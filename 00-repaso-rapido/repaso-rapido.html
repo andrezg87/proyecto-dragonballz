@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repaso rápido · Fundamentos de Frontend</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f7f5;--surface:#fff;--surface-2:#f0efeb;--text:#1d1d1f;--muted:#5f6368;--border:#e2e0da;--accent:#e4572e;--accent-2:#2e86de;--ok:#2a9d5c;--warn:#d99a00;--code-bg:#1e1f24;--code-text:#e6e6e6;--code-muted:#8b8f99;--radius:12px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121316;--surface:#1b1c20;--surface-2:#24262b;--text:#ececec;--muted:#a3a7ae;--border:#30323a;--accent:#ff7a50;--accent-2:#5aa9f5;--ok:#4cc985;--warn:#f2b632;--code-bg:#0d0e11;--code-muted:#7d818b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121316;--surface:#1b1c20;--surface-2:#24262b;--text:#ececec;--muted:#a3a7ae;--border:#30323a;--accent:#ff7a50;--accent-2:#5aa9f5;--ok:#4cc985;--warn:#f2b632;--code-bg:#0d0e11;--code-muted:#7d818b;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 Inter,system-ui,sans-serif}
+code,pre,kbd{font-family:"JetBrains Mono",ui-monospace,monospace}
+a{color:var(--accent-2)}
+.layout{display:grid;grid-template-columns:230px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:32px;padding-inline:16px}
+nav.toc{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:24px 0;font-size:14px}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:4px 10px;border-left:2px solid transparent}
+nav.toc a:hover{color:var(--text);border-left-color:var(--accent)}
+nav.toc .grp{margin:16px 0 4px;font-weight:600;color:var(--text);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+main{min-width:0;padding-block:24px 80px}
+header.hero{padding:36px 0 20px;border-bottom:1px solid var(--border);margin-bottom:12px}
+.hero .mod{font:600 12px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 6px}
+.hero h1{font-size:clamp(30px,5.5vw,46px);line-height:1.1;margin:0 0 8px;font-weight:800;text-wrap:balance}
+.hero h1 span{color:var(--accent)}
+.hero p{color:var(--muted);margin:0;max-width:64ch}
+section{padding-top:20px}
+h2{font-size:26px;margin:36px 0 4px;scroll-margin-top:12px;text-wrap:balance}
+h2 small{font:600 12px "JetBrains Mono",monospace;color:var(--muted);background:var(--surface-2);border:1px solid var(--border);border-radius:99px;padding:2px 10px;margin-left:8px;vertical-align:middle}
+h3{font-size:17px;margin:20px 0 4px}
+.idea{margin:4px 0 12px;font-size:18px;color:var(--text);max-width:68ch}
+.idea b{color:var(--accent)}
+p code,li code,td code,summary code{background:var(--surface-2);border:1px solid var(--border);border-radius:5px;padding:1px 5px;font-size:.88em;overflow-wrap:anywhere}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:10px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;min-width:0}
+.card h3{margin:0 0 4px;font-size:15px}
+.card p{margin:0;font-size:15px}
+.card ul{margin:4px 0 0;padding-left:18px;font-size:15px}
+.trap{border-left:4px solid var(--warn)}
+.tip{border-left:4px solid var(--ok)}
+.trap strong,.tip strong{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:2px}
+pre.code{background:var(--code-bg);color:var(--code-text);padding:12px 14px;border-radius:10px;overflow-x:auto;font-size:13px;line-height:1.55;margin:8px 0}
+pre.code i{font-style:normal}.c{color:var(--code-muted)}.s{color:#8fd694}.n{color:#f0a76e}.k{color:#7fb8f5}.t{color:#e3b6f0}
+.tablewrap{overflow-x:auto;margin:10px 0}
+table{width:100%;border-collapse:collapse;background:var(--surface);min-width:480px}
+th,td{text-align:left;padding:7px 12px;border-bottom:1px solid var(--border);vertical-align:top;font-size:15px}
+th{background:var(--surface-2);font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.flow span{background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:3px 12px;font-size:14px}
+.flow i{color:var(--muted);font-style:normal}
+details.q{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 14px;margin:8px 0}
+details.q summary{cursor:pointer;font-weight:600}
+details.q p{margin:8px 0 2px;color:var(--muted)}
+.theme-btn{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:5;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:99px;padding:8px 14px;cursor:pointer;font:600 13px Inter,sans-serif}
+footer{color:var(--muted);font-size:14px;border-top:1px solid var(--border);margin-top:48px;padding-top:14px}
+:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px}
+@media (max-width:860px){.layout{grid-template-columns:minmax(0,1fr);gap:0}nav.toc{display:none}.grid{grid-template-columns:minmax(0,1fr)}}
+@media print{nav.toc,.theme-btn{display:none}.layout{grid-template-columns:1fr}details.q{break-inside:avoid}}
+</style>
+</head>
+<body>
+<button class="theme-btn" id="themeBtn" aria-label="Cambiar tema">◐ Tema</button>
+<div class="layout">
+<nav class="toc" aria-label="Índice">
+  <div class="grp">Base</div>
+  <a href="#web">1 · La web y las APIs</a>
+  <a href="#html">2 · HTML</a>
+  <a href="#css">3 · CSS</a>
+  <div class="grp">Lógica</div>
+  <a href="#js">4 · JavaScript</a>
+  <a href="#async">5 · Asincronía y fetch</a>
+  <a href="#ts">6 · TypeScript</a>
+  <div class="grp">Cómo se arma una app</div>
+  <a href="#arquitectura">7 · Datos → pantalla</a>
+  <div class="grp">Nuevo: se aprende en el proyecto</div>
+  <a href="#git">8 · Git</a>
+  <a href="#deploy">9 · Publicar</a>
+  <div class="grp">Cierre</div>
+  <a href="#errores">Errores típicos</a>
+  <a href="#quiz">Autoevaluación</a>
+</nav>
+<main>
+<header class="hero">
+  <p class="mod">Módulo · Fundamentos de Frontend</p>
+  <h1>Repaso <span>rápido</span> de toda la teoría</h1>
+  <p>Una página para repasar en 20 minutos lo esencial del módulo: cada tema en una idea, un ejemplo mínimo y el error más típico. Sirve de mapa antes del proyecto y de chuleta mientras lo haces. Los temas 1 a 7 se vieron en clase. <b>Git y publicar en internet (temas 8 y 9) no se vieron en clase: se aprenden dentro de este proyecto</b> y se retoman más adelante, en Angular.</p>
+</header>
+
+<section id="web">
+<h2>1 · La web y las APIs <small>01 y 02</small></h2>
+<p class="idea">Tu navegador <b>pide</b> archivos o datos a un servidor, y el servidor <b>responde</b>. Una API responde con <b>datos</b> (JSON), no con páginas.</p>
+<div class="flow"><span>Navegador (cliente)</span><i>→ petición GET →</i><span>Servidor / API</span><i>→ respuesta 200 + JSON →</i><span>Tu código la pinta</span></div>
+<div class="grid">
+  <div class="card"><h3>HTTP</h3><ul><li><code>GET</code> leer · <code>POST</code> crear · <code>PUT/PATCH</code> cambiar · <code>DELETE</code> borrar</li><li><code>200</code> ok · <code>404</code> no existe · <code>500</code> falló el servidor</li></ul></div>
+  <div class="card"><h3>JSON</h3><p>Texto con forma de objeto: claves entre comillas dobles, sin comentarios ni coma final.</p></div>
+</div>
+<pre class="code" data-lang="js">const obj = JSON.parse('{"id":25,"name":"pikachu"}');  // texto -> objeto
+const texto = JSON.stringify(obj);                      // objeto -> texto</pre>
+<div class="card trap"><strong>Error típico</strong><p>Olvidar que la respuesta llega como <b>texto</b> y hay que convertirla (<code>respuesta.json()</code>).</p></div>
+</section>
+
+<section id="html">
+<h2>2 · HTML <small>01</small></h2>
+<p class="idea">HTML dice <b>qué hay</b> en la página: estructura y contenido, con <b>etiquetas</b>.</p>
+<pre class="code" data-lang="html">&lt;header&gt;&lt;h1&gt;Mi página&lt;/h1&gt;&lt;/header&gt;
+&lt;main&gt;
+  &lt;section id="lista"&gt;
+    &lt;article class="card"&gt;&lt;h2&gt;Goku&lt;/h2&gt;&lt;img src="goku.png" alt="Goku"&gt;&lt;/article&gt;
+  &lt;/section&gt;
+&lt;/main&gt;</pre>
+<div class="grid">
+  <div class="card"><h3>Semántica</h3><p><code>header</code>, <code>nav</code>, <code>main</code>, <code>section</code>, <code>article</code>, <code>footer</code>: describen su contenido en vez de usar solo <code>div</code>.</p></div>
+  <div class="card"><h3>Atributos</h3><p><code>id</code> (único), <code>class</code> (reutilizable), <code>href</code>, <code>src</code>, <code>alt</code> (siempre en imágenes).</p></div>
+</div>
+<div class="card trap"><strong>Error típico</strong><p>Imagen sin <code>alt</code>, o <code>id</code> repetido en dos elementos.</p></div>
+</section>
+
+<section id="css">
+<h2>3 · CSS <small>01</small></h2>
+<p class="idea">CSS dice <b>cómo se ve</b>: <code>selector { propiedad: valor; }</code>.</p>
+<pre class="code" data-lang="css">:root { --acento: #f58a1f; }                 /* variable */
+* { box-sizing: border-box; }                  /* el padding no agranda la caja */
+.card { background: white; padding: 16px; border-radius: 12px; }
+.card:hover { transform: translateY(-4px); }   /* pseudoclase */
+#lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+@media (max-width: 500px) { #lista { gap: 8px; } }  /* responsive */</pre>
+<div class="grid">
+  <div class="card"><h3>Selectores y cascada</h3><p>Etiqueta &lt; clase &lt; id &lt; <code>style=""</code> en fuerza. Si empatan, gana la regla de más abajo.</p></div>
+  <div class="card"><h3>Modelo de caja</h3><p>Contenido + <code>padding</code> + <code>border</code> + <code>margin</code>. Usa siempre <code>box-sizing: border-box</code>.</p></div>
+  <div class="card"><h3>Flexbox y Grid</h3><p>Flex: en fila o columna (<code>justify-content</code>, <code>align-items</code>). Grid: en cuadrícula.</p></div>
+  <div class="card"><h3>Tailwind</h3><p>Clases utilitarias en el HTML: <code>p-4 rounded-xl bg-white hover:-translate-y-1</code>. Prefijos <code>sm: md: lg:</code> = responsive.</p></div>
+</div>
+<div class="card trap"><strong>Error típico</strong><p>Escribir la clase sin el punto en CSS (<code>card</code> en vez de <code>.card</code>), o poner <code>display:flex</code> en los hijos en lugar del padre.</p></div>
+</section>
+
+<section id="js">
+<h2>4 · JavaScript <small>02</small></h2>
+<p class="idea">JS hace que la página <b>haga cosas</b>. Para consumir APIs basta dominar objetos, arrays y funciones.</p>
+<pre class="code" data-lang="js">const { id, name } = pokemon;                  // destructuring
+const copia = { ...pokemon, name: "raichu" };  // spread: copia sin mutar
+const nombre = pokemon.sprites?.front ?? "sin foto"; // ?. y ??
+
+const nombres = lista.map(p =&gt; p.name);        // transforma
+const fuertes = lista.filter(p =&gt; p.attack &gt; 80); // filtra
+const uno = lista.find(p =&gt; p.id === 25);      // el primero que cumple
+
+const html = `&lt;h2&gt;${name}&lt;/h2&gt;`;              // template string
+document.querySelector("#lista").innerHTML = html;   // pintar en el DOM</pre>
+<div class="card trap"><strong>Error típico</strong><p><code>Cannot read properties of undefined</code>: leíste un campo que no existe. Revisa el JSON real y usa <code>?.</code>.</p></div>
+</section>
+
+<section id="async">
+<h2>5 · Asincronía y fetch <small>02</small></h2>
+<p class="idea">Pedir datos tarda. JS <b>no se congela</b> esperando: usa <b>promesas</b>, y <code>async/await</code> las hace leer de arriba a abajo.</p>
+<pre class="code" data-lang="js">async function getJSON(url) {
+  const respuesta = await fetch(url);              // 1) llega estado y encabezados
+  if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`); // fetch NO falla con 404
+  return respuesta.json();                         // 2) llega el cuerpo -> objeto
+}
+
+try {
+  const datos = await getJSON("https://pokeapi.co/api/v2/pokemon/pikachu");
+} catch (error) {
+  mostrarError();                                  // sin internet, 404, etc.
+}
+
+const todos = await Promise.all(urls.map(getJSON)); // a la vez: tarda lo del más lento</pre>
+<div class="grid">
+  <div class="card"><h3>Promesa</h3><p><code>pending</code> → <code>fulfilled</code> (valor) o <code>rejected</code> (error).</p></div>
+  <div class="card"><h3><code>async</code> / <code>await</code></h3><p>Una función <code>async</code> siempre devuelve una promesa. <code>await</code> pausa solo esa función.</p></div>
+</div>
+<div class="card trap"><strong>Errores típicos</strong><p>Faltar un <code>await</code> (sale <code>Promise { &lt;pending&gt; }</code>); no revisar <code>respuesta.ok</code>; hacer <code>await</code> uno tras otro cuando pueden ir juntos con <code>Promise.all</code>.</p></div>
+</section>
+
+<section id="ts">
+<h2>6 · TypeScript <small>02</small></h2>
+<p class="idea">TypeScript es JavaScript <b>con tipos</b>: te avisa de errores <b>antes</b> de ejecutar. Los navegadores no lo entienden: se <b>compila</b> a JS y los tipos desaparecen.</p>
+<pre class="code" data-lang="ts">interface Pokemon { id: number; name: string; types: string[]; nick?: string; }
+
+type Tipo = "fire" | "water" | "grass";            // literales / unión
+
+async function getJSON&lt;T&gt;(url: string): Promise&lt;T&gt; {   // genérico
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return r.json();
+}
+
+const p = await getJSON&lt;Pokemon&gt;("https://pokeapi.co/api/v2/pokemon/25");
+
+function esPokemon(v: unknown): v is Pokemon {      // type guard
+  return typeof v === "object" &amp;&amp; v !== null &amp;&amp; typeof (v as Pokemon).id === "number";
+}</pre>
+<div class="grid">
+  <div class="card"><h3>Para qué sirve</h3><p>Autocompletar, detectar typos (<code>pokemon.nmae</code>) y campos que faltan.</p></div>
+  <div class="card"><h3>Utility types</h3><p><code>Partial</code>, <code>Pick</code>, <code>Omit</code>, <code>Readonly</code>, <code>Record&lt;K, V&gt;</code>.</p></div>
+</div>
+<div class="card trap"><strong>Error típico</strong><p>Creer que TS valida lo que llega de la red: <code>getJSON&lt;Pokemon&gt;</code> es una <b>promesa tuya</b>; en ejecución los tipos ya no existen. Y editar <code>main.ts</code> sin compilar: el navegador carga <code>main.js</code>.</p></div>
+</section>
+
+<section id="arquitectura">
+<h2>7 · De los datos a la pantalla <small>03</small></h2>
+<p class="idea">Toda la Pokédex sigue un mismo camino. Si lo entiendes, puedes armar cualquier app con una API.</p>
+<div class="flow"><span>API (JSON)</span><i>→</i><span><code>getJSON&lt;T&gt;</code></span><i>→</i><span>Adaptador</span><i>→</i><span>Estado</span><i>→</i><span><code>render()</code></span><i>→</i><span>HTML</span></div>
+<div class="tablewrap"><table>
+<tr><th>Pieza</th><th>Qué hace</th><th>Por qué existe</th></tr>
+<tr><td><code>interface</code> de la API</td><td>Describe lo que devuelve el servidor</td><td>Autocompletado y errores de tipo</td></tr>
+<tr><td>Adaptador (<code>aPokemon</code>)</td><td>Convierte la forma de la API a la de tu tarjeta</td><td>Si la API cambia, solo tocas un lugar</td></tr>
+<tr><td><code>tarjeta()</code></td><td>Recibe un dato y devuelve su HTML</td><td>Una sola plantilla para todos los elementos</td></tr>
+<tr><td>Estado + <code>render()</code></td><td>Guardas qué mostrar y lo dibujas desde cero</td><td>Buscador, filtros y paginación sin lío</td></tr>
+<tr><td>Delegación de eventos</td><td>Un solo listener en el contenedor</td><td>Cientos de botones sin cientos de listeners</td></tr>
+<tr><td><code>try/catch</code> + estados</td><td>Cargando, error, vacío</td><td>El usuario nunca ve una pantalla rota</td></tr>
+</table></div>
+<div class="card tip"><strong>Clave para el proyecto</strong><p>Otra API = otra forma de JSON. Reutilizas la arquitectura, pero comprueba siempre con el <b>JSON real</b>: nombre del arreglo, paginación, tipo de cada campo y qué responde cuando algo no existe.</p></div>
+</section>
+
+<section id="git">
+<h2>8 · Git <small>nuevo · docs/GIT-BASICO.md</small></h2>
+<p class="idea">Git guarda el <b>historial</b> de tu proyecto y te deja volver atrás; GitHub guarda una copia en internet. Una <b>rama</b> es una línea de trabajo independiente.</p>
+<div class="card tip"><strong>Videos para aprender Git</strong>
+<ul>
+  <li>🎬 <b>Empieza por aquí (2 min 30 s):</b> <a href="https://www.youtube.com/watch?v=DinilgacaWs" target="_blank" rel="noopener">¿Qué es Git y GitHub? Repositorios, ramas y mucho más</a></li>
+  <li>📚 <b>Curso completo en español:</b> <a href="https://www.youtube.com/watch?v=T3roQrB_Jko&amp;list=PLJ7sTTLrIA6klMtrvcpGXYkBFoUP3rqwo" target="_blank" rel="noopener">Curso de Git y GitHub (desde cero)</a></li>
+  <li>⏱️ <b>Curso de 1 hora (en inglés, activa los subtítulos):</b> <a href="https://www.youtube.com/watch?v=8JJ101D3knE" target="_blank" rel="noopener">Git Tutorial for Beginners: Learn Git in 1 Hour</a></li>
+</ul></div>
+
+<h3>¿Para qué sirve?</h3>
+<div class="grid">
+  <div class="card"><h3>Sin Git</h3><p>Carpetas como <code>proyecto_final</code>, <code>proyecto_final2</code>, <code>proyecto_final_ahora_si</code>. Si algo se rompe, no sabes qué cambió ni cómo volver.</p></div>
+  <div class="card"><h3>Con Git</h3><p>Un solo proyecto con un historial de «puntos de guardado» con mensaje. Puedes ver qué hiciste, cuándo, y probar cosas sin dañar lo que ya funciona.</p></div>
+</div>
+<p>Y <b>GitHub</b> sirve para tres cosas: respaldar tu trabajo en internet, compartirlo (tu profesor lo ve) y que servicios como <b>Vercel</b> lo lean para publicar tu página.</p>
+
+<h3>Las palabras que vas a oír</h3>
+<div class="tablewrap"><table>
+<tr><th>Palabra</th><th>Qué es</th><th>Analogía</th></tr>
+<tr><td><b>Repositorio</b></td><td>Tu carpeta del proyecto más su historial (una carpeta oculta llamada <code>.git</code>)</td><td>El cuaderno completo con todas sus páginas</td></tr>
+<tr><td><b>Commit</b></td><td>Un punto de guardado: una «foto» de todo tu proyecto con un mensaje y un código (por ejemplo <code>5be30ca</code>)</td><td>«Guardé la partida aquí: terminé el nivel 1»</td></tr>
+<tr><td><b>Rama (branch)</b></td><td>Una línea de commits independiente. Al cambiar de rama, <b>tus archivos cambian</b> para mostrar cómo estaban en esa rama</td><td>Un universo alterno donde pruebas sin dañar el principal</td></tr>
+<tr><td><b>Zona de preparación</b> (staging)</td><td>Lo que marcaste con <code>git add</code> para el próximo commit</td><td>La caja donde pones cosas antes de sellarla</td></tr>
+<tr><td><b>Remoto</b> (<code>origin</code>)</td><td>La copia de tu repositorio que está en GitHub</td><td>La partida guardada en la nube</td></tr>
+</table></div>
+
+<h3>El recorrido de tu trabajo</h3>
+<div class="flow"><span>Editas archivos</span><i>→ <code>git add</code> →</i><span>Zona de preparación</span><i>→ <code>git commit</code> →</i><span>Historial local</span><i>→ <code>git push</code> →</i><span>GitHub</span></div>
+<p><code>commit</code> guarda <b>solo en tu computador</b>. Hasta que no haces <code>push</code>, GitHub no se entera. <code>pull</code> hace el camino contrario: trae de GitHub lo que no tienes.</p>
+
+<h3>Los comandos del proyecto</h3>
+<pre class="code" data-lang="sh">git status                    # ¿dónde estoy y qué cambió? (tu brújula)
+git checkout -b nivel-1       # crear la rama nivel-1 y moverme a ella
+git add .                     # preparar TODOS los cambios (el punto = todo)
+git commit -m "Nivel 1: HTML" # guardar un punto en mi historial local
+git push -u origin nivel-1    # subir la rama a GitHub (la primera vez lleva -u origin)
+git push                      # las siguientes veces basta con esto
+git checkout nivel-3          # moverme a una rama que ya existe
+git branch                    # listar mis ramas (la que tiene * es donde estoy)
+git log --oneline             # ver mis commits, uno por línea
+git pull                      # traer lo nuevo de GitHub</pre>
+
+<h3>Un ejemplo completo, con lo que verás en pantalla</h3>
+<p>Estás en la rama <code>nivel-1</code> y acabas de crear tu <code>index.html</code>:</p>
+<pre class="code" data-lang="txt">$ git status
+On branch nivel-1
+Untracked files:
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+        04-proyecto/dragonball/nivel1/
+
+nothing added to commit but untracked files present</pre>
+<p>Git te dice: «hay archivos nuevos que todavía no sigo». Los preparas:</p>
+<pre class="code" data-lang="txt">$ git add .
+$ git status
+On branch nivel-1
+Changes to be committed:
+        new file:   04-proyecto/dragonball/nivel1/index.html</pre>
+<p>Están en la caja (zona de preparación), listos para sellar. Ahora el commit:</p>
+<pre class="code" data-lang="txt">$ git commit -m "Nivel 1: HTML con 5 personajes"
+[nivel-1 5be30ca] Nivel 1: HTML con 5 personajes
+ 1 file changed, 40 insertions(+)
+ create mode 100644 04-proyecto/dragonball/nivel1/index.html
+
+$ git status
+On branch nivel-1
+nothing to commit, working tree clean</pre>
+<p>«Working tree clean» significa que todo está guardado. Falta subirlo a GitHub:</p>
+<pre class="code" data-lang="txt">$ git push -u origin nivel-1
+ * [new branch]      nivel-1 -&gt; nivel-1
+branch 'nivel-1' set up to track 'origin/nivel-1'.
+
+$ git log --oneline
+5be30ca (HEAD -&gt; nivel-1, origin/nivel-1) Nivel 1: HTML con 5 personajes</pre>
+<p>Ya está en tu GitHub. <code>origin/nivel-1</code> junto al commit confirma que GitHub tiene el mismo punto que tu computador.</p>
+<div class="card tip"><strong>Si tu Git habla español</strong><p>Según cómo esté instalado, los mensajes pueden salir en español («En la rama nivel-1», «nada para hacer commit»). Significan lo mismo.</p></div>
+
+<h3>Cómo leer <code>git status</code></h3>
+<div class="tablewrap"><table>
+<tr><th>Lo que dice</th><th>Significa</th><th>Qué hacer</th></tr>
+<tr><td><code>Untracked files</code></td><td>Archivos nuevos que Git todavía no sigue</td><td><code>git add .</code></td></tr>
+<tr><td><code>Changes not staged for commit</code> + <code>modified:</code></td><td>Cambiaste archivos que ya seguía, pero no los has preparado</td><td><code>git add .</code></td></tr>
+<tr><td><code>Changes to be committed</code></td><td>Están preparados, esperando el commit</td><td><code>git commit -m "..."</code></td></tr>
+<tr><td><code>nothing to commit, working tree clean</code></td><td>Todo está guardado</td><td>Nada: ya puedes <code>push</code> o cambiar de rama</td></tr>
+<tr><td><code>Your branch is ahead of 'origin/...' by 1 commit</code></td><td>Tienes commits que GitHub no tiene</td><td><code>git push</code></td></tr>
+</table></div>
+
+<h3>Ramas de este proyecto</h3>
+<p>Cada nivel va en su rama y <b>nace de la anterior</b>, así tu trabajo se va acumulando:</p>
+<pre class="code" data-lang="txt">main      ●  materiales del curso
+           \
+nivel-1     ●──●  Nivel 1: HTML
+                \
+nivel-2          ●──●  Nivel 2: CSS
+                     \
+nivel-3               ●──●  Nivel 3: datos en memoria
+                          \
+                           ...  hasta nivel-7  (y, si haces los bonus: bonus-planetas y nivel-8)</pre>
+<p>La <b>rama</b> se llama <code>nivel-1</code> (con guion) y la <b>carpeta</b> <code>nivel1</code> (sin guion): son cosas distintas.</p>
+
+<h3>Preguntas que todos se hacen</h3>
+<div class="tablewrap"><table>
+<tr><th>Pregunta</th><th>Respuesta corta</th></tr>
+<tr><td>¿Pierdo mi trabajo al cambiar de rama?</td><td>No: queda guardado en su rama. Pero Git no te deja cambiar si tienes cambios sin guardar: haz <code>add</code> y <code>commit</code> primero.</td></tr>
+<tr><td>¿Cuándo hago commit?</td><td>Cada vez que algo funciona. Mejor varios commits pequeños que uno gigante.</td></tr>
+<tr><td>¿Cómo escribo el mensaje?</td><td>Corto y diciendo qué lograste: <code>Nivel 4: getJSON y adaptador</code>. Evita «cambios» o «listo».</td></tr>
+<tr><td>¿Por qué no se sube <code>node_modules</code>?</td><td>El archivo <code>.gitignore</code> le dice a Git qué ignorar. Esa carpeta se vuelve a crear con <code>npm install</code>.</td></tr>
+<tr><td>Hice <code>commit</code> pero GitHub no lo muestra</td><td>Falta el <code>git push</code>.</td></tr>
+<tr><td>¿Qué es <code>origin</code>?</td><td>El nombre por defecto de tu repositorio en GitHub.</td></tr>
+</table></div>
+
+<div class="card tip"><strong>Más adelante, en Angular</strong><p>Aquí solo ves lo básico para guardar y subir tu trabajo. Después se retoma y se amplía: Pull Requests, Issues, hotfixes y el flujo de ramas en equipo.</p></div>
+</section>
+
+<section id="deploy">
+<h2>9 · Publicar en internet <small>nuevo · bonus nivel 8</small></h2>
+<p class="idea">Vercel lee tu repositorio de GitHub y publica tu página con una URL pública. Cada <code>git push</code> a la rama publicada vuelve a desplegar.</p>
+<pre class="code" data-lang="toml"># vercel.toml: las 3 preguntas de Vercel
+installCommand = "npm install"            # ¿qué instalo?
+buildCommand = "npm run build"            # ¿cómo construyo? (TS -> JS)
+outputDirectory = "04-proyecto/dragonball/nivel7"  # ¿qué carpeta publico?</pre>
+<div class="grid">
+  <div class="card"><h3>Qué rama se publica</h3><p>La de <b>Settings → Environments → Production → Branch Tracking</b>. <code>Redeploy</code> no cambia de rama.</p></div>
+  <div class="card"><h3>Para que la vea cualquiera</h3><p>Comparte el dominio de producción y desactiva <b>Vercel Authentication</b> si pide login. Pruébalo en incógnito.</p></div>
+</div>
+</section>
+
+<section id="errores">
+<h2>Errores típicos, de un vistazo</h2>
+<div class="tablewrap"><table>
+<tr><th>Síntoma</th><th>Causa probable</th></tr>
+<tr><td>Las tildes salen raras (<code>Ã©</code>)</td><td>Falta <code>&lt;meta charset="UTF-8"&gt;</code></td></tr>
+<tr><td>El CSS no se aplica</td><td>Ruta del <code>href</code> mal, falta el punto en la clase o un <code>;</code> / <code>}</code></td></tr>
+<tr><td><code>Promise { &lt;pending&gt; }</code></td><td>Falta un <code>await</code></td></tr>
+<tr><td>404 y no pasa nada</td><td>No revisaste <code>respuesta.ok</code></td></tr>
+<tr><td><code>Cannot read properties of undefined</code></td><td>Campo inexistente: revisa el JSON real y usa <code>?.</code></td></tr>
+<tr><td><code>Unexpected token &lt; in JSON</code></td><td>La respuesta no era JSON (página de error, URL mal escrita)</td></tr>
+<tr><td>Lista vacía sin errores</td><td>El arreglo de resultados se llama distinto en esa API</td></tr>
+<tr><td>Cambié <code>main.ts</code> y nada cambia</td><td>Falta compilar (<code>npm run build</code>) y recargar con <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd></td></tr>
+<tr><td>TS: <code>Object is possibly 'null'</code></td><td><code>querySelector</code> puede no encontrar el elemento: revisa el <code>id</code></td></tr>
+<tr><td>Vercel: <code>No Output Directory named "public"</code></td><td>La rama desplegada no tiene la carpeta de <code>outputDirectory</code></td></tr>
+</table></div>
+</section>
+
+<section id="quiz">
+<h2>Autoevaluación rápida</h2>
+<p class="idea">Responde en tu cabeza (o en voz alta) y abre la respuesta para comprobar.</p>
+<details class="q"><summary>1. ¿Qué diferencia hay entre HTML, CSS y JavaScript?</summary><p>HTML dice qué hay, CSS cómo se ve y JavaScript qué hace.</p></details>
+<details class="q"><summary>2. ¿Por qué <code>fetch</code> necesita dos <code>await</code>?</summary><p>El primero espera la respuesta (estado y encabezados) y el segundo espera y convierte el cuerpo con <code>.json()</code>.</p></details>
+<details class="q"><summary>3. Pides un id que no existe. ¿<code>fetch</code> lanza error?</summary><p>No: responde con otro código (por ejemplo 404) y <code>respuesta.ok</code> es <code>false</code>. Solo lanza error si no hay conexión.</p></details>
+<details class="q"><summary>4. ¿Qué devuelve una función <code>async</code> sin <code>await</code>?</summary><p>Una <code>Promise</code>.</p></details>
+<details class="q"><summary>5. ¿Cuándo usas <code>Promise.all</code>?</summary><p>Cuando tienes varias peticiones independientes: salen a la vez y el tiempo total es el de la más lenta.</p></details>
+<details class="q"><summary>6. Tu <code>interface</code> dice <code>number</code> pero la API manda texto. ¿Qué pasa al ejecutar?</summary><p>Nada lo detecta: los tipos se borran al compilar y el dato sigue siendo texto.</p></details>
+<details class="q"><summary>7. ¿Por qué el navegador carga <code>main.js</code> y no <code>main.ts</code>?</summary><p>El navegador no entiende TypeScript; el compilador lo convierte a JavaScript.</p></details>
+<details class="q"><summary>8. ¿Para qué sirve un adaptador?</summary><p>Convierte la forma del JSON de la API a la forma que usa tu aplicación, y aísla los cambios de la API en un solo lugar.</p></details>
+<details class="q"><summary>9. (Tema nuevo del proyecto) ¿Qué diferencia hay entre <code>git add</code>, <code>commit</code> y <code>push</code>?</summary><p><code>add</code> prepara los cambios, <code>commit</code> los guarda en tu historial local y <code>push</code> los envía a GitHub.</p></details>
+<details class="q"><summary>10. ¿Qué tres preguntas contesta <code>vercel.toml</code>?</summary><p>Qué instalo, cómo construyo y qué carpeta publico.</p></details>
+</section>
+
+<footer>Repaso rápido · Módulo Fundamentos de Frontend. Material completo: <code>01-clase-html-css</code>, <code>02-clase-js-ts</code>, <code>03-pokedex-pasos</code> y <code>docs/</code>.</footer>
+</main>
+</div>
+<script>
+document.getElementById('themeBtn').addEventListener('click', function () {
+  var root = document.documentElement;
+  var isDark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = isDark ? 'light' : 'dark';
+});
+
+/* Resaltado ligero de los bloques de código */
+(function () {
+  var KW = new Set('const let var function return if else for while of in await async try catch finally throw new class interface type extends import export from as typeof instanceof null undefined true false void this'.split(' '));
+  var TY = new Set('string number boolean any unknown never object'.split(' '));
+  function mk(lang) { var hash = (lang === 'sh' || lang === 'toml') ? '|#[^\\n]*' : ''; return new RegExp('(\\/\\/[^\\n]*|\\/\\*[\\s\\S]*?\\*\\/|&lt;!--[\\s\\S]*?--&gt;' + hash + ')|("(?:\\\\.|[^"\\\\\\n])*"|\'(?:\\\\.|[^\'\\\\\\n])*\'|`(?:\\\\.|[^`\\\\])*`)|(\\b\\d[\\d_.]*\\b)|([A-Za-z_$][\\w$-]*)', 'g'); }
+  document.querySelectorAll('pre.code').forEach(function (pre) {
+    var lang = pre.dataset.lang;
+    if (lang === 'txt') return;
+    var src = pre.innerHTML;  // ya viene con &lt; &gt; &amp; escapados
+    var re = mk(lang), out = '', last = 0, m;
+    while ((m = re.exec(src))) {
+      out += src.slice(last, m.index);
+      var t = m[0];
+      if (m[1]) out += '<i class="c">' + t + '</i>';
+      else if (m[2] && lang !== 'html') out += '<i class="s">' + t + '</i>';
+      else if (m[3] && lang !== 'html') out += '<i class="n">' + t + '</i>';
+      else if (m[4] && (lang === 'js' || lang === 'ts') && KW.has(t)) out += '<i class="k">' + t + '</i>';
+      else if (m[4] && lang === 'ts' && (TY.has(t) || /^[A-Z]/.test(t))) out += '<i class="t">' + t + '</i>';
+      else out += t;
+      last = re.lastIndex;
+    }
+    pre.innerHTML = out + src.slice(last);
+  });
+})();
+</script>
+</body>
+</html>

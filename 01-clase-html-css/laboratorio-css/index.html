@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#090b14">
+	<meta name="description" content="Un pequeño laboratorio visual para explorar animaciones, gradientes, transiciones y efectos CSS.">
+	<title>CSS en movimiento — Laboratorio creativo</title>
+	<link rel="stylesheet" href="andres.css">
+</head>
+<body>
+	<header class="site-header">
+		<a class="brand" href="#inicio" aria-label="CSS en movimiento, inicio">
+			<span class="brand-icon" aria-hidden="true">✳</span>
+			<span>css<span class="brand-dot">.</span>playground</span>
+		</a>
+		<nav class="main-nav" aria-label="Navegación principal">
+			<a href="#experimentos">Experimentos</a>
+			<a href="#recursos">Recursos</a>
+		</nav>
+		<a class="header-cta" href="#experimentos">Explorar <span aria-hidden="true">↘</span></a>
+	</header>
+
+	<main id="inicio">
+		<section class="hero" aria-labelledby="hero-title">
+			<div class="hero-glow glow-one" aria-hidden="true"></div>
+			<div class="hero-glow glow-two" aria-hidden="true"></div>
+			<div class="hero-copy">
+				<p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> LABORATORIO CREATIVO · HTML + CSS</p>
+				<h1 id="hero-title">Un poco de código.<br>Un mundo de <span class="gradient-text">posibilidades.</span></h1>
+				<p class="hero-description">Gradientes, movimiento, luz y profundidad. Explora cómo CSS transforma una página y haz que cada píxel cobre vida.</p>
+				<div class="hero-actions">
+					<a class="button button-primary" href="#experimentos">Ver experimentos <span aria-hidden="true">↗</span></a>
+					<a class="button button-quiet" href="https://developer.mozilla.org/es/docs/Web/CSS" target="_blank" rel="noopener noreferrer">Aprender CSS</a>
+				</div>
+				<div class="hero-meta"><span>01</span><span class="meta-line"></span><span>Diseña. Anima. Sorprende.</span></div>
+			</div>
+
+			<div class="hero-art" aria-label="Ilustración abstracta animada creada con CSS">
+				<div class="art-grid" aria-hidden="true"></div>
+				<div class="orbit orbit-outer" aria-hidden="true"></div>
+				<div class="orbit orbit-inner" aria-hidden="true"></div>
+				<div class="art-core" aria-hidden="true"><span>CSS</span><i></i></div>
+				<span class="art-tag tag-top" aria-hidden="true">@keyframes</span>
+				<span class="art-tag tag-bottom" aria-hidden="true">transform: translateY(…)</span>
+				<span class="art-star star-one" aria-hidden="true">✦</span>
+				<span class="art-star star-two" aria-hidden="true">✳</span>
+			</div>
+			<a class="scroll-cue" href="#experimentos"><span aria-hidden="true">↓</span> DESLIZA PARA EXPLORAR</a>
+		</section>
+
+		<section class="experiments section-wrap" id="experimentos" aria-labelledby="experiments-title">
+			<div class="section-heading">
+				<div>
+					<p class="eyebrow">UN PARQUE DE JUEGOS PARA EL NAVEGADOR</p>
+					<h2 id="experiments-title">CSS en acción<span class="heading-period">.</span></h2>
+				</div>
+				<p class="section-intro">Pasa el cursor, mira de cerca y descubre el truco detrás de cada efecto.</p>
+			</div>
+
+			<div class="experiment-grid">
+				<article class="experiment-card card-gradient">
+					<div class="card-visual gradient-visual" aria-hidden="true"><span class="gradient-orb"></span><span class="gradient-ring"></span></div>
+					<div class="card-copy"><span class="card-number">01 / COLOR</span><h3>Gradientes vivos</h3><p>Capas de color que se mezclan y respiran.</p><code>background: linear-gradient(...)</code></div>
+				</article>
+				<article class="experiment-card card-motion">
+					<div class="card-visual motion-visual" aria-hidden="true"><span class="motion-orbit"></span><span class="motion-ball"></span><span class="motion-ball ball-small"></span></div>
+					<div class="card-copy"><span class="card-number">02 / MOVIMIENTO</span><h3>Órbita infinita</h3><p>Una animación continua hecha con keyframes.</p><code>animation: girar 8s linear infinite</code></div>
+				</article>
+				<article class="experiment-card card-glass">
+					<div class="card-visual glass-visual" aria-hidden="true"><span class="glass-shape"></span><span class="glass-panel"></span><span class="glass-sparkle">✦</span></div>
+					<div class="card-copy"><span class="card-number">03 / PROFUNDIDAD</span><h3>Vidrio esmerilado</h3><p>Transparencia, desenfoque y capas de luz.</p><code>backdrop-filter: blur(16px)</code></div>
+				</article>
+			</div>
+		</section>
+
+		<section class="interaction-section" aria-labelledby="interaction-title">
+			<div class="interaction-inner section-wrap">
+				<div class="interaction-copy">
+					<p class="eyebrow">NO ES UNA IMAGEN. ES CSS.</p>
+					<h2 id="interaction-title">Toca. Pasa.<br><span>Juega.</span></h2>
+					<p>Los pequeños detalles también cuentan: prueba el botón, observa el brillo y mira cómo responde la interfaz.</p>
+					<a class="button button-primary" href="https://developer.mozilla.org/es/docs/Web/CSS/transition" target="_blank" rel="noopener noreferrer">Ver cómo funciona <span aria-hidden="true">↗</span></a>
+				</div>
+				<div class="interaction-stage">
+					<div class="stage-orbit stage-orbit-one" aria-hidden="true"></div>
+					<div class="stage-orbit stage-orbit-two" aria-hidden="true"></div>
+					<div class="demo-card">
+						<div class="demo-topline"><span>INTERACCIÓN CSS</span><span class="demo-lights"><i></i><i></i><i></i></span></div>
+						<div class="demo-content"><span class="demo-icon" aria-hidden="true">✦</span><h3>Haz que pase algo.</h3><p>Una transición suave puede cambiarlo todo.</p><a class="demo-button" href="https://developer.mozilla.org/es/docs/Web/CSS/transition" target="_blank" rel="noopener noreferrer">Pruébame <span aria-hidden="true">→</span></a></div>
+						<div class="demo-progress" aria-hidden="true"><span></span></div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="marquee" aria-label="Técnicas CSS que puedes combinar">
+			<div class="marquee-track" aria-hidden="true">
+				<span>TRANSFORMS</span><i>✳</i><span>GRADIENTS</span><i>✦</i><span>KEYFRAMES</span><i>✳</i><span>GLASSMORPHISM</span><i>✦</i><span>TRANSFORMS</span><i>✳</i><span>GRADIENTS</span><i>✦</i><span>KEYFRAMES</span><i>✳</i><span>GLASSMORPHISM</span><i>✦</i>
+			</div>
+		</section>
+	</main>
+
+	<footer class="site-footer" id="recursos">
+		<a class="brand footer-brand" href="#inicio"><span class="brand-icon" aria-hidden="true">✳</span><span>css<span class="brand-dot">.</span>playground</span></a>
+		<p>Hecho con curiosidad y un montón de CSS.</p>
+		<a class="footer-link" href="https://developer.mozilla.org/es/docs/Web/CSS" target="_blank" rel="noopener noreferrer">Tu siguiente experimento empieza aquí ↗</a>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "dragonball",
+  "private": true,
+  "description": "Tu proyecto Dragon Ball. Aquí construyes los niveles 1 a 7.",
+  "scripts": {
+    "build": "node build.mjs",
+    "nivel": "node scripts/nuevo-nivel.mjs"
+  }
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+  PASO 6 · TailwindCSS
+  Objetivo: reemplazar nuestro styles.css por clases utilitarias de Tailwind.
+  En vez de escribir CSS en otro archivo, describimos el diseño con clases
+  directamente en el HTML (y en el HTML que genera main.ts).
+  Ya NO existe styles.css en esta carpeta.
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8"> <!-- para que se vean bien las tildes -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- necesario para celulares -->
+  <title>Mini Pokédex · Paso 6</title>
+
+  <!-- NUEVO: Tailwind en modo "Play CDN". Un solo script, cero instalación.
+       Perfecto para aprender y prototipar; en un proyecto real se instala con npm. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<!-- Cada clase hace UNA cosa pequeña:
+       bg-slate-50    -> color de fondo
+       text-slate-900 -> color de texto
+       font-sans      -> tipo de letra del sistema -->
+<body class="bg-slate-50 font-sans text-slate-900 antialiased">
+  <!-- text-center centra el texto, py-8 = padding vertical de 2rem, px-4 = padding horizontal -->
+  <header class="px-4 py-8 text-center">
+    <!-- text-3xl = tamaño grande, font-extrabold = muy negrita, text-orange-600 = color -->
+    <h1 class="text-3xl font-extrabold text-orange-600">Mini Pokédex</h1>
+    <p class="mt-1 text-slate-500">Pokémon con ilustraciones y estilos de Tailwind.</p>
+  </header>
+
+  <!-- mx-auto centra el bloque, max-w-5xl limita su ancho máximo -->
+  <main class="mx-auto max-w-5xl px-4 pb-12">
+    <!-- Los estilos de #estado ahora los pone JavaScript según el caso (ver main.ts) -->
+    <p id="estado" class="mb-4 min-h-6 text-center text-slate-500"></p>
+
+    <!-- Grid responsive: 1 columna en celular, 2 desde "sm", 3 desde "md", 4 desde "lg".
+         Los prefijos sm: md: lg: son los media queries de Tailwind. -->
+    <section id="lista" class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--
+  PASO 5 · Agregamos las imágenes
+  Objetivo: mostrar la ilustración de cada pokémon. La API ya la incluye
+  en su respuesta: solo hay que leerla, guardarla y pintarla con <img>.
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8"> <!-- para que se vean bien las tildes -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- necesario para celulares -->
+  <title>Mini Pokédex · Paso 5</title>
+
+  <!-- Conecta styles.css (paso 2) con esta página -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- <header>: la cabecera de la página -->
+  <header>
+    <h1>Mini Pokédex</h1>
+    <p>Pokémon con sus ilustraciones, traídos desde PokéAPI.</p>
+  </header>
+
+  <!-- <main>: el contenido principal (solo hay uno por página) -->
+  <main>
+    <!-- NUEVO: aquí JavaScript escribirá mensajes (cargando, error, cantidad...) -->
+    <p id="estado"></p>
+
+    <!-- CAMBIO: la sección está VACÍA. Las tarjetas ya no se escriben a mano:
+         las genera JavaScript a partir de los datos (ver main.ts). -->
+    <section id="lista"></section>
+  </main>
+
+  <!-- NUEVO: carga el JavaScript. Va al final del <body> para que los elementos
+       de arriba ya existan cuando el script los busque.
+       OJO: el navegador ejecuta main.js, no main.ts. TypeScript se compila a JavaScript. -->
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clase HTML y CSS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f7f5; --surface:#ffffff; --surface-2:#f0efeb; --text:#1d1d1f; --muted:#5f6368;
+  --border:#e2e0da; --accent:#e4572e; --accent-2:#2e86de; --ok:#2a9d5c; --warn:#d99a00;
+  --code-bg:#1e1f24; --code-text:#e6e6e6;
+  --radius:12px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121316; --surface:#1b1c20; --surface-2:#24262b; --text:#ececec; --muted:#a3a7ae;
+    --border:#30323a; --accent:#ff7a50; --accent-2:#5aa9f5; --ok:#4cc985; --warn:#f2b632;
+    --code-bg:#0d0e11; --code-text:#e6e6e6;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121316; --surface:#1b1c20; --surface-2:#24262b; --text:#ececec; --muted:#a3a7ae;
+  --border:#30323a; --accent:#ff7a50; --accent-2:#5aa9f5; --ok:#4cc985; --warn:#f2b632;
+  --code-bg:#0d0e11; --code-text:#e6e6e6;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 Inter,system-ui,sans-serif}
+code,textarea,pre{font-family:"JetBrains Mono",ui-monospace,monospace}
+a{color:var(--accent-2)}
+.layout{display:grid;grid-template-columns:240px 1fr;max-width:1200px;margin:0 auto;gap:32px;padding:0 16px}
+nav.toc{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:24px 0;font-size:14px}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:4px 10px;border-left:2px solid transparent}
+nav.toc a:hover{color:var(--text);border-left-color:var(--accent)}
+nav.toc .grp{margin:16px 0 4px;font-weight:600;color:var(--text);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+main{min-width:0;padding:24px 0 80px}
+header.hero{padding:40px 0 24px;border-bottom:1px solid var(--border);margin-bottom:24px}
+.hero h1{font-size:clamp(32px,6vw,52px);line-height:1.1;margin:0 0 8px;font-weight:800}
+.hero h1 span{color:var(--accent)}
+.hero p{color:var(--muted);margin:0;max-width:60ch}
+h2{font-size:28px;margin:56px 0 8px;scroll-margin-top:16px}
+h3{font-size:20px;margin:32px 0 8px;scroll-margin-top:16px}
+.time{display:inline-block;font:600 12px "JetBrains Mono",monospace;background:var(--surface-2);border:1px solid var(--border);border-radius:99px;padding:2px 10px;color:var(--muted);vertical-align:middle;margin-left:8px}
+p code,li code,td code{background:var(--surface-2);border:1px solid var(--border);border-radius:5px;padding:1px 5px;font-size:.88em}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:16px 0}
+.note{border-left:4px solid var(--accent-2)}
+.tip{border-left:4px solid var(--ok)}
+.warn{border-left:4px solid var(--warn)}
+.card strong.lbl{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+.agenda{display:grid;gap:8px;margin:16px 0}
+.agenda div{display:grid;grid-template-columns:110px 1fr;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.agenda b{font-family:"JetBrains Mono",monospace;color:var(--accent)}
+.agenda .brk{background:var(--surface-2)}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:15px;background:var(--surface);border-radius:var(--radius);overflow:hidden}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--surface-2);font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.tablewrap{overflow-x:auto}
+.analogy{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.analogy div{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center}
+.analogy .big{font-size:36px}
+.analogy b{display:block;margin:4px 0}
+.analogy small{color:var(--muted)}
+/* Playground */
+.play{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:16px 0;background:var(--surface)}
+.play .bar{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)}
+.play .bar button{font:inherit;font-size:12px;background:transparent;border:1px solid var(--border);color:var(--text);border-radius:6px;padding:3px 10px;cursor:pointer}
+.play .bar button:hover{border-color:var(--accent)}
+.play .panes{display:grid;grid-template-columns:1fr 1fr;min-height:220px}
+.play textarea{width:100%;min-height:220px;height:100%;resize:vertical;border:0;outline:0;padding:14px;background:var(--code-bg);color:var(--code-text);font-size:13.5px;line-height:1.55;tab-size:2}
+.play iframe{width:100%;height:100%;min-height:220px;border:0;background:#fff}
+pre.code{background:var(--code-bg);color:var(--code-text);padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:13.5px;line-height:1.55}
+.box-model{display:flex;justify-content:center;margin:16px 0}
+.bm{padding:22px;border-radius:8px;text-align:center;font-size:13px;font-weight:600;position:relative}
+.bm span{position:absolute;top:4px;left:10px;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.bm-m{background:#f6c58f33;border:2px dashed #e09f3e}
+.bm-b{background:#f4a26133;border:3px solid #e76f51}
+.bm-p{background:#8ecae633;border:2px dashed #219ebc}
+.bm-c{background:#90be6d55;padding:16px 28px;border-radius:4px}
+ul.check{list-style:none;padding:0}
+ul.check li{padding:6px 0 6px 30px;position:relative}
+ul.check input{position:absolute;left:0;top:10px;accent-color:var(--ok)}
+.theme-btn{position:fixed;right:16px;bottom:16px;z-index:5;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:99px;padding:8px 14px;cursor:pointer;font:600 13px Inter,sans-serif}
+footer{color:var(--muted);font-size:14px;border-top:1px solid var(--border);margin-top:56px;padding-top:16px}
+@media (max-width:860px){
+  .layout{grid-template-columns:1fr;gap:0}
+  nav.toc{display:none}
+  .play .panes{grid-template-columns:1fr}
+  .analogy{grid-template-columns:1fr}
+  .agenda div{grid-template-columns:1fr;gap:2px}
+}
+@media print{
+  nav.toc,.theme-btn,.play .bar button{display:none}
+  .layout{grid-template-columns:1fr}
+  .play iframe{display:none}
+  .play .panes{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<button class="theme-btn" id="themeBtn" aria-label="Cambiar tema">◐ Tema</button>
+<div class="layout">
+<nav class="toc">
+  <div class="grp">Inicio</div>
+  <a href="#agenda">Agenda (2 h)</a>
+  <a href="#web">¿Cómo funciona la web?</a>
+  <div class="grp">HTML</div>
+  <a href="#estructura">Estructura base</a>
+  <a href="#etiquetas">Etiquetas de texto</a>
+  <a href="#atributos">Atributos, enlaces e imágenes</a>
+  <a href="#listas">Listas y tablas</a>
+  <a href="#semantica">HTML semántico</a>
+  <a href="#formularios">Formularios</a>
+  <div class="grp">CSS</div>
+  <a href="#antes-despues">Antes y después</a>
+  <a href="#css-intro">¿Cómo se conecta CSS?</a>
+  <a href="#selectores">Selectores</a>
+  <a href="#cascada">Cascada y especificidad</a>
+  <a href="#colores">Colores, unidades y texto</a>
+  <a href="#caja">Modelo de caja</a>
+  <a href="#flex">Flexbox</a>
+  <a href="#responsive">Responsive</a>
+  <div class="grp">Práctica</div>
+  <a href="#proyecto">Proyecto final</a>
+  <a href="#errores">Errores comunes</a>
+  <a href="#chuleta">Chuleta</a>
+  <a href="#recursos">Recursos</a>
+</nav>
+
+<main>
+<header class="hero">
+  <h1>HTML <span>&amp;</span> CSS<br>desde cero</h1>
+  <p>Guía de estudio para una clase de 2 horas. Cada ejemplo con código es <b>editable</b>: cambia el código de la izquierda y mira el resultado a la derecha en tiempo real.</p>
+</header>
+
+<!-- ============ AGENDA ============ -->
+<h2 id="agenda">Agenda de la clase</h2>
+<div class="agenda">
+  <div><b>0:00 – 0:10</b><span>Cómo funciona la web · HTML vs CSS vs JS</span></div>
+  <div><b>0:10 – 0:50</b><span>HTML: estructura, etiquetas, atributos, listas, semántica, formularios</span></div>
+  <div class="brk"><b>0:50 – 1:00</b><span>☕ Descanso</span></div>
+  <div><b>1:00 – 1:40</b><span>CSS: selectores, cascada, colores, modelo de caja, Flexbox, responsive</span></div>
+  <div><b>1:40 – 2:00</b><span>Proyecto final: tarjeta de perfil + preguntas</span></div>
+</div>
+
+<!-- ============ WEB ============ -->
+<h2 id="web">¿Cómo funciona la web? <span class="time">10 min</span></h2>
+<p>Cuando escribes una dirección en el navegador, este le pide a un <b>servidor</b> unos archivos. El navegador recibe texto (HTML, CSS, JS) y lo convierte en la página que ves.</p>
+<div class="analogy">
+  <div><div class="big">🦴</div><b>HTML</b><small>El esqueleto: <em>qué</em> hay en la página (títulos, textos, imágenes).</small></div>
+  <div><div class="big">🎨</div><b>CSS</b><small>La ropa y el maquillaje: <em>cómo se ve</em> (colores, tamaños, posición).</small></div>
+  <div><div class="big">⚡</div><b>JavaScript</b><small>Los músculos: <em>qué hace</em> (interacción, lógica). Fuera de esta clase.</small></div>
+</div>
+<div class="card tip"><strong class="lbl">Herramientas</strong>
+Solo necesitas un <b>editor de código</b> (recomendado: VS Code) y un <b>navegador</b>. Crea un archivo <code>index.html</code>, ábrelo con doble clic y listo. Tip: la extensión <i>Live Server</i> recarga la página sola al guardar.</div>
+
+<!-- ============ HTML ============ -->
+<h2 id="estructura">HTML: estructura base <span class="time">0:10</span></h2>
+<p>HTML se escribe con <b>etiquetas</b>. Casi todas abren y cierran: <code>&lt;p&gt;texto&lt;/p&gt;</code>. Algunas no tienen cierre (se llaman <i>vacías</i>): <code>&lt;img&gt;</code>, <code>&lt;br&gt;</code>, <code>&lt;input&gt;</code>.</p>
+<pre class="code">&lt;!DOCTYPE html&gt;              &lt;!-- Le dice al navegador: esto es HTML5 --&gt;
+&lt;html lang="es"&gt;             &lt;!-- Raíz del documento, idioma español --&gt;
+  &lt;head&gt;                     &lt;!-- Información invisible (metadatos) --&gt;
+    &lt;meta charset="UTF-8"&gt;   &lt;!-- Para que se vean bien las tildes y la ñ --&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Mi primera página&lt;/title&gt;   &lt;!-- Texto de la pestaña --&gt;
+    &lt;link rel="stylesheet" href="estilos.css"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;                     &lt;!-- Todo lo que se VE va aquí --&gt;
+    &lt;h1&gt;¡Hola mundo!&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+<div class="card note"><strong class="lbl">Atajo en VS Code</strong>
+Escribe <code>!</code> y presiona <kbd>Tab</kbd> o <kbd>Enter</kbd>: se genera toda la estructura automáticamente.</div>
+
+<h3 id="etiquetas">Etiquetas de texto</h3>
+<div class="tablewrap"><table>
+<tr><th>Etiqueta</th><th>Para qué sirve</th></tr>
+<tr><td><code>&lt;h1&gt;</code> … <code>&lt;h6&gt;</code></td><td>Títulos, de más importante a menos. Un solo <code>h1</code> por página.</td></tr>
+<tr><td><code>&lt;p&gt;</code></td><td>Párrafo.</td></tr>
+<tr><td><code>&lt;strong&gt;</code> / <code>&lt;em&gt;</code></td><td>Importancia (negrita) / énfasis (cursiva).</td></tr>
+<tr><td><code>&lt;br&gt;</code></td><td>Salto de línea.</td></tr>
+<tr><td><code>&lt;hr&gt;</code></td><td>Línea separadora.</td></tr>
+<tr><td><code>&lt;span&gt;</code> / <code>&lt;div&gt;</code></td><td>Contenedores genéricos: en línea / en bloque.</td></tr>
+<tr><td><code>&lt;!-- --&gt;</code></td><td>Comentario (no se ve en la página).</td></tr>
+</table></div>
+<div class="play"><div class="bar"><span>✏️ Pruébalo</span><button data-reset>Restaurar</button></div><div class="panes"><textarea spellcheck="false"><h1>Mi blog de cocina</h1>
+<h2>Receta del día</h2>
+<p>Hoy vamos a preparar <strong>arepas</strong> con queso.
+Es <em>muy</em> fácil.</p>
+<hr>
+<p>Primera línea<br>Segunda línea</p>
+<!-- Esto es un comentario: no se ve -->
+<p>Cambia este texto y mira qué pasa 👉</p></textarea><iframe title="resultado"></iframe></div></div>
+
+<div class="card warn"><strong class="lbl">Bloque vs. en línea</strong>
+Los elementos <b>de bloque</b> (<code>h1</code>, <code>p</code>, <code>div</code>) ocupan todo el ancho y empiezan en una línea nueva. Los elementos <b>en línea</b> (<code>span</code>, <code>a</code>, <code>strong</code>) solo ocupan lo que mide su contenido.</div>
+
+<h3 id="atributos">Atributos, enlaces e imágenes</h3>
+<p>Los <b>atributos</b> dan información extra a una etiqueta. Van en la etiqueta de apertura: <code>nombre="valor"</code>.</p>
+<div class="tablewrap"><table>
+<tr><th>Atributo</th><th>Ejemplo</th><th>Qué hace</th></tr>
+<tr><td><code>href</code></td><td><code>&lt;a href="https://..."&gt;</code></td><td>Destino de un enlace.</td></tr>
+<tr><td><code>target="_blank"</code></td><td><code>&lt;a ... target="_blank"&gt;</code></td><td>Abre en pestaña nueva.</td></tr>
+<tr><td><code>src</code></td><td><code>&lt;img src="foto.jpg"&gt;</code></td><td>Ruta del archivo.</td></tr>
+<tr><td><code>alt</code></td><td><code>&lt;img alt="Un gato"&gt;</code></td><td>Texto alternativo (accesibilidad y SEO). ¡Siempre!</td></tr>
+<tr><td><code>id</code></td><td><code>&lt;section id="contacto"&gt;</code></td><td>Nombre <b>único</b> en la página.</td></tr>
+<tr><td><code>class</code></td><td><code>&lt;p class="destacado"&gt;</code></td><td>Grupo reutilizable (para CSS).</td></tr>
+</table></div>
+<div class="play"><div class="bar"><span>✏️ Pruébalo</span><button data-reset>Restaurar</button></div><div class="panes"><textarea spellcheck="false"><a href="https://developer.mozilla.org/es/" target="_blank">Ir a MDN</a>
+
+<p><a href="#abajo">Saltar al final de la página</a></p>
+
+<img src="https://picsum.photos/300/150" alt="Foto aleatoria de paisaje" width="300">
+
+<p id="abajo">Aquí es "abajo" 👋</p></textarea><iframe title="resultado"></iframe></div></div>
+<div class="card note"><strong class="lbl">Rutas</strong>
+<code>foto.jpg</code> = misma carpeta · <code>img/foto.jpg</code> = dentro de la carpeta img · <code>../foto.jpg</code> = una carpeta arriba · <code>https://...</code> = ruta absoluta en internet.</div>
+
+<h3 id="listas">Listas y tablas</h3>
+<div class="play"><div class="bar"><span>✏️ Pruébalo</span><button data-reset>Restaurar</button></div><div class="panes"><textarea spellcheck="false"><h3>Ingredientes (lista sin orden)</h3>
+<ul>
+  <li>Harina</li>
+  <li>Agua</li>
+  <li>Sal</li>
+</ul>
+
+<h3>Pasos (lista ordenada)</h3>
+<ol>
+  <li>Mezclar</li>
+  <li>Amasar</li>
+  <li>Asar</li>
+</ol>
+
+<table border="1">
+  <tr><th>Producto</th><th>Precio</th></tr>
+  <tr><td>Arepa</td><td>$3.000</td></tr>
+  <tr><td>Jugo</td><td>$4.000</td></tr>
+</table></textarea><iframe title="resultado"></iframe></div></div>
+<p><code>ul</code> = <i>unordered list</i>, <code>ol</code> = <i>ordered list</i>, <code>li</code> = <i>list item</i>. En tablas: <code>tr</code> = fila, <code>th</code> = celda de encabezado, <code>td</code> = celda de dato.</p>
+
+<h3 id="semantica">HTML semántico</h3>
+<p>En vez de llenar todo de <code>&lt;div&gt;</code>, usamos etiquetas que <b>describen su contenido</b>. Ayuda a Google, a lectores de pantalla y a quien lee tu código.</p>
+<pre class="code">&lt;header&gt;   Cabecera: logo, título        &lt;/header&gt;
+&lt;nav&gt;      Menú de navegación             &lt;/nav&gt;
+&lt;main&gt;     Contenido principal (uno solo)
+  &lt;section&gt;  Una sección temática         &lt;/section&gt;
+  &lt;article&gt;  Contenido independiente (un post, una noticia) &lt;/article&gt;
+  &lt;aside&gt;    Contenido secundario (barra lateral) &lt;/aside&gt;
+&lt;/main&gt;
+&lt;footer&gt;   Pie de página: contacto, copyright &lt;/footer&gt;</pre>
+
+<h3 id="formularios">Formularios</h3>
+<div class="play"><div class="bar"><span>✏️ Pruébalo</span><button data-reset>Restaurar</button></div><div class="panes"><textarea spellcheck="false"><form>
+  <label for="nombre">Nombre</label><br>
+  <input type="text" id="nombre" placeholder="Tu nombre" required><br><br>
+
+  <label for="correo">Correo</label><br>
+  <input type="email" id="correo"><br><br>
+
+  <label for="edad">Edad</label><br>
+  <input type="number" id="edad" min="1"><br><br>
+
+  <label><input type="checkbox"> Acepto los términos</label><br><br>
+
+  <select>
+    <option>Principiante</option>
+    <option>Intermedio</option>
+  </select><br><br>
+
+  <textarea placeholder="Comentario"></textarea><br>
+  <button type="submit">Enviar</button>
+</form></textarea><iframe title="resultado"></iframe></div></div>
+<div class="card tip"><strong class="lbl">Buena práctica</strong>
+El <code>for</code> del <code>&lt;label&gt;</code> debe coincidir con el <code>id</code> del <code>&lt;input&gt;</code>: así, al hacer clic en el texto se activa el campo. Prueba otros <code>type</code>: <code>password</code>, <code>date</code>, <code>color</code>, <code>range</code>.</div>
+
+<div class="card" style="text-align:center;font-size:20px">☕ <b>Descanso – 10 minutos</b></div>
+
+<!-- ============ CSS ============ -->
+<h2 id="css-intro">CSS: ¿cómo se conecta? <span class="time">1:00</span></h2>
+<h3 id="antes-despues">Antes y después: la misma página, sin CSS y con CSS</h3>
+<p>Esta es una página hecha <b>solo con HTML</b>. Funciona, pero se ve como un documento de los años 90. Presiona <b>✨ Agregar CSS</b> y mira cómo cambia, sin tocar una sola etiqueta del HTML.</p>
+<div class="play" data-css="css-demo"><div class="bar"><span>✏️ Página sin CSS</span><span><button data-add-css>✨ Agregar CSS</button> <button data-reset>Quitar CSS</button></span></div><div class="panes"><textarea spellcheck="false" style="min-height:420px"><header>
+  <h1>☕ Café La Esquina</h1>
+  <nav>
+    <a href="#">Inicio</a>
+    <a href="#">Menú</a>
+    <a href="#">Contacto</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <h2>El mejor café del barrio</h2>
+    <p>Granos colombianos, tostados cada semana.</p>
+    <a class="boton" href="#">Ver el menú</a>
+  </section>
+
+  <section class="productos">
+    <article class="producto">
+      <h3>Tinto</h3>
+      <p>Clásico y fuerte.</p>
+      <strong>$2.500</strong>
+    </article>
+    <article class="producto">
+      <h3>Capuchino</h3>
+      <p>Con espuma de leche.</p>
+      <strong>$6.000</strong>
+    </article>
+    <article class="producto">
+      <h3>Pandebono</h3>
+      <p>Recién horneado.</p>
+      <strong>$3.000</strong>
+    </article>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 Café La Esquina · Calle 10 #5-20</p>
+</footer></textarea><iframe title="resultado"></iframe></div></div>
+<script type="text/plain" id="css-demo"><style>
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: system-ui, sans-serif; background: #fdf8f3; color: #3b2a20; padding: 0; }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: #3b2a20;
+    color: white;
+  }
+  header h1 { font-size: 1.3rem; }
+  nav { display: flex; gap: 16px; }
+  nav a { color: #f5d9b8; text-decoration: none; }
+  nav a:hover { color: white; }
+
+  .hero {
+    text-align: center;
+    padding: 48px 24px;
+    background: linear-gradient(135deg, #c8865a, #8b5a3c);
+    color: white;
+  }
+  .hero h2 { font-size: 2rem; margin-bottom: 8px; }
+  .hero p { margin-bottom: 20px; }
+  .boton {
+    background: white;
+    color: #8b5a3c;
+    padding: 10px 22px;
+    border-radius: 99px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .productos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 32px 24px;
+    justify-content: center;
+  }
+  .producto {
+    background: white;
+    width: 160px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    text-align: center;
+  }
+  .producto p { color: #8a7a70; font-size: .9rem; margin: 6px 0 12px; }
+  .producto strong { color: #c8865a; font-size: 1.2rem; }
+
+  footer { text-align: center; padding: 20px; color: #8a7a70; font-size: .85rem; }
+</style>
+
+</script>
+<div class="card tip"><strong class="lbl">La idea clave</strong>
+El HTML dice <b>qué</b> hay (un encabezado, un menú, tres productos). El CSS solo dice <b>cómo se ve</b>. Por eso podemos cambiar todo el diseño sin tocar el contenido. Después de agregar el CSS, prueba a cambiar los colores <code>#3b2a20</code> o <code>#c8865a</code> por otros.</div>
+
+<h3>Anatomía de una regla CSS</h3>
+<p>CSS = <i>Cascading Style Sheets</i>. Una regla CSS tiene esta forma:</p>
+<pre class="code">selector {
+  propiedad: valor;   /* cada declaración termina en ; */
+  otra-propiedad: valor;
+}
+
+/* Ejemplo */
+h1 {
+  color: tomato;
+  font-size: 40px;
+}</pre>
+<p>Hay 3 formas de agregar CSS:</p>
+<div class="tablewrap"><table>
+<tr><th>Forma</th><th>Ejemplo</th><th>¿Cuándo?</th></tr>
+<tr><td>Externo ✅</td><td><code>&lt;link rel="stylesheet" href="estilos.css"&gt;</code> en el <code>head</code></td><td>Siempre que puedas. Separa estructura y estilo.</td></tr>
+<tr><td>Interno</td><td><code>&lt;style&gt; h1 { color: red; } &lt;/style&gt;</code> en el <code>head</code></td><td>Pruebas rápidas, una sola página.</td></tr>
+<tr><td>En línea ⚠️</td><td><code>&lt;h1 style="color: red"&gt;</code></td><td>Casi nunca. Difícil de mantener.</td></tr>
+</table></div>
+
+<h3 id="selectores">Selectores</h3>
+<div class="tablewrap"><table>
+<tr><th>Selector</th><th>Selecciona…</th></tr>
+<tr><td><code>p</code></td><td>Todos los <code>&lt;p&gt;</code> (selector de etiqueta).</td></tr>
+<tr><td><code>.tarjeta</code></td><td>Elementos con <code>class="tarjeta"</code>.</td></tr>
+<tr><td><code>#menu</code></td><td>El elemento con <code>id="menu"</code>.</td></tr>
+<tr><td><code>nav a</code></td><td>Los <code>a</code> que están <b>dentro</b> de un <code>nav</code> (descendiente).</td></tr>
+<tr><td><code>h1, h2</code></td><td>Los <code>h1</code> <b>y</b> los <code>h2</code> (agrupar).</td></tr>
+<tr><td><code>a:hover</code></td><td>Un enlace cuando pasas el mouse (pseudoclase).</td></tr>
+<tr><td><code>li:first-child</code></td><td>El primer <code>li</code> de su lista.</td></tr>
+<tr><td><code>*</code></td><td>Todo.</td></tr>
+</table></div>
+<div class="play"><div class="bar"><span>✏️ Pruébalo</span><button data-reset>Restaurar</button></div><div class="panes"><textarea spellcheck="false"><style>
+  p { color: gray; }
+  .destacado { color: crimson; font-weight: bold; }
+  #unico { background: gold; }
+  ul li:first-child { color: royalblue; }
+  a:hover { color: green; font-size: 22px; }
+</style>
+
+<p>Párrafo normal</p>
+<p class="destacado">Párrafo con clase</p>
+<p id="unico">Párrafo con id</p>
+<ul><li>Primero</li><li>Segundo</li></ul>
+<a href="#">Pasa el mouse por aquí</a></textarea><iframe title="resultado"></iframe></div></div>
+
+<h3 id="cascada">Cascada y especificidad</h3>
+<p>Si dos reglas apuntan al mismo elemento, ¿cuál gana?</p>
+<ol>
+  <li><b>Especificidad:</b> <code>style=""</code> &gt; <code>#id</code> &gt; <code>.clase</code> / <code>:hover</code> &gt; <code>etiqueta</code>.</li>
+  <li>Si empatan, gana <b>la que está más abajo</b> en el código (por eso se llama "cascada").</li>
+  <li><b>Herencia:</b> propiedades de texto (<code>color</code>, <code>font-family</code>) pasan de padres a hijos.</li>
+</ol>
+<div class="play"><div class="bar"><span>✏️ ¿De qué color será el texto? Adivina antes de mirar</span><button data-reset>Restaurar</button></div><div class="panes"><textarea spellcheck="false"><style>
+  #titulo   { color: green; }
+  .grande   { color: blue;  }
+  h1        { color: red;   }
+  h1        { color: orange; }
+</style>
+
+<h1 id="titulo" class="grande">¿Qué color gano?</h1>
+
+<!-- Reto: borra la regla #titulo. ¿Y ahora? -->
+<!-- Reto 2: borra también .grande. ¿Y ahora? --></textarea><iframe title="resultado"></iframe></div></div>
+<div class="card warn"><strong class="lbl">Evita</strong>
+<code>!important</code> rompe la cascada. Úsalo solo como último recurso.</div>
+
+<h3 id="colores">Colores, unidades y texto</h3>
+<div class="tablewrap"><table>
+<tr><th>Tipo</th><th>Ejemplos</th><th>Nota</th></tr>
+<tr><td>Colores</td><td><code>red</code> · <code>#ff6347</code> · <code>rgb(255, 99, 71)</code> · <code>rgba(0,0,0,.5)</code></td><td>El 4º valor de <code>rgba</code> es la transparencia (0 a 1).</td></tr>
+<tr><td><code>px</code></td><td><code>16px</code></td><td>Tamaño fijo.</td></tr>
+<tr><td><code>%</code></td><td><code>50%</code></td><td>Relativo al padre.</td></tr>
+<tr><td><code>rem</code></td><td><code>1.5rem</code></td><td>Relativo al tamaño de letra raíz (normalmente 16px). Ideal para texto.</td></tr>
+<tr><td><code>vw</code> / <code>vh</code></td><td><code>100vh</code></td><td>% del ancho / alto de la ventana.</td></tr>
+</table></div>
+<div class="play"><div class="bar"><span>✏️ Pruébalo</span><button data-reset>Restaurar</button></div><div class="panes"><textarea spellcheck="false"><style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #fdf6e3;
+  }
+  h1 {
+    color: #e4572e;
+    font-size: 2.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+  }
+  p {
+    color: rgb(60, 60, 60);
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  .tachado { text-decoration: line-through; }
+</style>
+
+<h1>Tipografía</h1>
+<p>El texto también se diseña. Cambia la fuente a <code>Georgia, serif</code>.</p>
+<p class="tachado">Precio anterior: $10.000</p></textarea><iframe title="resultado"></iframe></div></div>
+
+<h3 id="caja">El modelo de caja <span class="time">el concepto más importante</span></h3>
+<p><b>Todo</b> elemento en HTML es una caja con 4 capas:</p>
+<div class="box-model"><div class="bm bm-m"><span>margin</span><div class="bm bm-b"><span>border</span><div class="bm bm-p"><span>padding</span><div class="bm-c">contenido<br>width × height</div></div></div></div></div>
+<ul>
+  <li><b>content</b>: el texto o imagen.</li>
+  <li><b>padding</b>: espacio <i>interno</i> (entre contenido y borde). Toma el color de fondo.</li>
+  <li><b>border</b>: el borde.</li>
+  <li><b>margin</b>: espacio <i>externo</i> (separa de otras cajas). Siempre transparente.</li>
+</ul>
+<div class="play"><div class="bar"><span>✏️ Juega con los números</span><button data-reset>Restaurar</button></div><div class="panes"><textarea spellcheck="false"><style>
+  * { box-sizing: border-box; } /* ¡Pon esto siempre! */
+
+  .caja {
+    width: 220px;
+    background: lightblue;
+    padding: 20px;
+    border: 5px solid steelblue;
+    margin: 30px auto;  /* auto = centrar horizontalmente */
+    border-radius: 12px;
+  }
+  /* padding: 10px 20px;  → arriba/abajo  izq/der   */
+  /* padding: 5px 10px 15px 20px; → arr, der, abajo, izq (reloj) */
+</style>
+
+<div class="caja">Soy una caja</div>
+<div class="caja">Yo también</div></textarea><iframe title="resultado"></iframe></div></div>
+<div class="card tip"><strong class="lbl">¿Por qué box-sizing: border-box?</strong>
+Sin él, <code>width: 220px</code> + padding + border = la caja mide más de 220px. Con <code>border-box</code>, el ancho que escribes es el ancho final. Mucho más intuitivo.</div>
+
+<h3 id="flex">Flexbox: acomodar elementos</h3>
+<p>Para poner cosas <b>en fila o columna</b>, alinearlas y repartir espacio. Se aplica al <b>padre</b> (contenedor), y afecta a sus hijos directos.</p>
+<div class="tablewrap"><table>
+<tr><th>Propiedad (en el padre)</th><th>Valores comunes</th><th>Qué hace</th></tr>
+<tr><td><code>display: flex</code></td><td>—</td><td>Activa Flexbox.</td></tr>
+<tr><td><code>flex-direction</code></td><td><code>row</code> · <code>column</code></td><td>Dirección del eje principal.</td></tr>
+<tr><td><code>justify-content</code></td><td><code>flex-start</code> · <code>center</code> · <code>space-between</code> · <code>space-around</code></td><td>Alineación en el eje <b>principal</b>.</td></tr>
+<tr><td><code>align-items</code></td><td><code>stretch</code> · <code>center</code> · <code>flex-start</code> · <code>flex-end</code></td><td>Alineación en el eje <b>cruzado</b>.</td></tr>
+<tr><td><code>gap</code></td><td><code>16px</code></td><td>Espacio entre hijos.</td></tr>
+<tr><td><code>flex-wrap</code></td><td><code>wrap</code></td><td>Permite saltar de línea.</td></tr>
+</table></div>
+<div class="play"><div class="bar"><span>✏️ Cambia justify-content y align-items</span><button data-reset>Restaurar</button></div><div class="panes"><textarea spellcheck="false"><style>
+  .contenedor {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    height: 160px;
+    background: #eee;
+    padding: 10px;
+  }
+  .item {
+    background: tomato;
+    color: white;
+    padding: 16px;
+    border-radius: 8px;
+  }
+  .item:nth-child(2) { padding: 40px 16px; }
+</style>
+
+<div class="contenedor">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+</div></textarea><iframe title="resultado"></iframe></div></div>
+<div class="card note"><strong class="lbl">El truco más famoso</strong>
+Centrar algo perfectamente: <code>display: flex; justify-content: center; align-items: center;</code> en el padre. 🎯<br>
+Para practicar jugando: <a href="https://flexboxfroggy.com/#es" target="_blank">Flexbox Froggy</a>.</div>
+
+<h3 id="responsive">Responsive: que se vea bien en el celular</h3>
+<p>Con <b>media queries</b> aplicamos estilos solo cuando la pantalla cumple una condición. Achica la ventana del navegador para probar.</p>
+<div class="play"><div class="bar"><span>✏️ Cambia el 500px por 800px</span><button data-reset>Restaurar</button></div><div class="panes"><textarea spellcheck="false"><style>
+  .fila { display: flex; gap: 10px; }
+  .col {
+    flex: 1;  /* cada columna crece igual */
+    background: mediumseagreen;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+
+  /* Si la pantalla mide 500px o menos... */
+  @media (max-width: 500px) {
+    .fila { flex-direction: column; }
+    .col { background: slateblue; }
+  }
+</style>
+
+<div class="fila">
+  <div class="col">A</div>
+  <div class="col">B</div>
+  <div class="col">C</div>
+</div></textarea><iframe title="resultado"></iframe></div></div>
+<div class="card warn"><strong class="lbl">No olvides</strong>
+Sin <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code> en el <code>head</code>, el celular "finge" ser una pantalla grande y tus media queries no funcionan.</div>
+
+<!-- ============ PROYECTO ============ -->
+<h2 id="proyecto">Proyecto final: tarjeta de perfil <span class="time">1:40</span></h2>
+<p>Juntamos todo: HTML semántico + selectores + modelo de caja + Flexbox + hover. Personalízala con tus datos.</p>
+<div class="play"><div class="bar"><span>✏️ Tu tarjeta</span><button data-reset>Restaurar</button></div><div class="panes"><textarea spellcheck="false" style="min-height:420px"><style>
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    font-family: system-ui, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .tarjeta {
+    background: white;
+    width: 280px;
+    padding: 28px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  }
+  .tarjeta img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #764ba2;
+  }
+  .tarjeta h1 { font-size: 1.4rem; margin-top: 12px; }
+  .tarjeta p  { color: #666; margin: 6px 0 18px; }
+  .redes { display: flex; justify-content: center; gap: 10px; }
+  .redes a {
+    text-decoration: none;
+    background: #764ba2;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 99px;
+    font-size: .85rem;
+    transition: transform .2s;
+  }
+  .redes a:hover { transform: translateY(-3px); background: #667eea; }
+</style>
+
+<article class="tarjeta">
+  <img src="https://i.pravatar.cc/200" alt="Foto de perfil">
+  <h1>Tu Nombre</h1>
+  <p>Estudiante de desarrollo web 🚀</p>
+  <nav class="redes">
+    <a href="#">GitHub</a>
+    <a href="#">LinkedIn</a>
+  </nav>
+</article></textarea><iframe title="resultado"></iframe></div></div>
+
+<h3>Retos (marca los que logres)</h3>
+<ul class="check">
+  <li><label><input type="checkbox"> Cambia nombre, descripción y colores del degradado.</label></li>
+  <li><label><input type="checkbox"> Agrega un tercer botón de red social.</label></li>
+  <li><label><input type="checkbox"> Agrega una lista <code>&lt;ul&gt;</code> con 3 habilidades debajo de la descripción.</label></li>
+  <li><label><input type="checkbox"> Haz que la tarjeta crezca un poco al pasar el mouse (<code>transform: scale(1.05)</code>).</label></li>
+  <li><label><input type="checkbox"> Pon 3 tarjetas una al lado de la otra con Flexbox.</label></li>
+  <li><label><input type="checkbox"> ⭐ Haz que en pantallas pequeñas las tarjetas se apilen en columna.</label></li>
+</ul>
+
+<!-- ============ ERRORES ============ -->
+<h2 id="errores">Errores comunes</h2>
+<div class="tablewrap"><table>
+<tr><th>Síntoma</th><th>Causa probable</th></tr>
+<tr><td>Las tildes salen como <code>Ã©</code></td><td>Falta <code>&lt;meta charset="UTF-8"&gt;</code>.</td></tr>
+<tr><td>El CSS no hace nada</td><td>Ruta del <code>href</code> mal escrita, o falta <code>rel="stylesheet"</code>.</td></tr>
+<tr><td>Una regla no se aplica</td><td>Falta un <code>;</code> o una <code>}</code>, o hay otra regla más específica.</td></tr>
+<tr><td>La clase no funciona</td><td>En CSS falta el punto: <code>tarjeta</code> en vez de <code>.tarjeta</code>.</td></tr>
+<tr><td>La imagen no aparece</td><td>Ruta o extensión incorrecta (<code>.JPG</code> ≠ <code>.jpg</code> en servidores).</td></tr>
+<tr><td>La caja es más ancha de lo esperado</td><td>Falta <code>box-sizing: border-box</code>.</td></tr>
+<tr><td>Flexbox no hace nada</td><td>Se puso <code>display: flex</code> en los hijos en vez del padre.</td></tr>
+</table></div>
+<div class="card tip"><strong class="lbl">Tu mejor amigo: DevTools</strong>
+Clic derecho → <b>Inspeccionar</b> (o <kbd>F12</kbd>). Ahí ves el HTML, qué reglas CSS se aplican, cuáles están tachadas (perdieron la cascada) y el modelo de caja de cada elemento. Puedes editar en vivo.</div>
+
+<!-- ============ CHULETA ============ -->
+<h2 id="chuleta">Chuleta rápida</h2>
+<div class="tablewrap"><table>
+<tr><th>Quiero…</th><th>CSS</th></tr>
+<tr><td>Cambiar color de texto</td><td><code>color: navy;</code></td></tr>
+<tr><td>Cambiar fondo</td><td><code>background: #f0f0f0;</code></td></tr>
+<tr><td>Tamaño de letra</td><td><code>font-size: 1.2rem;</code></td></tr>
+<tr><td>Negrita</td><td><code>font-weight: bold;</code></td></tr>
+<tr><td>Centrar texto</td><td><code>text-align: center;</code></td></tr>
+<tr><td>Centrar un bloque</td><td><code>margin: 0 auto;</code> (necesita <code>width</code>)</td></tr>
+<tr><td>Centrar todo en un contenedor</td><td><code>display:flex; justify-content:center; align-items:center;</code></td></tr>
+<tr><td>Esquinas redondeadas</td><td><code>border-radius: 10px;</code></td></tr>
+<tr><td>Círculo</td><td><code>border-radius: 50%;</code></td></tr>
+<tr><td>Sombra</td><td><code>box-shadow: 0 4px 12px rgba(0,0,0,.2);</code></td></tr>
+<tr><td>Quitar subrayado de enlaces</td><td><code>text-decoration: none;</code></td></tr>
+<tr><td>Quitar viñetas de lista</td><td><code>list-style: none;</code></td></tr>
+<tr><td>Cursor de mano</td><td><code>cursor: pointer;</code></td></tr>
+<tr><td>Animación suave</td><td><code>transition: all .3s;</code></td></tr>
+<tr><td>Imagen que no se deforme</td><td><code>object-fit: cover;</code></td></tr>
+<tr><td>Ocultar</td><td><code>display: none;</code></td></tr>
+</table></div>
+
+<h2 id="recursos">Recursos para seguir aprendiendo</h2>
+<ul>
+  <li><a href="https://developer.mozilla.org/es/docs/Learn" target="_blank">MDN Web Docs</a> — la documentación de referencia (en español).</li>
+  <li><a href="https://flexboxfroggy.com/#es" target="_blank">Flexbox Froggy</a> — juego para aprender Flexbox.</li>
+  <li><a href="https://cssgridgarden.com/#es" target="_blank">Grid Garden</a> — juego para aprender CSS Grid (siguiente tema).</li>
+  <li><a href="https://www.freecodecamp.org/espanol/" target="_blank">freeCodeCamp</a> — curso gratuito con certificado.</li>
+  <li><a href="https://codepen.io" target="_blank">CodePen</a> — para practicar en el navegador y ver trabajos de otros.</li>
+</ul>
+
+<footer>Guía de estudio · Clase de HTML y CSS · 2 horas. Puedes imprimirla (Ctrl/Cmd + P) para tener los apuntes en papel.</footer>
+</main>
+</div>
+
+<script>
+// Playgrounds: el textarea se renderiza en el iframe en vivo
+document.querySelectorAll('.play').forEach(play => {
+  const ta = play.querySelector('textarea');
+  const frame = play.querySelector('iframe');
+  const original = ta.value;
+  const render = () => {
+    frame.srcdoc = '<!doctype html><meta charset="utf-8"><style>body{font-family:system-ui,sans-serif;padding:12px;color:#222}</style>' + ta.value;
+  };
+  let t;
+  ta.addEventListener('input', () => { clearTimeout(t); t = setTimeout(render, 250); });
+  ta.addEventListener('keydown', e => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const s = ta.selectionStart;
+      ta.setRangeText('  ', s, ta.selectionEnd, 'end');
+      render();
+    }
+  });
+  play.querySelector('[data-reset]').addEventListener('click', () => { ta.value = original; render(); });
+  const addCss = play.querySelector('[data-add-css]');
+  if (addCss) addCss.addEventListener('click', () => {
+    if (ta.value.includes('<style>')) return;
+    ta.value = document.getElementById(play.dataset.css).textContent.trimStart() + ta.value;
+    ta.scrollTop = 0;
+    render();
+  });
+  render();
+});
+
+// Tema claro/oscuro
+const btn = document.getElementById('themeBtn');
+btn.addEventListener('click', () => {
+  const root = document.documentElement;
+  const isDark = root.dataset.theme
+    ? root.dataset.theme === 'dark'
+    : matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = isDark ? 'light' : 'dark';
+});
+</script>
+</body>
+</html>

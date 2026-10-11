@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe Dragon Ball</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+/* Página de lectura con tokens de tema; los wireframes siempre son "papel" gris claro, como una captura */
+:root{--bg:#f7f7f5;--surface:#fff;--text:#1d1d1f;--muted:#5f6368;--border:#e2e0da;--accent:#e4572e;--accent-2:#2e86de}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121316;--surface:#1b1c20;--text:#ececec;--muted:#a3a7ae;--border:#30323a;--accent:#ff7a50;--accent-2:#5aa9f5;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121316;--surface:#1b1c20;--text:#ececec;--muted:#a3a7ae;--border:#30323a;--accent:#ff7a50;--accent-2:#5aa9f5;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,sans-serif}
+code{font-family:"JetBrains Mono",monospace;font-size:.88em;background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:1px 5px}
+main{max-width:1000px;margin:0 auto;padding:32px 16px 80px}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0 0 8px;font-weight:800}
+h1 span{color:var(--accent)}
+h2{font-size:22px;margin:40px 0 4px}
+.lead{color:var(--muted);margin:0 0 16px;max-width:68ch}
+.theme-btn{position:fixed;right:16px;bottom:16px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:99px;padding:8px 14px;cursor:pointer;font:600 13px Inter,sans-serif;z-index:9}
+.scroll{overflow-x:auto;padding:4px 2px 12px}
+.flow{display:flex;gap:20px;align-items:flex-start;width:max-content}
+.cap{font:600 12px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 6px}
+.next{align-self:center;font:22px "Patrick Hand",cursive;color:var(--muted);text-align:center;width:90px}
+.next b{display:block;font-size:34px;line-height:1}
+
+/* ---- Piezas de wireframe ---- */
+.wf{--ink:#8a8a8a;--fill:#e4e4e4;--soft:#f1f1f1;font-family:"Patrick Hand",cursive;color:#555;background:#fafafa;border:2px solid #777;position:relative}
+.wf *{box-sizing:border-box}
+.web{width:640px;border-radius:10px;overflow:hidden}
+.phone{width:250px;border-radius:26px;border-width:3px;overflow:hidden}
+.chrome{display:flex;gap:6px;align-items:center;padding:7px 10px;background:#ddd;border-bottom:2px solid #777}
+.chrome i{width:9px;height:9px;border-radius:50%;background:#aaa}
+.chrome .url{margin-left:8px;flex:1;background:#fff;border-radius:99px;padding:1px 10px;font-size:13px;color:#888}
+.notch{height:22px;display:flex;justify-content:center;align-items:center;background:#ddd;border-bottom:2px solid #777}
+.notch i{width:60px;height:6px;border-radius:9px;background:#999}
+.screen{padding:12px;display:grid;gap:10px;position:relative}
+.phone .screen{padding:10px;gap:8px}
+.bar{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.logo{border:2px solid var(--ink);background:var(--fill);padding:0 8px;font-size:14px;border-radius:4px}
+.ln{height:8px;background:#cfcfcf;border-radius:5px}
+.w20{width:20%}.w30{width:30%}.w40{width:40%}.w50{width:50%}.w60{width:60%}.w70{width:70%}.w80{width:80%}.w100{width:100%}
+.ln.h{height:14px;background:#bdbdbd}
+.img{background:linear-gradient(to top right,transparent calc(50% - 1px),#aaa,transparent calc(50% + 1px)),linear-gradient(to top left,transparent calc(50% - 1px),#aaa,transparent calc(50% + 1px)),var(--fill);border:2px solid var(--ink);border-radius:6px;display:grid;place-items:center;color:#777;font-size:13px}
+.img span{background:#fafafa;padding:0 6px;border-radius:4px}
+.search{position:relative;border:2px solid var(--ink);border-radius:99px;background:#fff;padding:5px 14px;font-size:15px;color:#999}
+.chips{display:flex;gap:6px;flex-wrap:wrap;position:relative}
+.phone .chips{flex-wrap:nowrap;overflow:hidden}
+.chip{border:2px solid var(--ink);border-radius:99px;padding:0 10px;font-size:13px;background:#fff;white-space:nowrap}
+.chip.on{background:#bbb;color:#222}
+.sel{border:2px solid var(--ink);border-radius:6px;padding:0 10px;font-size:13px;background:#fff}
+.grid{display:grid;gap:10px;position:relative}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.card{border:2px solid var(--ink);border-radius:8px;padding:6px;background:#fff;display:grid;gap:5px;position:relative}
+.card.hot{border-style:dashed;border-color:#333;background:#fffbe6}
+.card .img{height:78px}
+.phone .card .img{height:62px}
+.btn{border:2px solid var(--ink);border-radius:6px;padding:2px 14px;text-align:center;font-size:14px;background:#eee;width:max-content}
+.center{display:flex;justify-content:center}
+.two{display:grid;grid-template-columns:200px 1fr;gap:14px}
+.stack{display:grid;gap:7px;align-content:start}
+.bars{display:grid;gap:6px}
+.bar2{display:grid;grid-template-columns:70px 1fr;gap:8px;align-items:center;font-size:13px}
+.track{height:10px;border:2px solid var(--ink);border-radius:9px;background:#fff;position:relative}
+.track i{position:absolute;inset:0 40% 0 0;background:#bbb;border-radius:9px}
+.thumbs{display:flex;gap:6px}
+.thumbs .img{width:44px;height:44px;flex:none}
+.box{border:2px solid var(--ink);border-radius:8px;padding:6px;display:grid;gap:5px;background:#fff}
+.lbl{font-size:13px;color:#555;font-weight:700}
+.fld{font:10px "JetBrains Mono",monospace;color:#999}
+.dots{display:flex;gap:4px;justify-content:center}
+.dots i{width:7px;height:7px;border-radius:50%;background:#bbb}.dots i:first-child{background:#666}
+.pin{position:absolute;z-index:3;width:22px;height:22px;border-radius:50%;background:#e4572e;color:#fff;font:700 13px/22px "JetBrains Mono",monospace;text-align:center;font-style:normal;box-shadow:0 0 0 2px #fff}
+.pin.tr{top:-9px;right:-9px}.pin.tl{top:-9px;left:-9px}
+
+/* Leyenda */
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin:12px 0;padding:0;list-style:none}
+.legend li{display:grid;grid-template-columns:26px 1fr;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:15px}
+.legend b.n{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font:700 13px/24px "JetBrains Mono",monospace;text-align:center}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;background:var(--surface);min-width:520px}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);font-size:15px}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+</style>
+</head>
+<body>
+<button class="theme-btn" id="themeBtn" aria-label="Cambiar tema">◐ Tema</button>
+<main>
+  <h1>Wireframe <span>Dragon Ball</span></h1>
+  <p class="lead">Mi sobrino quiere una página para ver sus personajes favoritos de Dragon Ball. Son <b>solo dos pantallas</b>: un listado con buscador y filtros, y el detalle de un personaje. Aquí están en versión web y en versión móvil. Más abajo, como <b>bonus ★</b>, la misma idea con planetas. Es un boceto en gris a propósito: la forma y la distribución, sin colores ni estilo.</p>
+
+  <h2>Versión web</h2>
+  <div class="scroll"><div class="flow">
+    <!-- WEB · LISTADO -->
+    <div>
+      <p class="cap">Web · Listado</p>
+      <div class="wf web">
+        <div class="chrome"><i></i><i></i><i></i><div class="url">mi-dragonball.vercel.app</div></div>
+        <div class="screen">
+          <div class="bar"><div class="logo">LOGO</div><div class="ln h w30"></div><div class="ln w20"></div></div>
+          <div class="chips" style="position:relative"><span class="chip on">Personajes</span><span class="chip" style="border-style:dashed">Planetas ★ bonus</span><i class="pin tl">6</i></div>
+          <div style="max-width:380px;margin-inline:auto;width:100%;position:relative"><div class="search">⌕ Buscar personaje…</div><i class="pin tr">1</i></div>
+          <div class="chips"><span class="chip on">Todos</span><span class="chip">Saiyan</span><span class="chip">Namekian</span><span class="chip">Human</span><span class="chip">Android</span><span class="sel">Afiliación ▾</span><i class="pin tl">2</i></div>
+          <div class="ln w30"></div>
+          <div class="grid g4">
+            <div class="card hot"><div class="img"><span>image</span></div><div class="ln h w70"></div><div class="ln w50"></div><i class="pin tl">3</i></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w60"></div><div class="ln w40"></div></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w70"></div><div class="ln w50"></div></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w50"></div><div class="ln w40"></div></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w60"></div><div class="ln w50"></div></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w70"></div><div class="ln w40"></div></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w50"></div><div class="ln w50"></div></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w60"></div><div class="ln w40"></div></div>
+          </div>
+          <div class="center"><div class="btn">Ver más</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="next"><b>→</b>clic en una tarjeta</div>
+    <!-- WEB · DETALLE -->
+    <div>
+      <p class="cap">Web · Detalle</p>
+      <div class="wf web">
+        <div class="chrome"><i></i><i></i><i></i><div class="url">mi-dragonball.vercel.app</div></div>
+        <div class="screen">
+          <div style="position:relative"><div class="btn">← Volver al listado</div><i class="pin tr" style="left:128px;right:auto">4</i></div>
+          <div class="two" style="position:relative">
+            <i class="pin tl">5</i>
+            <div class="img" style="height:250px"><span>image</span></div>
+            <div class="stack">
+              <div class="ln h w60" style="height:20px"></div><span class="fld">name</span>
+              <div class="chips"><span class="chip">raza</span><span class="chip">afiliación</span></div><span class="fld">race · affiliation</span>
+              <div class="bars">
+                <div class="bar2">Ki<div class="track"><i></i></div></div>
+                <div class="bar2">Ki máx.<div class="track"><i style="inset:0 15% 0 0"></i></div></div>
+              </div><span class="fld">ki · maxKi (¡vienen como texto!)</span>
+              <div class="ln w100"></div><div class="ln w100"></div><div class="ln w80"></div><span class="fld">description</span>
+              <div class="box" style="grid-template-columns:44px 1fr;align-items:center;border-style:dashed;position:relative"><div class="img" style="height:44px"></div><div><div class="lbl">Planeta de origen ★</div><div class="ln w60"></div></div><i class="pin tr">7</i></div><span class="fld">originPlanet · clic → detalle del planeta (bonus)</span>
+            </div>
+          </div>
+          <div class="lbl">Transformaciones</div>
+          <div class="thumbs"><div class="img"></div><div class="img"></div><div class="img"></div><div class="img"></div><div class="img"></div></div>
+          <span class="fld">transformations[]</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <h2>Versión móvil</h2>
+  <div class="scroll"><div class="flow">
+    <!-- MÓVIL · LISTADO -->
+    <div>
+      <p class="cap">Móvil · Listado</p>
+      <div class="wf phone">
+        <div class="notch"><i></i></div>
+        <div class="screen">
+          <div class="bar"><div class="logo">LOGO</div><div class="ln h w40"></div></div>
+          <div class="chips" style="position:relative"><span class="chip on">Personajes</span><span class="chip" style="border-style:dashed">Planetas ★</span><i class="pin tl">6</i></div>
+          <div class="search" style="position:relative">⌕ Buscar…<i class="pin tr">1</i></div>
+          <div class="chips"><span class="chip on">Todos</span><span class="chip">Saiyan</span><span class="chip">Namekian</span><span class="chip">Human</span><i class="pin tl">2</i></div>
+          <div class="ln w30"></div>
+          <div class="grid g2">
+            <div class="card hot"><div class="img"><span>image</span></div><div class="ln h w70"></div><div class="ln w50"></div><i class="pin tl">3</i></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w60"></div><div class="ln w40"></div></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w70"></div><div class="ln w50"></div></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w50"></div><div class="ln w40"></div></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w60"></div><div class="ln w50"></div></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w70"></div><div class="ln w40"></div></div>
+          </div>
+          <div class="center"><div class="btn">Ver más</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="next"><b>→</b>toque en una tarjeta</div>
+    <!-- MÓVIL · DETALLE -->
+    <div>
+      <p class="cap">Móvil · Detalle</p>
+      <div class="wf phone">
+        <div class="notch"><i></i></div>
+        <div class="screen">
+          <div style="position:relative"><div class="btn">← Volver</div><i class="pin tr" style="left:70px;right:auto">4</i></div>
+          <div class="img" style="height:170px;position:relative"><span>image</span><i class="pin tl">5</i></div>
+          <div class="ln h w60" style="height:18px"></div>
+          <div class="chips"><span class="chip">raza</span><span class="chip">afiliación</span></div>
+          <div class="bars">
+            <div class="bar2">Ki<div class="track"><i></i></div></div>
+            <div class="bar2">Ki máx.<div class="track"><i style="inset:0 15% 0 0"></i></div></div>
+          </div>
+          <div class="ln w100"></div><div class="ln w100"></div><div class="ln w70"></div>
+          <div class="box" style="grid-template-columns:36px 1fr;align-items:center"><div class="img" style="height:36px"></div><div><div class="lbl">Planeta de origen</div><div class="ln w60"></div></div></div>
+          <div class="lbl">Transformaciones</div>
+          <div class="thumbs"><div class="img" style="width:50px;height:50px"></div><div class="img" style="width:50px;height:50px"></div><div class="img" style="width:50px;height:50px"></div><div class="img" style="width:50px;height:50px;opacity:.5"></div></div>
+          <div class="dots"><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <h2>Bonus · Planetas ★</h2>
+  <p class="lead">Es opcional y se suma a lo anterior: la misma página, con una segunda pestaña para ver los <b>planetas</b> de Dragon Ball. Mismo patrón que los personajes (listado con búsqueda y filtro, y detalle al hacer clic), con otros datos. En la pantalla de un personaje, el planeta de origen puede llevar al detalle de ese planeta.</p>
+  <div class="scroll"><div class="flow">
+    <!-- PLANETAS · WEB LISTADO -->
+    <div>
+      <p class="cap">Web · Planetas (listado)</p>
+      <div class="wf web">
+        <div class="chrome"><i></i><i></i><i></i><div class="url">mi-dragonball.vercel.app</div></div>
+        <div class="screen">
+          <div class="bar"><div class="logo">LOGO</div><div class="ln h w30"></div><div class="ln w20"></div></div>
+          <div class="chips"><span class="chip">Personajes</span><span class="chip on" style="border-style:dashed">Planetas ★ bonus</span></div>
+          <div style="max-width:380px;margin-inline:auto;width:100%"><div class="search">⌕ Buscar planeta…</div></div>
+          <div class="chips"><span class="chip on">Todos</span><span class="chip">Existen</span><span class="chip">Destruidos</span></div>
+          <div class="ln w30"></div>
+          <div class="grid g4">
+            <div class="card hot"><div class="img"><span>image</span></div><div class="ln h w60"></div><span class="chip" style="width:max-content">estado</span></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w70"></div><span class="chip" style="width:max-content">estado</span></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w50"></div><span class="chip" style="width:max-content">estado</span></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w60"></div><span class="chip" style="width:max-content">estado</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="next"><b>→</b>clic en un planeta</div>
+    <!-- PLANETAS · WEB DETALLE -->
+    <div>
+      <p class="cap">Web · Planeta (detalle)</p>
+      <div class="wf web">
+        <div class="chrome"><i></i><i></i><i></i><div class="url">mi-dragonball.vercel.app</div></div>
+        <div class="screen">
+          <div class="btn">← Volver a planetas</div>
+          <div class="two">
+            <div class="img" style="height:230px"><span>image</span></div>
+            <div class="stack">
+              <div class="ln h w60" style="height:20px"></div><span class="fld">name</span>
+              <div class="chips"><span class="chip">estado</span></div><span class="fld">isDestroyed → “Existe” / “Destruido”</span>
+              <div class="ln w100"></div><div class="ln w100"></div><div class="ln w80"></div><div class="ln w60"></div><span class="fld">description</span>
+              <div class="lbl">Personajes de este planeta (opcional)</div>
+              <div class="thumbs"><div class="img"></div><div class="img"></div><div class="img"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <div class="scroll"><div class="flow">
+    <!-- PLANETAS · MÓVIL -->
+    <div>
+      <p class="cap">Móvil · Planetas (listado)</p>
+      <div class="wf phone">
+        <div class="notch"><i></i></div>
+        <div class="screen">
+          <div class="bar"><div class="logo">LOGO</div><div class="ln h w40"></div></div>
+          <div class="chips"><span class="chip">Personajes</span><span class="chip on" style="border-style:dashed">Planetas ★</span></div>
+          <div class="search">⌕ Buscar…</div>
+          <div class="chips"><span class="chip on">Todos</span><span class="chip">Existen</span><span class="chip">Destruidos</span></div>
+          <div class="grid g2">
+            <div class="card hot"><div class="img"><span>image</span></div><div class="ln h w60"></div><span class="chip" style="width:max-content">estado</span></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w70"></div><span class="chip" style="width:max-content">estado</span></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w50"></div><span class="chip" style="width:max-content">estado</span></div>
+            <div class="card"><div class="img"><span>image</span></div><div class="ln h w60"></div><span class="chip" style="width:max-content">estado</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="next"><b>→</b>toque en un planeta</div>
+    <div>
+      <p class="cap">Móvil · Planeta (detalle)</p>
+      <div class="wf phone">
+        <div class="notch"><i></i></div>
+        <div class="screen">
+          <div class="btn">← Volver</div>
+          <div class="img" style="height:150px"><span>image</span></div>
+          <div class="ln h w60" style="height:18px"></div>
+          <div class="chips"><span class="chip">estado</span></div>
+          <div class="ln w100"></div><div class="ln w100"></div><div class="ln w70"></div>
+          <div class="lbl">Personajes de este planeta (opcional)</div>
+          <div class="thumbs"><div class="img" style="width:50px;height:50px"></div><div class="img" style="width:50px;height:50px"></div><div class="img" style="width:50px;height:50px"></div></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <h2>Qué hace cada parte</h2>
+  <ul class="legend">
+    <li><b class="n">1</b><span><b>Búsqueda sencilla.</b> Un solo campo que filtra los personajes por nombre.</span></li>
+    <li><b class="n">2</b><span><b>Filtros.</b> Chips por raza y un selector de afiliación. En móvil los chips se deslizan en horizontal.</span></li>
+    <li><b class="n">3</b><span><b>Tarjetas.</b> Imagen, nombre y raza. Cuadrícula de 4 columnas en web y de 2 en móvil.</span></li>
+    <li><b class="n">4</b><span><b>Volver.</b> Regresa al listado conservando la búsqueda y el filtro.</span></li>
+    <li><b class="n">5</b><span><b>Detalle.</b> Imagen grande, datos, descripción, planeta de origen y transformaciones. Puede ser una pantalla o una ventana encima del listado: <b>decídelo y justifícalo</b>.</span></li>
+      <li><b class="n">6</b><span><b>Pestañas (bonus).</b> «Personajes» y «Planetas ★». Si no haces el bonus, solo existe «Personajes».</span></li>
+    <li><b class="n">7</b><span><b>Planeta de origen (bonus).</b> En el detalle de un personaje, un clic en su planeta lleva al detalle de ese planeta.</span></li>
+  </ul>
+
+  <h2>De dónde sale cada dato</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Elemento del diseño</th><th>Campo de la API</th><th>Se obtiene en</th></tr>
+    <tr><td>Imagen, nombre, raza de la tarjeta</td><td><code>image</code>, <code>name</code>, <code>race</code></td><td>Lista <code>/characters</code></td></tr>
+    <tr><td>Chips y selector de filtro</td><td><code>race</code>, <code>affiliation</code></td><td>Lista <code>/characters</code></td></tr>
+    <tr><td>Ki y Ki máximo</td><td><code>ki</code>, <code>maxKi</code></td><td>Lista y detalle (son texto)</td></tr>
+    <tr><td>Descripción</td><td><code>description</code></td><td>Lista y detalle</td></tr>
+    <tr><td>Planeta de origen y transformaciones</td><td><code>originPlanet</code>, <code>transformations</code></td><td>Solo detalle <code>/characters/{id}</code></td></tr>
+      <tr><td>★ Bonus: tarjeta de planeta</td><td><code>image</code>, <code>name</code>, <code>isDestroyed</code></td><td>Lista <code>/planets</code></td></tr>
+    <tr><td>★ Bonus: detalle de planeta</td><td><code>description</code> (y los campos de la tarjeta)</td><td>Lista <code>/planets</code> o su detalle: compruébalo con el JSON real</td></tr>
+  </table></div>
+</main>
+<script>
+document.getElementById('themeBtn').addEventListener('click', function () {
+  var root = document.documentElement;
+  var isDark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = isDark ? 'light' : 'dark';
+});
+</script>
+</body>
+</html>

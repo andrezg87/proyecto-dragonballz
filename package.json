@@ -1,0 +1,14 @@
+{
+  "name": "curso-js-ts-api",
+  "private": true,
+  "description": "Curso de JavaScript y TypeScript consumiendo APIs: materiales de clase, Pokédex paso a paso y proyecto Dragon Ball.",
+  "engines": { "node": ">=18" },
+  "workspaces": ["03-pokedex-pasos", "04-proyecto/dragonball"],
+  "scripts": {
+    "verificar": "node scripts/verificar-ambiente.mjs",
+    "servir": "node scripts/servir.mjs",
+    "build:pokedex": "npm run build -w pokedex-pasos",
+    "build": "npm run build -w dragonball",
+    "nivel": "npm run nivel -w dragonball --"
+  }
+}

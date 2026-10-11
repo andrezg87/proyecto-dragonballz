@@ -1,0 +1,1574 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clase JavaScript y TypeScript</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: índice lateral fijo + columna de lectura; mismo lenguaje visual que la clase de HTML y CSS */
+:root{
+  --bg:#f7f7f5; --surface:#ffffff; --surface-2:#f0efeb; --text:#1d1d1f; --muted:#5f6368;
+  --border:#e2e0da; --accent:#e4572e; --accent-2:#2e86de; --ok:#2a9d5c; --warn:#d99a00; --bad:#c0392b;
+  --code-bg:#1e1f24; --code-text:#e6e6e6; --code-muted:#8b8f99;
+  --radius:12px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121316; --surface:#1b1c20; --surface-2:#24262b; --text:#ececec; --muted:#a3a7ae;
+    --border:#30323a; --accent:#ff7a50; --accent-2:#5aa9f5; --ok:#4cc985; --warn:#f2b632; --bad:#ff7b6b;
+    --code-bg:#0d0e11; --code-text:#e6e6e6; --code-muted:#7d818b;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121316; --surface:#1b1c20; --surface-2:#24262b; --text:#ececec; --muted:#a3a7ae;
+  --border:#30323a; --accent:#ff7a50; --accent-2:#5aa9f5; --ok:#4cc985; --warn:#f2b632; --bad:#ff7b6b;
+  --code-bg:#0d0e11; --code-text:#e6e6e6; --code-muted:#7d818b;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 Inter,system-ui,sans-serif}
+code,textarea,pre,kbd{font-family:"JetBrains Mono",ui-monospace,monospace}
+a{color:var(--accent-2)}
+.layout{display:grid;grid-template-columns:240px minmax(0,1fr);max-width:1240px;margin:0 auto;gap:32px;padding-inline:16px}
+nav.toc{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:24px 0;font-size:14px}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:4px 10px;border-left:2px solid transparent}
+nav.toc a:hover{color:var(--text);border-left-color:var(--accent)}
+nav.toc .grp{margin:16px 0 4px;font-weight:600;color:var(--text);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+main{min-width:0;padding-block:24px 80px}
+header.hero{padding:40px 0 24px;border-bottom:1px solid var(--border);margin-bottom:24px}
+.hero h1{font-size:clamp(32px,6vw,52px);line-height:1.1;margin:0 0 8px;font-weight:800;text-wrap:balance}
+.hero h1 span{color:var(--accent)}
+.hero p{color:var(--muted);margin:0 0 16px;max-width:62ch}
+h2{font-size:28px;margin:56px 0 8px;scroll-margin-top:16px;text-wrap:balance}
+h3{font-size:20px;margin:36px 0 8px;scroll-margin-top:16px;text-wrap:balance}
+.time{display:inline-block;font:600 12px "JetBrains Mono",monospace;background:var(--surface-2);border:1px solid var(--border);border-radius:99px;padding:2px 10px;color:var(--muted);vertical-align:middle;margin-left:8px;letter-spacing:0}
+p code,li code,td code,.card code{background:var(--surface-2);border:1px solid var(--border);border-radius:5px;padding:1px 5px;font-size:.88em;overflow-wrap:anywhere}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:16px 0}
+.note{border-left:4px solid var(--accent-2)}
+.tip{border-left:4px solid var(--ok)}
+.warn{border-left:4px solid var(--warn)}
+.card strong.lbl{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+.agenda{display:grid;gap:8px;margin:16px 0}
+.agenda div{display:grid;grid-template-columns:110px 1fr;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.agenda b{font-family:"JetBrains Mono",monospace;color:var(--accent)}
+.agenda .brk{background:var(--surface-2)}
+.tablewrap{overflow-x:auto;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:15px;background:var(--surface)}
+.tablewrap table{min-width:520px}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--surface-2);font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+ul.check{list-style:none;padding:0}
+ul.check li{padding:6px 0 6px 30px;position:relative}
+ul.check input{position:absolute;left:0;top:10px;accent-color:var(--ok)}
+.theme-btn{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:5;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:99px;padding:8px 14px;cursor:pointer;font:600 13px Inter,sans-serif}
+footer{color:var(--muted);font-size:14px;border-top:1px solid var(--border);margin-top:56px;padding-top:16px}
+:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px}
+
+/* Origen de datos */
+.modebox{display:grid;gap:6px;max-width:560px}
+.modebox select{font:inherit;font-size:14px;padding:6px 8px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);max-width:100%}
+.modebox small{color:var(--muted);line-height:1.45}
+
+/* Diagrama petición / respuesta */
+.flow{display:grid;grid-template-columns:1fr minmax(120px,1.3fr) 1fr;gap:12px;align-items:center;margin:16px 0}
+.flow .node{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center}
+.flow .node b{display:block}
+.flow .node small{color:var(--muted)}
+.flow .wire{display:grid;gap:10px;font:12px/1.4 "JetBrains Mono",monospace;text-align:center;color:var(--muted)}
+.flow .wire div{padding:6px 8px;border-radius:8px;border:1px dashed var(--border);background:var(--surface-2)}
+.flow .wire .req{color:var(--accent)}
+.flow .wire .res{color:var(--ok)}
+.url{font:15px/1.9 "JetBrains Mono",monospace;background:var(--code-bg);color:var(--code-text);padding:14px 16px;border-radius:10px;overflow-x:auto;white-space:nowrap}
+.url b{font-weight:400;padding:2px 4px;border-radius:4px}
+.url .u1{background:#2e86de55}.url .u2{background:#2a9d5c55}.url .u3{background:#e4572e66}.url .u4{background:#d99a0066}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--muted);margin:8px 0 0}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
+.pipe{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:center;margin:16px 0}
+.pipe .step{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px;text-align:center}
+.pipe .step code{display:block;margin-bottom:4px}
+.pipe .step small{color:var(--muted)}
+.pipe .arr{color:var(--muted);font-size:20px}
+
+/* Código estático */
+pre.code{background:var(--code-bg);color:var(--code-text);padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:13.5px;line-height:1.55;margin:12px 0;tab-size:2}
+pre.code i{font-style:normal}
+pre.code .c{color:var(--code-muted)}
+pre.code .s{color:#8fd694}
+pre.code .n{color:#f0a76e}
+pre.code .k{color:#7fb8f5}
+pre.code .t{color:#e3b6f0}
+
+/* Playground */
+.play{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:16px 0;background:var(--surface)}
+.play .bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;padding:6px 12px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)}
+.play .bar .ttl{display:flex;align-items:center;gap:8px;min-width:0}
+.play .bar .btns{display:flex;gap:6px}
+.play button{font:inherit;font-size:12px;background:transparent;border:1px solid var(--border);color:var(--text);border-radius:6px;padding:3px 10px;cursor:pointer}
+.play button:hover{border-color:var(--accent)}
+.play button.run{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.play button.run:hover{filter:brightness(1.08)}
+.play .lang{font:600 11px "JetBrains Mono",monospace;padding:1px 7px;border-radius:5px;background:#f0db4f;color:#2b2b2b}
+.play[data-lang="ts"] .lang{background:#3178c6;color:#fff}
+.play .panes{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+.play .left{min-width:0;border-right:1px solid var(--border);display:flex;flex-direction:column}
+.play .right{min-width:0;display:flex;flex-direction:column;background:var(--code-bg)}
+.play .tabs{display:flex;gap:2px;padding:6px 8px 0;background:var(--surface-2);border-bottom:1px solid var(--border)}
+.play .tabs button{border:0;border-radius:6px 6px 0 0;padding:4px 12px;color:var(--muted);font-family:"JetBrains Mono",monospace}
+.play .tabs button[aria-selected="true"]{background:var(--code-bg);color:var(--code-text)}
+.play .right .tabs{background:#00000026;border-bottom:1px solid #ffffff1f}
+.play .right .tabs button{color:#a9adb7}
+.play .right .tabs button[aria-selected="true"]{background:var(--code-bg);color:#fff}
+.play textarea{display:block;width:100%;min-height:150px;max-height:520px;resize:vertical;border:0;outline:0;padding:14px;background:var(--code-bg);color:var(--code-text);font-size:13px;line-height:1.55;tab-size:2;white-space:pre;overflow:auto}
+.play textarea:focus-visible{outline:2px solid var(--accent-2);outline-offset:-2px}
+.play .diag{border-top:1px solid #ffffff1f;background:var(--code-bg);font-size:12.5px;max-height:190px;overflow:auto}
+.play .diag .head{padding:6px 14px;font:600 12px "JetBrains Mono",monospace;color:#a9adb7}
+.play .diag .head.ok{color:#6fd49a}
+.play .diag .head.err{color:#ff8f80}
+.play .diag ul{list-style:none;margin:0;padding:0 14px 8px}
+.play .diag li{display:grid;grid-template-columns:auto 1fr;gap:10px;padding:3px 0;color:#e6e6e6;font-family:"JetBrains Mono",monospace;line-height:1.45}
+.play .diag li b{color:#ff8f80;font-weight:600;white-space:nowrap}
+.play iframe.view{display:block;width:100%;height:320px;border:0;background:#fff;border-bottom:1px solid #ffffff1f}
+.play iframe.hid{position:absolute;width:0;height:0;border:0;visibility:hidden}
+.play .console{flex:1;min-height:150px;max-height:420px;overflow:auto;padding:8px 0;font-size:13px;color:var(--code-text)}
+.play .console .ph{padding:10px 14px;color:#7d818b;font-family:"JetBrains Mono",monospace}
+.play .ln{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:2px 14px;font-family:"JetBrains Mono",monospace;line-height:1.5;border-left:3px solid transparent}
+.play .ln pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:inherit}
+.play .ln .tm{color:#7d818b;font-size:11px;white-space:nowrap;padding-top:2px}
+.play .ln.error{color:#ff8f80;border-left-color:#ff8f80;background:#ff8f8014}
+.play .ln.warn{color:#f2c75c;border-left-color:#f2c75c;background:#f2c75c12}
+.play .ln.info{color:#8fb8e8}
+.play .ln.sys{color:#7d818b;font-style:italic}
+.play pre.jsout{margin:0;flex:1;min-height:150px;max-height:420px;overflow:auto;padding:12px 14px;font-size:12.5px;line-height:1.5;color:var(--code-text)}
+.play .status{padding:4px 14px;font:11.5px "JetBrains Mono",monospace;color:#7d818b;border-top:1px solid #ffffff1f}
+
+@media (max-width:860px){
+  .layout{grid-template-columns:minmax(0,1fr);gap:0}
+  nav.toc{display:none}
+  .play .panes{grid-template-columns:minmax(0,1fr)}
+  .play .left{border-right:0;border-bottom:1px solid var(--border)}
+  .agenda div{grid-template-columns:1fr;gap:2px}
+  .flow{grid-template-columns:minmax(0,1fr)}
+  .pipe{grid-template-columns:minmax(0,1fr)}
+  .pipe .arr{transform:rotate(90deg);text-align:center}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<button class="theme-btn" id="themeBtn" aria-label="Cambiar tema">◐ Tema</button>
+<div class="layout">
+<nav class="toc" aria-label="Índice">
+  <div class="grp">Inicio</div>
+  <a href="#agenda">Agenda (2 h)</a>
+  <div class="grp">API</div>
+  <a href="#api">¿Qué es una API?</a>
+  <a href="#http">HTTP: métodos y códigos</a>
+  <a href="#json">JSON</a>
+  <a href="#pokeapi">PokéAPI</a>
+  <div class="grp">JavaScript</div>
+  <a href="#js-base">JS que necesitas</a>
+  <a href="#arrays">Arrays: map, filter…</a>
+  <a href="#async">Asincronía</a>
+  <a href="#fetch">fetch paso a paso</a>
+  <a href="#async-profundo">async/await a fondo</a>
+  <div class="grp">TypeScript</div>
+  <a href="#ts-intro">¿Qué es TypeScript?</a>
+  <a href="#ts-basicos">Tipos básicos</a>
+  <a href="#ts-funciones">Funciones tipadas</a>
+  <a href="#ts-union">Unión y narrowing</a>
+  <a href="#ts-interfaces">Interfaces</a>
+  <a href="#ts-generics">Genéricos</a>
+  <a href="#ts-utility">Utility types</a>
+  <a href="#ts-api">Tipar la API</a>
+  <a href="#ts-unknown">unknown y type guards</a>
+  <div class="grp">Práctica</div>
+  <a href="#proyecto">Proyecto: Mini Pokédex</a>
+  <a href="#errores">Errores comunes</a>
+  <a href="#local">Llevarlo a tu PC</a>
+  <a href="#chuleta">Chuleta</a>
+  <a href="#recursos">Recursos</a>
+</nav>
+
+<main>
+<header class="hero">
+  <h1>JavaScript <span>&amp;</span> TypeScript<br>consumiendo una API</h1>
+  <p>Guía para una clase de 2 horas. Vamos a pedirle datos de pokémon a una API pública con <code>fetch</code>, a manejar lo que pueda salir mal y a describir esos datos con tipos de TypeScript. Todo el código es <b>editable y ejecutable</b>: presiona <b>▶ Ejecutar</b> (o <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd>) y mira la consola a la derecha.</p>
+  <div class="card modebox">
+    <label for="modeSel"><b>Origen de los datos de PokéAPI</b></label>
+    <select id="modeSel">
+      <option value="auto">Automático: API real si se puede, si no datos simulados</option>
+      <option value="mock">Siempre simulados (muestra de 16 pokémon)</option>
+      <option value="real">Solo API real</option>
+    </select>
+    <small>Algunos visores bloquean las conexiones a otros sitios. En ese caso el modo automático responde con una muestra local que tiene la misma forma que la API real. Si abres el archivo <code>clase-js-ts.html</code> desde tu computador, llamará a <code>pokeapi.co</code> de verdad.</small>
+  </div>
+</header>
+
+<!-- ============ AGENDA ============ -->
+<h2 id="agenda">Agenda de la clase</h2>
+<div class="agenda">
+  <div><b>0:00 – 0:10</b><span>Qué es una API, HTTP, JSON y PokéAPI</span></div>
+  <div><b>0:10 – 0:30</b><span>JavaScript para trabajar con datos: objetos, destructuring, arrays</span></div>
+  <div><b>0:30 – 0:55</b><span>Asincronía, promesas y <code>async/await</code> a fondo, con un ejemplo básico de <code>fetch</code></span></div>
+  <div class="brk"><b>0:55 – 1:05</b><span>Descanso</span></div>
+  <div><b>1:05 – 1:35</b><span>TypeScript: tipos, interfaces, genéricos, tipar la respuesta de la API</span></div>
+  <div><b>1:35 – 2:00</b><span>Proyecto: Mini Pokédex con búsqueda + preguntas</span></div>
+</div>
+
+<!-- ============ API ============ -->
+<h2 id="api">¿Qué es una API? <span class="time">0:00</span></h2>
+<p>Una <b>API</b> (<i>Application Programming Interface</i>) es una puerta por la que un programa le pide datos o acciones a otro programa. En web, casi siempre es un <b>servidor</b> que responde <b>peticiones HTTP</b> con datos en formato <b>JSON</b>.</p>
+<div class="flow" role="img" aria-label="El cliente envía una petición GET al servidor y recibe una respuesta 200 con JSON">
+  <div class="node"><b>Cliente</b><small>tu página, tu app</small></div>
+  <div class="wire">
+    <div class="req">GET /pokemon/pikachu →</div>
+    <div class="res">← 200 OK + JSON</div>
+  </div>
+  <div class="node"><b>Servidor</b><small>pokeapi.co</small></div>
+</div>
+<p>Hasta ahora tus páginas eran estáticas: el contenido estaba escrito en el HTML. Con una API el contenido <b>viene de afuera</b> y tu código lo pinta. Así funcionan las apps de clima, los mapas, las tiendas en línea o las redes sociales.</p>
+
+<h3>Anatomía de una URL de API</h3>
+<div class="url" aria-label="https://pokeapi.co/api/v2/pokemon?limit=5&amp;offset=10"><b class="u1">https://pokeapi.co</b><b class="u2">/api/v2/pokemon</b><b class="u3">?limit=5</b><b class="u4">&amp;offset=10</b></div>
+<div class="legend"><span><i style="background:#2e86de"></i>servidor (host)</span><span><i style="background:#2a9d5c"></i>ruta del recurso</span><span><i style="background:#e4572e"></i>parámetro de consulta</span><span><i style="background:#d99a00"></i>otro parámetro (<code>&amp;</code> los separa)</span></div>
+
+<h3 id="http">HTTP: métodos y códigos de estado</h3>
+<div class="tablewrap"><table>
+<tr><th>Método</th><th>Para qué</th><th>Ejemplo</th></tr>
+<tr><td><code>GET</code></td><td>Leer datos. No cambia nada en el servidor.</td><td>Traer un pokémon</td></tr>
+<tr><td><code>POST</code></td><td>Crear algo nuevo.</td><td>Registrar un usuario</td></tr>
+<tr><td><code>PUT</code> / <code>PATCH</code></td><td>Reemplazar / modificar parcialmente.</td><td>Cambiar mi foto de perfil</td></tr>
+<tr><td><code>DELETE</code></td><td>Borrar.</td><td>Eliminar un comentario</td></tr>
+</table></div>
+<p>Hoy usamos solo <code>GET</code>, porque PokéAPI es de solo lectura. La respuesta siempre trae un <b>código de estado</b>:</p>
+<div class="tablewrap"><table>
+<tr><th>Código</th><th>Significa</th></tr>
+<tr><td><code>200</code> OK</td><td>Todo bien, aquí están los datos.</td></tr>
+<tr><td><code>201</code> Created</td><td>Se creó el recurso (respuesta típica de un <code>POST</code>).</td></tr>
+<tr><td><code>400</code> Bad Request</td><td>La petición está mal armada.</td></tr>
+<tr><td><code>401</code> / <code>403</code></td><td>No estás autenticado / no tienes permiso.</td></tr>
+<tr><td><code>404</code> Not Found</td><td>Ese recurso no existe.</td></tr>
+<tr><td><code>500</code></td><td>Falló el servidor, no es tu culpa.</td></tr>
+</table></div>
+<p>Así se ve una petición y su respuesta “por dentro”. El navegador y <code>fetch</code> arman esto por ti:</p>
+<script type="text/plain" class="src" data-lang="plain">
+GET /api/v2/pokemon/pikachu HTTP/1.1
+Host: pokeapi.co
+Accept: application/json
+
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{ "id": 25, "name": "pikachu", "height": 4, ... }
+</script>
+<div class="card tip"><strong class="lbl">Míralo con tus propios ojos</strong>
+Abre <a href="https://pokeapi.co/api/v2/pokemon/pikachu" target="_blank">pokeapi.co/api/v2/pokemon/pikachu</a> en una pestaña: es la API respondiendo a tu navegador. Luego abre DevTools (<kbd>F12</kbd>) → pestaña <b>Network</b> en cualquier página y recarga: verás todas las peticiones, con su método, estado, tiempo y JSON.</div>
+
+<h3 id="json">JSON: el idioma de las APIs</h3>
+<p>JSON (<i>JavaScript Object Notation</i>) es <b>texto</b> con una sintaxis parecida a los objetos de JS. Viaja por la red como <code>string</code> y en tu código lo conviertes a un objeto de verdad con <code>JSON.parse</code>. <code>fetch</code> lo hace por ti con <code>respuesta.json()</code>.</p>
+<div class="play" data-lang="js" data-title="JSON ↔ objeto">
+<script type="text/plain" data-file="main.js">
+// Una respuesta de API llega como TEXTO (string) en formato JSON
+const texto = '{"id":25,"name":"pikachu","height":4,"types":["electric"]}';
+
+console.log(typeof texto);          // string
+
+const pokemon = JSON.parse(texto);  // texto -> objeto
+console.log(typeof pokemon);        // object
+console.log(pokemon.name);          // pikachu
+console.log(pokemon.types[0]);      // electric
+
+// Y para enviar datos es al revés: objeto -> texto
+const paraEnviar = JSON.stringify({ nombre: "Ash", equipo: ["pikachu", "snorlax"] });
+console.log(paraEnviar);
+
+// JSON es estricto: comillas dobles y sin coma final
+try {
+  JSON.parse("{ name: 'pikachu' }");
+} catch (error) {
+  console.error("JSON inválido →", error.message);
+}
+</script>
+</div>
+<div class="card note"><strong class="lbl">Reglas de JSON</strong>
+Las claves van entre comillas dobles, los textos también, no hay comentarios ni coma final. Valores posibles: texto, número, <code>true</code>/<code>false</code>, <code>null</code>, lista <code>[ ]</code> y objeto <code>{ }</code>.</div>
+
+<h3 id="pokeapi">Nuestra API: PokéAPI</h3>
+<p><a href="https://pokeapi.co" target="_blank">pokeapi.co</a> es una API pública y gratuita con datos de pokémon. No pide registro ni llave (<i>API key</i>) y permite peticiones desde el navegador. Usaremos dos rutas:</p>
+<div class="tablewrap"><table>
+<tr><th>Ruta</th><th>Devuelve</th></tr>
+<tr><td><code>/api/v2/pokemon?limit=5&amp;offset=0</code></td><td>Una <b>lista paginada</b>: <code>count</code> (total), <code>next</code>, <code>previous</code> y <code>results</code> con <code>name</code> y <code>url</code> de cada pokémon.</td></tr>
+<tr><td><code>/api/v2/pokemon/pikachu</code> o <code>/pokemon/25</code></td><td>El <b>detalle</b>: <code>id</code>, <code>name</code>, <code>height</code> (en decímetros), <code>weight</code> (en hectogramos), <code>types</code>, <code>abilities</code>, <code>stats</code>, <code>sprites</code>…</td></tr>
+</table></div>
+<div class="card warn"><strong class="lbl">Cuidado con las unidades</strong>
+Un pikachu con <code>weight: 60</code> pesa 6 kg: la API usa hectogramos. Leer la documentación evita estos sustos.</div>
+
+<!-- ============ JS ============ -->
+<h2 id="js-base">JavaScript que necesitas <span class="time">0:10</span></h2>
+<p>Una respuesta de API es un objeto grande con objetos y listas adentro. Estas herramientas de JS te permiten navegarlo sin sufrir. Cambia el código y vuelve a ejecutar.</p>
+<div class="play" data-lang="js" data-title="Objetos, destructuring y spread">
+<script type="text/plain" data-file="main.js">
+const pikachu = {
+  id: 25,
+  name: "pikachu",
+  height: 4,
+  types: [
+    { slot: 1, type: { name: "electric" } }
+  ],
+  stats: [
+    { base_stat: 35, stat: { name: "hp" } },
+    { base_stat: 90, stat: { name: "speed" } }
+  ]
+};
+
+// Acceder con punto y con índice
+console.log(pikachu.name);
+console.log(pikachu.types[0].type.name);
+
+// Destructuring: sacar propiedades en variables
+const { id, name, height } = pikachu;
+console.log(`#${id} ${name} mide ${height / 10} m`);
+
+// Spread: copiar y modificar sin tocar el original
+const copia = { ...pikachu, name: "raichu" };
+console.log(copia.name, "|", pikachu.name);
+
+// Optional chaining (?.) y valor por defecto (??)
+console.log(pikachu.sprites?.front_default);               // undefined, sin romper
+console.log(pikachu.sprites?.front_default ?? "sin foto"); // sin foto
+
+// Prueba: quita el "?" de la línea siguiente y ejecuta
+console.log(pikachu.sprites?.front_default.length);
+</script>
+</div>
+<div class="tablewrap"><table>
+<tr><th>Herramienta</th><th>Para qué sirve con una API</th></tr>
+<tr><td>Template strings <code>`Hola ${nombre}`</code></td><td>Armar URLs y textos con variables.</td></tr>
+<tr><td>Destructuring <code>const { id, name } = obj</code></td><td>Sacar solo los campos que usas de una respuesta grande.</td></tr>
+<tr><td>Spread <code>{ ...obj }</code> / <code>[ ...lista ]</code></td><td>Copiar sin mutar el original.</td></tr>
+<tr><td><code>?.</code> y <code>??</code></td><td>Datos que pueden faltar (<code>null</code>, <code>undefined</code>) sin que la página se rompa.</td></tr>
+<tr><td>Arrow functions <code>(x) =&gt; x * 2</code></td><td>Funciones cortas para <code>map</code>, <code>filter</code> y <code>.then</code>.</td></tr>
+</table></div>
+
+<h3 id="arrays">Arrays: map, filter, find, sort, reduce</h3>
+<p>Las listas son el formato más común en una API (<code>results</code>, <code>types</code>, <code>stats</code>…). Estos métodos reciben una función y <b>no usan bucles</b>:</p>
+<div class="play" data-lang="js" data-title="Métodos de array">
+<script type="text/plain" data-file="main.js">
+const pokemones = [
+  { name: "pikachu",    type: "electric", attack: 55 },
+  { name: "charmander", type: "fire",     attack: 52 },
+  { name: "squirtle",   type: "water",    attack: 48 },
+  { name: "machop",     type: "fighting", attack: 80 },
+  { name: "mewtwo",     type: "psychic",  attack: 110 },
+];
+
+const nombres = pokemones.map(p => p.name);              // transforma cada elemento
+console.log("map →", nombres);
+
+const fuertes = pokemones.filter(p => p.attack >= 80);   // deja los que cumplen
+console.log("filter →", fuertes.map(p => p.name));
+
+const agua = pokemones.find(p => p.type === "water");    // el primero que cumple
+console.log("find →", agua);
+
+const ordenados = [...pokemones].sort((a, b) => b.attack - a.attack); // copia + ordena
+console.log("sort →", ordenados[0].name);
+
+const total = pokemones.reduce((suma, p) => suma + p.attack, 0);      // junta todo en uno
+console.log("reduce →", total, "de ataque total");
+
+for (const { name, attack } of pokemones) {
+  console.log(name.padEnd(11), "█".repeat(Math.round(attack / 10)));
+}
+</script>
+</div>
+
+<!-- ============ ASYNC ============ -->
+<h2 id="async">Asincronía: por qué hay que esperar <span class="time">0:30</span></h2>
+<p>Pedir datos a un servidor tarda (cientos de milisegundos). JavaScript <b>no se queda congelado esperando</b>: sigue ejecutando lo demás y avisa cuando llega la respuesta. Predice el orden de los números antes de ejecutar:</p>
+<div class="play" data-lang="js" data-title="Orden de ejecución">
+<script type="text/plain" data-file="main.js">
+console.log("1. Empiezo");
+
+setTimeout(() => {
+  console.log("3. Esto tarda 1 segundo");
+}, 1000);
+
+console.log("2. Sigo sin esperar");
+</script>
+</div>
+<p>Una <b>Promesa</b> (<code>Promise</code>) es un objeto que representa un resultado que llegará en el futuro. Tiene tres estados:</p>
+<div class="tablewrap"><table>
+<tr><th>Estado</th><th>Significa</th><th>Cómo reaccionas</th></tr>
+<tr><td><code>pending</code></td><td>Todavía esperando.</td><td>—</td></tr>
+<tr><td><code>fulfilled</code></td><td>Salió bien y trae un valor.</td><td><code>.then(valor =&gt; …)</code> o <code>await</code></td></tr>
+<tr><td><code>rejected</code></td><td>Falló y trae un error.</td><td><code>.catch(error =&gt; …)</code> o <code>try/catch</code></td></tr>
+</table></div>
+<p><code>async/await</code> es una forma de escribir promesas para que se lean de arriba a abajo. <code>await</code> pausa <b>solo esa función</b> hasta que la promesa termine; solo se puede usar dentro de una función <code>async</code> (en estos ejemplos puedes usarlo directamente arriba del todo).</p>
+<div class="play" data-lang="js" data-title="Promesas: .then vs async/await">
+<script type="text/plain" data-file="main.js">
+const esperar = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+function cocinar() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const salioBien = Math.random() > 0.3;
+      if (salioBien) resolve("Arepa lista");
+      else reject(new Error("Se quemó"));
+    }, 800);
+  });
+}
+
+// Con .then / .catch
+cocinar()
+  .then((plato) => console.log("then →", plato))
+  .catch((err) => console.error("catch →", err.message));
+
+// Con async / await: la misma idea, se lee en orden
+async function main() {
+  console.log("Pidiendo...");
+  try {
+    const plato = await cocinar();
+    console.log("await →", plato);
+  } catch (err) {
+    console.error("await catch →", err.message);
+  }
+  await esperar(500);
+  console.log("Fin");
+}
+
+await main();
+</script>
+</div>
+<p>Ejecútalo varias veces: a veces sale bien y a veces mal. Así se comportan las peticiones reales: <b>pueden fallar</b>, y tu código debe estar listo para eso.</p>
+
+<h3 id="fetch">fetch paso a paso</h3>
+<p><code>fetch(url)</code> es la función del navegador para hacer peticiones. Devuelve una promesa y necesita <b>dos <code>await</code></b>: el primero espera la respuesta (estado y encabezados) y el segundo espera y convierte el cuerpo a JSON.</p>
+<div class="play" data-lang="js" data-title="Mi primera petición">
+<script type="text/plain" data-file="main.js">
+const url = "https://pokeapi.co/api/v2/pokemon/pikachu";
+
+const respuesta = await fetch(url);        // 1) llegan estado y encabezados
+console.log("status:", respuesta.status, "| ok:", respuesta.ok);
+
+const pokemon = await respuesta.json();    // 2) llega el cuerpo y se convierte
+console.log("nombre:", pokemon.name);
+console.log("peso:", pokemon.weight / 10, "kg");
+console.log("tipos:", pokemon.types.map((t) => t.type.name));
+console.log("habilidades:", pokemon.abilities.map((a) => a.ability.name));
+
+const hp = pokemon.stats.find((s) => s.stat.name === "hp");
+console.log("hp:", hp.base_stat);
+
+// Cambia "pikachu" por "snorlax" o por el número 150
+</script>
+</div>
+
+<div class="card warn"><strong class="lbl">Trampa clásica</strong>
+<code>fetch</code> <b>no lanza error</b> con un 404 o 500; solo falla si no hay conexión. Por eso se revisa <code>respuesta.ok</code> y se envuelve todo en <code>try/catch</code>:</div>
+<script type="text/plain" class="src" data-lang="js">
+async function pedir(url) {
+  const respuesta = await fetch(url);                  // 1. pedir
+  if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`); // 2. revisar el estado
+  return respuesta.json();                             // 3. convertir a objeto
+}
+
+try {
+  const datos = await pedir("https://...");            // 4. usar dentro de try/catch
+} catch (error) {
+  // mostrar un mensaje al usuario
+}
+</script>
+
+<h3 id="async-profundo">async/await a fondo</h3>
+<p>Estas tres ideas son el centro de la clase. Los ejemplos usan una función <code>esperar(ms)</code> para ver el efecto de cada <code>await</code> sin depender de internet.</p>
+<h3 id="errores-fetch">1. Una función <code>async</code> siempre devuelve una promesa</h3>
+<div class="play" data-lang="js" data-title="async devuelve una Promise">
+<script type="text/plain" data-file="main.js">
+const esperar = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function obtenerNombre() {
+  await esperar(500);
+  return "pikachu";            // se envuelve en una Promise automáticamente
+}
+
+const sinAwait = obtenerNombre();
+console.log("sin await →", sinAwait);       // Promise, no el texto
+
+const conAwait = await obtenerNombre();
+console.log("con await →", conAwait);       // pikachu
+
+// .then hace lo mismo que await
+obtenerNombre().then((n) => console.log("then →", n));
+</script>
+</div>
+<h3 id="paralelo">2. Uno tras otro vs a la vez</h3>
+<p><code>await</code> en cada línea hace que las tareas se <b>sumen</b> en el tiempo. Si no dependen entre sí, lánzalas juntas con <code>Promise.all</code>.</p>
+<div class="play" data-lang="js" data-title="Secuencial vs Promise.all">
+<script type="text/plain" data-file="main.js">
+const esperar = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function pedirPokemon(nombre) {
+  await esperar(400);                       // simula la red
+  return nombre.toUpperCase();
+}
+
+let t0 = performance.now();
+const a = await pedirPokemon("bulbasaur");
+const b = await pedirPokemon("charmander");
+const c = await pedirPokemon("squirtle");
+console.log("uno tras otro:", Math.round(performance.now() - t0), "ms", [a, b, c]);
+
+t0 = performance.now();
+const todos = await Promise.all([
+  pedirPokemon("bulbasaur"),
+  pedirPokemon("charmander"),
+  pedirPokemon("squirtle"),
+]);
+console.log("Promise.all:  ", Math.round(performance.now() - t0), "ms", todos);
+</script>
+</div>
+<h3>3. Errores con try / catch / finally</h3>
+<p>Una promesa rechazada se comporta como una excepción: la capturas con <code>try/catch</code>. <code>finally</code> corre siempre, ideal para apagar el “Cargando…”.</p>
+<div class="play" data-lang="js" data-title="try / catch / finally">
+<script type="text/plain" data-file="main.js">
+const esperar = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function buscar(nombre) {
+  await esperar(300);
+  if (nombre !== "pikachu") throw new Error(`No encontré "${nombre}"`);
+  return { name: nombre, id: 25 };
+}
+
+for (const nombre of ["pikachu", "xyz"]) {
+  console.log("Cargando...");
+  try {
+    const p = await buscar(nombre);
+    console.log("✓", p);
+  } catch (error) {
+    console.error("✗", error.message);
+  } finally {
+    console.log("(termina la carga)");
+  }
+}
+</script>
+</div>
+
+<div class="card note"><strong class="lbl">CORS y llaves de API</strong>
+Un navegador solo deja leer una API de otro sitio si ese servidor lo permite (<i>CORS</i>). PokéAPI lo permite; muchas APIs privadas no. Además, <b>nunca pongas una llave secreta en código del navegador</b>: cualquiera la ve en DevTools. Las APIs con llave se llaman desde tu propio backend.</div>
+
+<div class="card" style="text-align:center;font-size:20px"><b>Descanso: 10 minutos</b></div>
+
+<!-- ============ TS ============ -->
+<h2 id="ts-intro">¿Qué es TypeScript? <span class="time">1:05</span></h2>
+<p><b>TypeScript = JavaScript + tipos.</b> Los tipos describen qué forma tiene cada dato (<i>“esto es un número”, “esto es un pokémon con id y name”</i>) y el editor te avisa de los errores <b>mientras escribes</b>, antes de ejecutar. En una API esto vale oro: te autocompleta los campos de la respuesta y te grita si escribes <code>pokemon.weigth</code>.</p>
+<div class="pipe" role="img" aria-label="Archivo .ts pasa por el compilador y sale un archivo .js que corre el navegador">
+  <div class="step"><code>app.ts</code><small>tu código con tipos</small></div>
+  <div class="arr">→</div>
+  <div class="step"><code>compilador (tsc, Vite)</code><small>revisa tipos y los borra</small></div>
+  <div class="arr">→</div>
+  <div class="step"><code>app.js</code><small>lo que ejecuta el navegador</small></div>
+</div>
+<div class="card warn"><strong class="lbl">Idea clave</strong>
+Los navegadores <b>no entienden TypeScript</b>. Los tipos solo existen mientras programas; al compilar desaparecen. Por eso TS no puede validar lo que llega de la red en tiempo de ejecución (lo veremos con <code>unknown</code>).</div>
+<p>En los cuadros de TypeScript de esta página, el editor revisa tus tipos en vivo (panel <b>Problemas</b>) y la pestaña <b>JS generado</b> te muestra lo que queda después de compilar. Aunque haya errores de tipos, el código se ejecuta igual, como en TypeScript real.</p>
+
+<h3 id="ts-basicos">Tipos básicos e inferencia</h3>
+<p>Escribes el tipo después de dos puntos: <code>nombre: string</code>. Si inicializas la variable, TS lo <b>infiere</b> y no hace falta escribirlo. Los tipos primitivos son <code>string</code>, <code>number</code>, <code>boolean</code>; las listas son <code>string[]</code> o <code>Array&lt;string&gt;</code>.</p>
+<div class="play" data-lang="ts" data-title="Tipos básicos: corrige los errores" data-manual>
+<script type="text/plain" data-file="main.ts">
+// Tipos básicos: TypeScript los infiere o los escribes tú
+const nombre: string = "pikachu";
+let nivel = 5;                       // inferido: number
+const esLegendario: boolean = false;
+const tipos: string[] = ["electric"];
+const ataques: Array<number> = [55, 40];
+
+console.log(nombre, nivel, esLegendario, tipos, ataques);
+
+// Hay 4 errores. Léelos en "Problemas" y corrígelos:
+nivel = "cinco";
+const peso: number = "6 kg";
+tipos.push(25);
+console.log(nombre.toUppercase());
+</script>
+</div>
+<p>Dos tipos “de escape” que debes conocer: <code>any</code> (apaga el chequeo, evítalo) y <code>unknown</code> (“no sé qué es, compruébalo antes de usarlo”). Más abajo los comparamos.</p>
+
+<h3 id="ts-funciones">Funciones tipadas</h3>
+<p>Tipas los <b>parámetros</b> y el <b>valor que devuelve</b>. Un parámetro opcional lleva <code>?</code>; una función que no devuelve nada es <code>void</code>.</p>
+<div class="play" data-lang="ts" data-title="Parámetros y retorno" data-manual>
+<script type="text/plain" data-file="main.ts">
+function calcularDanio(ataque: number, defensa: number, bonus?: number): number {
+  const base = Math.max(1, ataque - defensa / 2);
+  return Math.round(base * (bonus ?? 1));
+}
+
+const saludar = (nombre: string): void => {
+  console.log(`¡Hola, ${nombre}!`);
+};
+
+console.log(calcularDanio(55, 40));        // bonus es opcional
+console.log(calcularDanio(55, 40, 2));
+saludar("Ash");
+
+// Estas llamadas tienen errores:
+calcularDanio(55);
+calcularDanio("55", 40);
+saludar(25);
+</script>
+</div>
+
+<h3 id="ts-union">Uniones, literales y narrowing</h3>
+<p>Una <b>unión</b> (<code>A | B</code>) acepta varios tipos. Un <b>literal</b> limita a valores exactos (<code>"fire" | "water"</code>). Dentro de un <code>if</code> con <code>typeof</code> TS <b>afina</b> el tipo (<i>narrowing</i>) y te deja usar los métodos correctos. Con <code>strict</code> activo, <code>undefined</code> y <code>null</code> también son tipos que debes manejar.</p>
+<div class="play" data-lang="ts" data-title="Unión, literales y undefined" data-manual>
+<script type="text/plain" data-file="main.ts">
+type Tipo = "fire" | "water" | "grass" | "electric";   // literales
+type Id = number | string;                              // unión
+
+function describir(id: Id): string {
+  if (typeof id === "number") {
+    return `Número #${id.toString().padStart(3, "0")}`;  // aquí id es number
+  }
+  return `Nombre ${id.toUpperCase()}`;                    // aquí id es string
+}
+
+console.log(describir(25));
+console.log(describir("pikachu"));
+
+function colorDe(tipo: Tipo): string {
+  switch (tipo) {
+    case "fire": return "rojo";
+    case "water": return "azul";
+    case "grass": return "verde";
+    case "electric": return "amarillo";
+  }
+}
+console.log(colorDe("fire"));
+
+// Un valor que puede no existir: string | undefined
+const buscarNombre = (id: number): string | undefined =>
+  id === 25 ? "pikachu" : undefined;
+
+const n = buscarNombre(1);
+console.log(n?.toUpperCase() ?? "no existe");     // forma segura
+
+// Errores:
+console.log(colorDe("psychic"));   // "psychic" no está en Tipo
+console.log(n.toUpperCase());      // n puede ser undefined
+</script>
+</div>
+
+<h3 id="ts-interfaces">Interfaces: la forma de un objeto</h3>
+<p>Una <code>interface</code> describe qué propiedades tiene un objeto y de qué tipo. Es lo que más usarás para describir respuestas de APIs.</p>
+<div class="play" data-lang="ts" data-title="interface Pokemon" data-manual>
+<script type="text/plain" data-file="main.ts">
+interface Stat {
+  base_stat: number;
+  stat: { name: string };
+}
+
+interface Pokemon {
+  id: number;
+  name: string;
+  height: number;
+  types: { slot: number; type: { name: string } }[];
+  stats: Stat[];
+  nickname?: string;          // opcional
+  readonly createdAt: number; // solo lectura
+}
+
+const pikachu: Pokemon = {
+  id: 25,
+  name: "pikachu",
+  height: 4,
+  types: [{ slot: 1, type: { name: "electric" } }],
+  stats: [{ base_stat: 35, stat: { name: "hp" } }],
+  createdAt: 1,
+};
+
+function resumen(p: Pokemon): string {
+  const hp = p.stats.find((s) => s.stat.name === "hp")?.base_stat ?? 0;
+  return `#${p.id} ${p.name} (${p.types[0].type.name}) HP ${hp}`;
+}
+console.log(resumen(pikachu));
+
+// Errores:
+console.log(pikachu.nmae);
+pikachu.createdAt = 2;
+const incompleto: Pokemon = { id: 1, name: "bulbasaur" };
+</script>
+</div>
+<div class="tablewrap"><table>
+<tr><th></th><th><code>interface</code></th><th><code>type</code></th></tr>
+<tr><td>Describir objetos</td><td>Sí</td><td>Sí</td></tr>
+<tr><td>Uniones y literales (<code>"a" | "b"</code>)</td><td>No</td><td>Sí</td></tr>
+<tr><td>Se puede extender</td><td><code>interface B extends A</code></td><td><code>type B = A &amp; { … }</code></td></tr>
+<tr><td>Regla práctica</td><td>Para la forma de objetos y respuestas de API.</td><td>Para uniones, alias y combinaciones.</td></tr>
+</table></div>
+
+<h3 id="ts-generics">Genéricos: tipos con parámetros</h3>
+<p>Un genérico es un tipo con un “hueco” <code>&lt;T&gt;</code> que se rellena al usarlo. Ya los usas sin saberlo: <code>Array&lt;string&gt;</code> y <code>Promise&lt;number&gt;</code>. También puedes crear los tuyos para escribir una función una sola vez y que sirva para muchos tipos.</p>
+<div class="play" data-lang="ts" data-title="Genéricos" data-manual>
+<script type="text/plain" data-file="main.ts">
+// T se rellena según lo que le pases
+function primero<T>(items: T[]): T | undefined {
+  return items[0];
+}
+
+const n = primero([10, 20, 30]);        // T = number
+const s = primero(["a", "b"]);          // T = string
+console.log(n, s);
+console.log(s?.toUpperCase());
+
+// Un contenedor genérico, como las respuestas de una API
+interface Respuesta<T> {
+  ok: boolean;
+  data: T | null;
+  error?: string;
+}
+
+function exito<T>(data: T): Respuesta<T> {
+  return { ok: true, data };
+}
+
+const r = exito({ name: "pikachu", id: 25 });
+console.log(r.data?.name);
+console.log(r.data?.nmae);   // Error: TS sabe qué forma tiene data
+
+// Ya los usas: Array<T> y Promise<T>
+const lista: Array<string> = ["a"];
+const futuro: Promise<number> = Promise.resolve(25);
+futuro.then((v) => console.log(v + 1));
+console.log(lista);
+</script>
+</div>
+
+<h3 id="ts-utility">Utility types: derivar tipos sin repetir</h3>
+<div class="tablewrap"><table>
+<tr><th>Utility</th><th>Resultado</th></tr>
+<tr><td><code>Partial&lt;T&gt;</code></td><td>Todas las propiedades opcionales (útil para formularios y <code>PATCH</code>).</td></tr>
+<tr><td><code>Pick&lt;T, "a" | "b"&gt;</code></td><td>Solo las propiedades que eliges.</td></tr>
+<tr><td><code>Omit&lt;T, "a"&gt;</code></td><td>Todas menos las que indicas.</td></tr>
+<tr><td><code>Readonly&lt;T&gt;</code></td><td>Nada se puede modificar.</td></tr>
+<tr><td><code>Record&lt;K, V&gt;</code></td><td>Un diccionario con claves <code>K</code> y valores <code>V</code>.</td></tr>
+</table></div>
+<div class="play" data-lang="ts" data-title="Partial, Pick, Omit, Readonly, Record" data-manual>
+<script type="text/plain" data-file="main.ts">
+interface Pokemon {
+  id: number;
+  name: string;
+  height: number;
+  weight: number;
+}
+
+type Borrador = Partial<Pokemon>;                 // todo opcional
+type Ficha = Pick<Pokemon, "id" | "name">;        // solo estas dos
+type SinId = Omit<Pokemon, "id">;                 // todo menos id
+type Solo = Readonly<Pokemon>;                    // no se puede modificar
+type PorTipo = Record<string, Pokemon[]>;         // diccionario
+
+const borrador: Borrador = { name: "eevee" };
+const ficha: Ficha = { id: 133, name: "eevee" };
+const sinId: SinId = { name: "eevee", height: 3, weight: 65 };
+const equipo: PorTipo = {
+  normal: [{ id: 133, name: "eevee", height: 3, weight: 65 }],
+};
+
+console.log(borrador, ficha, sinId, Object.keys(equipo));
+
+// Errores:
+const mala: Ficha = { id: 133, name: "eevee", height: 3 };
+const fija: Solo = { id: 1, name: "bulbasaur", height: 7, weight: 69 };
+fija.name = "ivysaur";
+</script>
+</div>
+
+<h3 id="ts-api">Tipar la respuesta de la API</h3>
+<p>Ahora juntamos todo. Describimos con interfaces solo los campos que usamos y creamos <b>una función genérica <code>getJSON&lt;T&gt;</code></b> que sirve para cualquier endpoint. Observa el autocompletado: escribe <code>pokemon.</code> en el editor de VS Code y verás la lista de campos.</p>
+<div class="play" data-lang="ts" data-title="getJSON&lt;T&gt; con la PokéAPI">
+<script type="text/plain" data-file="main.ts">
+interface PokemonApi {
+  id: number;
+  name: string;
+  height: number;
+  weight: number;
+  types: { type: { name: string } }[];
+  stats: { base_stat: number; stat: { name: string } }[];
+}
+
+interface ListaApi {
+  count: number;
+  results: { name: string; url: string }[];
+}
+
+// Función genérica reutilizable: tú dices qué forma esperas recibir
+async function getJSON<T>(url: string): Promise<T> {
+  const respuesta = await fetch(url);
+  if (!respuesta.ok) {
+    throw new Error(`HTTP ${respuesta.status} en ${url}`);
+  }
+  return respuesta.json();           // json() devuelve any, se ajusta a T
+}
+
+const BASE = "https://pokeapi.co/api/v2";
+
+const lista = await getJSON<ListaApi>(`${BASE}/pokemon?limit=3`);
+console.log(`Hay ${lista.count} pokémon. Primeros:`, lista.results.map((r) => r.name));
+
+const pokemon = await getJSON<PokemonApi>(`${BASE}/pokemon/${lista.results[0].name}`);
+console.log(pokemon.name, "→", pokemon.types.map((t) => t.type.name).join(", "));
+
+// Error de tipos: el campo se llama "weight"
+console.log(pokemon.weigth);
+</script>
+</div>
+<div class="card warn"><strong class="lbl">TS no verifica lo que llega de la red</strong>
+<code>getJSON&lt;PokemonApi&gt;</code> es una <b>promesa tuya</b> al compilador: “confía, así viene”. Si la API cambia o responde otra cosa, TS no se entera, porque los tipos desaparecen al compilar. Para datos no confiables, valida en tiempo de ejecución.</div>
+
+<h3 id="ts-unknown"><code>unknown</code> y type guards</h3>
+<p><code>any</code> deja pasar todo; <code>unknown</code> te obliga a comprobar antes de usar. Una función con retorno <code>valor is Pokemon</code> (<i>type guard</i>) comprueba el dato en ejecución y, si da <code>true</code>, TS lo trata como <code>Pokemon</code> dentro del <code>if</code>.</p>
+<div class="play" data-lang="ts" data-title="unknown vs any" data-manual>
+<script type="text/plain" data-file="main.ts">
+interface Pokemon {
+  id: number;
+  name: string;
+}
+
+// unknown: "no sé qué es, compruébalo antes de usarlo"
+function esPokemon(valor: unknown): valor is Pokemon {
+  return (
+    typeof valor === "object" &&
+    valor !== null &&
+    typeof (valor as Pokemon).id === "number" &&
+    typeof (valor as Pokemon).name === "string"
+  );
+}
+
+const datos: unknown[] = [
+  { id: 25, name: "pikachu" },
+  { id: "25", name: "pikachu" },   // id es string: dato malo
+  null,
+  "hola",
+];
+
+for (const d of datos) {
+  if (esPokemon(d)) {
+    console.log("✓ válido:", d.name.toUpperCase());   // aquí d es Pokemon
+  } else {
+    console.log("✗ inválido:", d);
+  }
+}
+
+// any apaga el chequeo; unknown lo exige
+const u: unknown = "texto";
+u.toUpperCase();         // Error: primero hay que comprobar el tipo
+
+const a: any = "texto";
+a.noExiste();            // TS no se queja... y falla al ejecutar
+</script>
+</div>
+<div class="card note"><strong class="lbl">En un <code>catch</code></strong>
+Con <code>strict</code>, la variable <code>error</code> de un <code>catch</code> es de tipo <code>unknown</code>. Para leer su mensaje usa <code>if (error instanceof Error) { error.message }</code>.</div>
+
+<!-- ============ PROYECTO ============ -->
+<h2 id="proyecto">Proyecto: Mini Pokédex <span class="time">1:35</span></h2>
+<p>Una página que carga los primeros pokémon, permite buscar por nombre o número y muestra estados de <b>carga</b>, <b>error</b> y <b>resultado</b>. Usa todo lo que vimos: <code>fetch</code>, <code>async/await</code>, <code>try/catch</code>, <code>Promise.all</code>, interfaces y <code>getJSON&lt;T&gt;</code>. Hay dos pestañas: <code>index.html</code> y <code>main.ts</code>.</p>
+<div class="play" data-lang="ts" data-title="Mini Pokédex" data-view>
+<script type="text/plain" data-file="index.html">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, sans-serif; margin: 0; padding: 14px; background: #f4f6fb; color: #1b1d27; }
+  h1 { font-size: 1.15rem; margin: 0 0 10px; }
+  form { display: flex; gap: 8px; margin-bottom: 12px; }
+  input { flex: 1; min-width: 0; padding: 8px 10px; border: 1px solid #c9cedb; border-radius: 8px; font: inherit; }
+  button { padding: 8px 14px; border: 0; border-radius: 8px; background: #e4572e; color: #fff; font: inherit; cursor: pointer; }
+  #estado { color: #5b6070; font-size: .9rem; margin: 0 0 10px; min-height: 1.2em; }
+  #estado.error { color: #c0261b; }
+  #lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+  .card { background: #fff; border-radius: 12px; padding: 12px; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+  .num { color: #8a90a2; font-size: .8rem; }
+  .card h2 { font-size: 1rem; margin: 2px 0 6px; text-transform: capitalize; }
+  .chip { display: inline-block; font-size: .72rem; padding: 1px 8px; border-radius: 99px; background: #e8ebf5; margin: 0 4px 2px 0; }
+  .hp { height: 6px; background: #e8ebf5; border-radius: 3px; margin-top: 8px; overflow: hidden; }
+  .hp i { display: block; height: 100%; background: #2a9d5c; }
+</style>
+
+<h1>Mini Pokédex</h1>
+<form id="form">
+  <input id="q" placeholder="pikachu, snorlax, 25…" autocomplete="off">
+  <button>Buscar</button>
+</form>
+<p id="estado"></p>
+<div id="lista"></div>
+</script>
+<script type="text/plain" data-file="main.ts">
+interface PokemonApi {
+  id: number;
+  name: string;
+  types: { type: { name: string } }[];
+  stats: { base_stat: number; stat: { name: string } }[];
+  sprites: { front_default: string | null };
+}
+
+interface ListaApi {
+  count: number;
+  results: { name: string; url: string }[];
+}
+
+const BASE = "https://pokeapi.co/api/v2";
+
+async function getJSON<T>(url: string): Promise<T> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+// Elementos de la página (en VS Code aquí tendrías tipos del DOM completos)
+const form = document.querySelector("#form");
+const input = document.querySelector("#q");
+const estado = document.querySelector("#estado");
+const lista = document.querySelector("#lista");
+
+function setEstado(texto: string, esError = false): void {
+  estado.textContent = texto;
+  estado.className = esError ? "error" : "";
+}
+
+function tarjeta(p: PokemonApi): string {
+  const hp = p.stats.find((s) => s.stat.name === "hp")?.base_stat ?? 0;
+  const tipos = p.types.map((t) => `<span class="chip">${t.type.name}</span>`).join("");
+  const foto = p.sprites.front_default ?? "";
+  return `
+    <article class="card">
+      <img src="${foto}" alt="" width="72" height="72" onerror="this.style.display='none'">
+      <div class="num">#${String(p.id).padStart(3, "0")}</div>
+      <h2>${p.name}</h2>
+      ${tipos}
+      <div class="hp" title="HP ${hp}"><i style="width:${Math.min(100, hp / 2)}%"></i></div>
+    </article>`;
+}
+
+async function cargarPrimeros(cantidad: number): Promise<void> {
+  setEstado("Cargando…");
+  try {
+    const { results } = await getJSON<ListaApi>(`${BASE}/pokemon?limit=${cantidad}`);
+    const detalles = await Promise.all(results.map((r) => getJSON<PokemonApi>(r.url)));
+    lista.innerHTML = detalles.map(tarjeta).join("");
+    setEstado(`Mostrando ${detalles.length} pokémon`);
+  } catch (error) {
+    setEstado("No se pudo cargar la lista", true);
+  }
+}
+
+async function buscar(texto: string): Promise<void> {
+  const consulta = texto.trim().toLowerCase();
+  if (!consulta) return cargarPrimeros(6);
+
+  setEstado(`Buscando "${consulta}"…`);
+  try {
+    const p = await getJSON<PokemonApi>(`${BASE}/pokemon/${consulta}`);
+    lista.innerHTML = tarjeta(p);
+    setEstado("Encontrado");
+  } catch (error) {
+    lista.innerHTML = "";
+    setEstado(`No encontré "${consulta}"`, true);
+  }
+}
+
+form.addEventListener("submit", (e: any) => {
+  e.preventDefault();
+  buscar(input.value);
+});
+
+await cargarPrimeros(6);
+</script>
+</div>
+<p>Escribe <code>snorlax</code>, <code>150</code> o algo que no exista como <code>xyz</code> en el cuadro de búsqueda de la vista previa.</p>
+<h3>Retos (marca los que logres)</h3>
+<ul class="check">
+  <li><label><input type="checkbox"> Muestra todas las estadísticas (ataque, defensa, velocidad…) en cada tarjeta.</label></li>
+  <li><label><input type="checkbox"> Cambia el color del chip según el tipo (<code>Record&lt;string, string&gt;</code> con un color por tipo).</label></li>
+  <li><label><input type="checkbox"> Agrega un botón “Ver más” que pida la siguiente página con <code>offset</code>.</label></li>
+  <li><label><input type="checkbox"> Muestra la altura en metros y el peso en kg (recuerda las unidades de la API).</label></li>
+  <li><label><input type="checkbox"> Crea un tipo <code>Estado = "cargando" | "error" | "listo"</code> y úsalo en <code>setEstado</code>.</label></li>
+  <li><label><input type="checkbox"> ⭐ Evita pedir dos veces el mismo pokémon guardándolo en un <code>Map&lt;string, PokemonApi&gt;</code>.</label></li>
+</ul>
+
+<!-- ============ ERRORES ============ -->
+<h2 id="errores">Errores comunes</h2>
+<div class="tablewrap"><table>
+<tr><th>Síntoma</th><th>Causa probable</th></tr>
+<tr><td>Imprime <code>Promise { &lt;pending&gt; }</code></td><td>Falta un <code>await</code>.</td></tr>
+<tr><td><code>await is only valid in async function</code></td><td>Usaste <code>await</code> dentro de una función que no es <code>async</code>.</td></tr>
+<tr><td><code>Unexpected token &lt; in JSON</code></td><td>Llamaste a <code>.json()</code> pero el servidor devolvió HTML o texto (una página de error, una URL mal escrita).</td></tr>
+<tr><td>No sale error pero tampoco datos (404)</td><td>No revisaste <code>respuesta.ok</code>.</td></tr>
+<tr><td><code>Cannot read properties of undefined</code></td><td>Navegaste un campo que no existe. Usa <code>?.</code> y revisa la forma real del JSON.</td></tr>
+<tr><td><code>CORS policy: No 'Access-Control-Allow-Origin'</code></td><td>Esa API no permite peticiones desde el navegador. Se resuelve desde un backend, no desde el frontend.</td></tr>
+<tr><td>Los datos llegan pero el DOM no cambia</td><td>Pintaste antes de que terminara la petición: pinta <b>después</b> del <code>await</code>.</td></tr>
+<tr><td>TS: <code>Property 'x' does not exist on type</code></td><td>Typo en el campo o tu interfaz no lo declara.</td></tr>
+<tr><td>TS: <code>Object is possibly 'undefined'</code></td><td>Usa <code>?.</code>, <code>??</code> o un <code>if</code> que descarte el caso.</td></tr>
+</table></div>
+<div class="card tip"><strong class="lbl">Tu mejor amigo: DevTools</strong>
+Pestaña <b>Network</b>: ver la petición, su estado y el JSON real. Pestaña <b>Console</b>: errores y <code>console.log</code>. Pestaña <b>Sources</b>: poner puntos de parada (<i>breakpoints</i>) y avanzar línea a línea.</div>
+
+<h2 id="local">Llevarlo a tu computador</h2>
+<p>Necesitas <a href="https://nodejs.org" target="_blank">Node.js</a> instalado. Dos caminos:</p>
+<h3>Opción A: ejecutar un archivo TypeScript suelto</h3>
+<script type="text/plain" class="src" data-lang="sh">
+npx tsx pokedex.ts       # ejecuta TS directamente (Node 18+ trae fetch)
+</script>
+<h3>Opción B: proyecto de navegador con Vite</h3>
+<script type="text/plain" class="src" data-lang="sh">
+npm create vite@latest mi-pokedex -- --template vanilla-ts
+cd mi-pokedex
+npm install
+npm run dev              # abre http://localhost:5173
+</script>
+<p>Vite compila tu <code>src/main.ts</code> al vuelo y te marca los errores de tipos. El archivo <code>tsconfig.json</code> que genera ya trae <code>"strict": true</code>; déjalo así.</p>
+
+<h2 id="chuleta">Chuleta rápida</h2>
+<div class="tablewrap"><table>
+<tr><th>Quiero…</th><th>Código</th></tr>
+<tr><td>Pedir y convertir a JSON</td><td><code>const datos = await (await fetch(url)).json();</code></td></tr>
+<tr><td>Saber si salió bien</td><td><code>if (!respuesta.ok) throw new Error(respuesta.status)</code></td></tr>
+<tr><td>Armar parámetros</td><td><code>new URLSearchParams({ limit: 10 })</code></td></tr>
+<tr><td>Varias peticiones a la vez</td><td><code>await Promise.all(urls.map(u =&gt; fetch(u)))</code></td></tr>
+<tr><td>Enviar datos (POST)</td><td><code>fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(obj) })</code></td></tr>
+<tr><td>Texto ↔ objeto</td><td><code>JSON.parse(texto)</code> · <code>JSON.stringify(obj)</code></td></tr>
+<tr><td>Campo que puede faltar</td><td><code>obj?.campo ?? "valor por defecto"</code></td></tr>
+<tr><td>Tipo de un objeto</td><td><code>interface Pokemon { id: number; name: string }</code></td></tr>
+<tr><td>Valor de varios tipos</td><td><code>string | number</code></td></tr>
+<tr><td>Valores exactos permitidos</td><td><code>"fire" | "water"</code></td></tr>
+<tr><td>Parámetro / propiedad opcional</td><td><code>bonus?: number</code></td></tr>
+<tr><td>Función que devuelve promesa</td><td><code>async function f(): Promise&lt;Pokemon&gt; { … }</code></td></tr>
+<tr><td>Todo opcional / solo algunos campos</td><td><code>Partial&lt;T&gt;</code> · <code>Pick&lt;T, "a" | "b"&gt;</code></td></tr>
+</table></div>
+
+<h2 id="recursos">Recursos para seguir aprendiendo</h2>
+<ul>
+  <li><a href="https://pokeapi.co/docs/v2" target="_blank">Documentación de PokéAPI</a> — todos los endpoints y sus campos.</li>
+  <li><a href="https://developer.mozilla.org/es/docs/Web/API/Fetch_API/Using_Fetch" target="_blank">MDN: usar fetch</a> — referencia en español.</li>
+  <li><a href="https://javascript.info/async" target="_blank">javascript.info: promesas y async</a> — la mejor explicación paso a paso.</li>
+  <li><a href="https://www.typescriptlang.org/docs/handbook/typescript-from-scratch.html" target="_blank">TypeScript Handbook</a> — la guía oficial.</li>
+  <li><a href="https://www.typescriptlang.org/play" target="_blank">TypeScript Playground</a> — editor oficial para probar tipos en línea.</li>
+  <li><a href="https://github.com/public-apis/public-apis" target="_blank">public-apis</a> — lista de cientos de APIs gratuitas para practicar (clima, chistes, países, películas…).</li>
+</ul>
+
+<footer>Guía de estudio · Clase de JavaScript y TypeScript · 2 horas. Los datos de pokémon pertenecen a PokéAPI.</footer>
+</main>
+</div>
+
+<!-- Declaraciones mínimas de la librería estándar para revisar tipos en el navegador -->
+<script type="text/plain" id="ts-lib">
+interface Symbol { readonly description: string | undefined; }
+interface SymbolConstructor { readonly iterator: unique symbol; readonly asyncIterator: unique symbol; }
+declare var Symbol: SymbolConstructor;
+type PropertyKey = string | number | symbol;
+
+interface IteratorYieldResult<TYield> { done?: false; value: TYield; }
+interface IteratorReturnResult<TReturn> { done: true; value: TReturn; }
+type IteratorResult<T, TReturn = any> = IteratorYieldResult<T> | IteratorReturnResult<TReturn>;
+interface Iterator<T, TReturn = any, TNext = any> { next(...args: [] | [TNext]): IteratorResult<T, TReturn>; }
+interface Iterable<T> { [Symbol.iterator](): Iterator<T>; }
+interface IterableIterator<T> extends Iterator<T> { [Symbol.iterator](): IterableIterator<T>; }
+interface ArrayLike<T> { readonly length: number; readonly [n: number]: T; }
+
+interface Object { toString(): string; hasOwnProperty(v: PropertyKey): boolean; }
+interface ObjectConstructor {
+  keys(o: object): string[];
+  values<T>(o: { [s: string]: T }): T[];
+  entries<T>(o: { [s: string]: T }): [string, T][];
+  assign<T extends {}, U>(target: T, source: U): T & U;
+  freeze<T>(o: T): Readonly<T>;
+  fromEntries<T = any>(entries: Iterable<readonly [PropertyKey, T]>): { [k: string]: T };
+}
+declare var Object: ObjectConstructor;
+interface Function { readonly name: string; apply(this: Function, thisArg: any, argArray?: any): any; call(this: Function, thisArg: any, ...argArray: any[]): any; bind(this: Function, thisArg: any, ...argArray: any[]): any; }
+interface CallableFunction extends Function {}
+interface NewableFunction extends Function {}
+interface IArguments { [index: number]: any; length: number; }
+interface RegExp { test(string: string): boolean; }
+interface RegExpMatchArray extends Array<string> { index?: number; }
+declare var RegExp: { new (pattern: string, flags?: string): RegExp; };
+interface TemplateStringsArray extends ReadonlyArray<string> { readonly raw: readonly string[]; }
+interface Boolean { valueOf(): boolean; }
+declare var Boolean: { (value?: any): boolean; };
+interface Number { toFixed(fractionDigits?: number): string; toString(radix?: number): string; toLocaleString(locales?: string, options?: any): string; }
+interface NumberConstructor { (value?: any): number; isInteger(n: unknown): boolean; isNaN(n: unknown): boolean; parseFloat(s: string): number; parseInt(s: string, radix?: number): number; readonly MAX_SAFE_INTEGER: number; }
+declare var Number: NumberConstructor;
+interface String {
+  readonly length: number; [index: number]: string;
+  charAt(pos: number): string; includes(searchString: string, position?: number): boolean;
+  startsWith(s: string): boolean; endsWith(s: string): boolean; indexOf(s: string): number;
+  slice(start?: number, end?: number): string; split(separator: string | RegExp, limit?: number): string[];
+  toLowerCase(): string; toUpperCase(): string; trim(): string;
+  padStart(maxLength: number, fillString?: string): string; padEnd(maxLength: number, fillString?: string): string;
+  replace(searchValue: string | RegExp, replaceValue: string): string; repeat(count: number): string;
+  localeCompare(that: string): number; match(regexp: RegExp): RegExpMatchArray | null;
+}
+declare var String: { (value?: any): string; };
+interface Date { toISOString(): string; getTime(): number; getFullYear(): number; toLocaleDateString(locales?: string): string; }
+declare var Date: { new (): Date; new (value: number | string): Date; now(): number; };
+interface Math {
+  readonly PI: number; abs(x: number): number; ceil(x: number): number; floor(x: number): number;
+  max(...values: number[]): number; min(...values: number[]): number; pow(x: number, y: number): number;
+  random(): number; round(x: number): number; sqrt(x: number): number;
+}
+declare var Math: Math;
+interface JSON { parse(text: string): any; stringify(value: any, replacer?: any, space?: string | number): string; }
+declare var JSON: JSON;
+declare var NaN: number;
+declare var Infinity: number;
+declare function parseInt(string: string, radix?: number): number;
+declare function parseFloat(string: string): number;
+declare function isNaN(number: number): boolean;
+
+interface ReadonlyArray<T> {
+  readonly length: number; readonly [n: number]: T;
+  [Symbol.iterator](): IterableIterator<T>;
+  map<U>(callbackfn: (value: T, index: number, array: readonly T[]) => U): U[];
+  filter(predicate: (value: T, index: number, array: readonly T[]) => unknown): T[];
+  find(predicate: (value: T, index: number, obj: readonly T[]) => unknown): T | undefined;
+  includes(searchElement: T): boolean; join(separator?: string): string; slice(start?: number, end?: number): T[];
+  forEach(callbackfn: (value: T, index: number, array: readonly T[]) => void): void;
+}
+interface Array<T> {
+  length: number; [n: number]: T;
+  [Symbol.iterator](): IterableIterator<T>;
+  push(...items: T[]): number; pop(): T | undefined; shift(): T | undefined; unshift(...items: T[]): number;
+  concat(...items: (T | T[])[]): T[]; join(separator?: string): string; slice(start?: number, end?: number): T[];
+  indexOf(searchElement: T): number; includes(searchElement: T): boolean; reverse(): T[];
+  sort(compareFn?: (a: T, b: T) => number): this;
+  forEach(callbackfn: (value: T, index: number, array: T[]) => void): void;
+  map<U>(callbackfn: (value: T, index: number, array: T[]) => U): U[];
+  flatMap<U>(callback: (value: T, index: number, array: T[]) => U | readonly U[]): U[];
+  filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S): S[];
+  filter(predicate: (value: T, index: number, array: T[]) => unknown): T[];
+  find<S extends T>(predicate: (value: T, index: number, obj: T[]) => value is S): S | undefined;
+  find(predicate: (value: T, index: number, obj: T[]) => unknown): T | undefined;
+  findIndex(predicate: (value: T, index: number, obj: T[]) => unknown): number;
+  some(predicate: (value: T, index: number, array: T[]) => unknown): boolean;
+  every(predicate: (value: T, index: number, array: T[]) => unknown): boolean;
+  reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): T;
+  reduce<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;
+  at(index: number): T | undefined;
+}
+interface ArrayConstructor { isArray(arg: any): arg is any[]; from<T>(iterable: Iterable<T> | ArrayLike<T>): T[]; new (arrayLength?: number): any[]; }
+declare var Array: ArrayConstructor;
+
+interface Map<K, V> {
+  readonly size: number; get(key: K): V | undefined; set(key: K, value: V): this; has(key: K): boolean;
+  delete(key: K): boolean; clear(): void; forEach(callbackfn: (value: V, key: K, map: Map<K, V>) => void): void;
+  keys(): IterableIterator<K>; values(): IterableIterator<V>; entries(): IterableIterator<[K, V]>;
+  [Symbol.iterator](): IterableIterator<[K, V]>;
+}
+declare var Map: { new <K = any, V = any>(entries?: readonly (readonly [K, V])[] | null): Map<K, V>; };
+interface Set<T> {
+  readonly size: number; add(value: T): this; has(value: T): boolean; delete(value: T): boolean; clear(): void;
+  forEach(callbackfn: (value: T, value2: T, set: Set<T>) => void): void; values(): IterableIterator<T>;
+  [Symbol.iterator](): IterableIterator<T>;
+}
+declare var Set: { new <T = any>(values?: readonly T[] | null): Set<T>; };
+
+type Partial<T> = { [P in keyof T]?: T[P] };
+type Required<T> = { [P in keyof T]-?: T[P] };
+type Readonly<T> = { readonly [P in keyof T]: T[P] };
+type Pick<T, K extends keyof T> = { [P in K]: T[P] };
+type Record<K extends keyof any, T> = { [P in K]: T };
+type Exclude<T, U> = T extends U ? never : T;
+type Extract<T, U> = T extends U ? T : never;
+type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
+type NonNullable<T> = T & {};
+type Parameters<T extends (...args: any) => any> = T extends (...args: infer P) => any ? P : never;
+type ReturnType<T extends (...args: any) => any> = T extends (...args: any) => infer R ? R : any;
+type Awaited<T> = T extends null | undefined ? T : T extends object & { then(onfulfilled: infer F, ...args: infer _): any } ? F extends ((value: infer V, ...args: infer _) => any) ? Awaited<V> : never : T;
+
+interface PromiseLike<T> { then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null): PromiseLike<TResult1 | TResult2>; }
+interface Promise<T> {
+  then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null): Promise<TResult1 | TResult2>;
+  catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | null): Promise<T | TResult>;
+  finally(onfinally?: (() => void) | null): Promise<T>;
+}
+interface PromiseFulfilledResult<T> { status: "fulfilled"; value: T; }
+interface PromiseRejectedResult { status: "rejected"; reason: any; }
+type PromiseSettledResult<T> = PromiseFulfilledResult<T> | PromiseRejectedResult;
+interface PromiseConstructor {
+  new <T>(executor: (resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void): Promise<T>;
+  all<T extends readonly unknown[] | []>(values: T): Promise<{ -readonly [P in keyof T]: Awaited<T[P]> }>;
+  allSettled<T extends readonly unknown[] | []>(values: T): Promise<{ -readonly [P in keyof T]: PromiseSettledResult<Awaited<T[P]>> }>;
+  race<T extends readonly unknown[] | []>(values: T): Promise<Awaited<T[number]>>;
+  resolve(): Promise<void>;
+  resolve<T>(value: T): Promise<Awaited<T>>;
+  reject<T = never>(reason?: any): Promise<T>;
+}
+declare var Promise: PromiseConstructor;
+
+interface Error { name: string; message: string; stack?: string; }
+interface ErrorConstructor { new (message?: string): Error; (message?: string): Error; }
+declare var Error: ErrorConstructor;
+declare var TypeError: ErrorConstructor;
+declare var RangeError: ErrorConstructor;
+
+interface Console { log(...data: any[]): void; info(...data: any[]): void; warn(...data: any[]): void; error(...data: any[]): void; table(data: any): void; }
+declare var console: Console;
+declare function setTimeout(handler: () => void, timeout?: number): number;
+declare function clearTimeout(id: number | undefined): void;
+declare function setInterval(handler: () => void, timeout?: number): number;
+declare function clearInterval(id: number | undefined): void;
+declare var performance: { now(): number };
+
+interface Headers { get(name: string): string | null; has(name: string): boolean; }
+interface RequestInit { method?: string; headers?: Record<string, string>; body?: string; signal?: any; }
+interface Response {
+  readonly ok: boolean; readonly status: number; readonly statusText: string; readonly url: string; readonly headers: Headers;
+  json(): Promise<any>; text(): Promise<string>;
+}
+interface URLSearchParams { get(name: string): string | null; set(name: string, value: string): void; append(name: string, value: string): void; has(name: string): boolean; toString(): string; }
+declare var URLSearchParams: { new (init?: string | Record<string, string | number>): URLSearchParams; };
+interface URL { readonly href: string; readonly pathname: string; readonly searchParams: URLSearchParams; toString(): string; }
+declare var URL: { new (url: string, base?: string): URL; };
+declare function fetch(input: string | URL, init?: RequestInit): Promise<Response>;
+
+declare const document: any;
+declare const window: any;
+declare const localStorage: any;
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typescript/5.9.3/typescript.min.js"></script>
+<script>
+/* ========= Tema claro/oscuro ========= */
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const root = document.documentElement;
+  const isDark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = isDark ? 'light' : 'dark';
+});
+
+/* ========= Resaltado de código estático ========= */
+const KW = new Set('const let var function return if else for while of in await async try catch finally throw new class interface type extends implements import export from as typeof instanceof switch case break continue default null undefined true false void readonly this keyof'.split(' '));
+const TY = new Set('string number boolean any unknown never object symbol bigint'.split(' '));
+const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function highlight(src) {
+  const re = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)|("(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'|`(?:\\.|[^`\\])*`)|(\b\d[\d_.]*\b)|([A-Za-z_$][\w$]*)/g;
+  let out = '', last = 0, m;
+  while ((m = re.exec(src))) {
+    out += esc(src.slice(last, m.index));
+    const [t, c, s, n, w] = m;
+    if (c) out += '<i class="c">' + esc(t) + '</i>';
+    else if (s) out += '<i class="s">' + esc(t) + '</i>';
+    else if (n) out += '<i class="n">' + esc(t) + '</i>';
+    else if (KW.has(w)) out += '<i class="k">' + w + '</i>';
+    else if (TY.has(w) || /^[A-Z]/.test(w)) out += '<i class="t">' + w + '</i>';
+    else out += w;
+    last = re.lastIndex;
+  }
+  return out + esc(src.slice(last));
+}
+const dedent = (s) => s.replace(/^\s*\n/, '').replace(/\s+$/, '');
+document.querySelectorAll('script.src').forEach((el) => {
+  const pre = document.createElement('pre');
+  pre.className = 'code';
+  const lang = el.dataset.lang;
+  const text = dedent(el.textContent);
+  pre.innerHTML = (lang === 'plain' || lang === 'sh') ? esc(text) : highlight(text);
+  el.after(pre);
+});
+
+/* ========= Datos de muestra de PokéAPI (misma forma que la API real) ========= */
+// [id, nombre, altura (dm), peso (hg), tipos, habilidades, [hp, atk, def, spa, spd, spe]]
+const POKE_DB = [
+  [1, 'bulbasaur', 7, 69, ['grass', 'poison'], ['overgrow', 'chlorophyll'], [45, 49, 49, 65, 65, 45]],
+  [4, 'charmander', 6, 85, ['fire'], ['blaze', 'solar-power'], [39, 52, 43, 60, 50, 65]],
+  [6, 'charizard', 17, 905, ['fire', 'flying'], ['blaze', 'solar-power'], [78, 84, 78, 109, 85, 100]],
+  [7, 'squirtle', 5, 90, ['water'], ['torrent', 'rain-dish'], [44, 48, 65, 50, 64, 43]],
+  [25, 'pikachu', 4, 60, ['electric'], ['static', 'lightning-rod'], [35, 55, 40, 50, 50, 90]],
+  [39, 'jigglypuff', 5, 55, ['normal', 'fairy'], ['cute-charm', 'competitive'], [115, 45, 20, 45, 25, 20]],
+  [54, 'psyduck', 8, 196, ['water'], ['damp', 'cloud-nine', 'swift-swim'], [50, 52, 48, 65, 50, 55]],
+  [66, 'machop', 8, 195, ['fighting'], ['guts', 'no-guard', 'steadfast'], [70, 80, 50, 35, 35, 35]],
+  [92, 'gastly', 13, 1, ['ghost', 'poison'], ['levitate'], [30, 35, 30, 100, 35, 80]],
+  [94, 'gengar', 15, 405, ['ghost', 'poison'], ['cursed-body'], [60, 65, 60, 130, 75, 110]],
+  [129, 'magikarp', 9, 100, ['water'], ['swift-swim', 'rattled'], [20, 10, 55, 15, 20, 80]],
+  [133, 'eevee', 3, 65, ['normal'], ['run-away', 'adaptability', 'anticipation'], [55, 55, 50, 45, 65, 55]],
+  [143, 'snorlax', 21, 4600, ['normal'], ['immunity', 'thick-fat', 'gluttony'], [160, 110, 65, 65, 110, 30]],
+  [149, 'dragonite', 22, 2100, ['dragon', 'flying'], ['inner-focus', 'multiscale'], [91, 134, 95, 100, 100, 80]],
+  [150, 'mewtwo', 20, 1220, ['psychic'], ['pressure', 'unnerve'], [106, 110, 90, 154, 90, 130]],
+  [151, 'mew', 4, 40, ['psychic'], ['synchronize'], [100, 100, 100, 100, 100, 100]],
+];
+
+/* Código que corre DENTRO del iframe de cada ejemplo: consola, errores y fetch con respaldo simulado */
+function preludeMain(cfg) {
+  const t0 = performance.now();
+  const now = () => Math.round(performance.now() - t0);
+  const send = (type, data) => parent.postMessage(Object.assign({ __play: cfg.id, type }, data), '*');
+  const fmt = (v) => {
+    if (typeof v === 'string') return v;
+    if (v instanceof Error) return v.name + ': ' + v.message;
+    if (typeof v === 'function') return '[Function ' + (v.name || 'anónima') + ']';
+    if (v === undefined) return 'undefined';
+    if (v instanceof Promise) return 'Promise { <pending> }';
+    if (typeof v === 'symbol') return String(v);
+    if (typeof Response !== 'undefined' && v instanceof Response) return 'Response { status: ' + v.status + ', ok: ' + v.ok + ' }';
+    try {
+      const rep = (k, x) => (x instanceof Error ? x.name + ': ' + x.message : typeof x === 'bigint' ? String(x) : x instanceof Map ? Object.fromEntries(x) : x instanceof Set ? Array.from(x) : x);
+      const compact = JSON.stringify(v, rep);
+      if (compact !== undefined && compact.length <= 76) return compact;
+      return JSON.stringify(v, rep, 2);
+    } catch (e) { return String(v); }
+  };
+  ['log', 'info', 'warn', 'error', 'debug', 'table'].forEach((level) => {
+    console[level] = (...args) => send('log', { level: level === 'debug' || level === 'table' ? 'log' : level, text: args.map(fmt).join(' '), t: now() });
+  });
+  window.__started = false;
+  window.addEventListener('error', (e) => {
+    send('log', { level: 'error', text: 'Uncaught ' + (e.error ? e.error.name + ': ' + e.error.message : e.message), t: now() });
+    if (!window.__started) send('done', { t: now() });
+  });
+  window.addEventListener('unhandledrejection', (e) => {
+    const r = e.reason;
+    send('log', { level: 'error', text: 'Promesa rechazada sin capturar: ' + (r && r.message ? r.message : fmt(r)), t: now() });
+  });
+  window.__done = () => send('done', { t: now() });
+
+  /* fetch: PokéAPI real si es posible, simulada si no */
+  const API = 'https://pokeapi.co/api/v2/';
+  const realFetch = window.fetch.bind(window);
+  const SPRITES = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
+  const STATS = ['hp', 'attack', 'defense', 'special-attack', 'special-defense', 'speed'];
+  const ref = (kind, name, id) => ({ name: name, url: API + kind + '/' + id + '/' });
+  const detail = (r) => ({
+    id: r[0], name: r[1], height: r[2], weight: r[3],
+    types: r[4].map((t, i) => ({ slot: i + 1, type: ref('type', t, 0) })),
+    abilities: r[5].map((a, i) => ({ ability: ref('ability', a, 0), is_hidden: r[5].length > 1 && i === r[5].length - 1, slot: i + 1 })),
+    stats: r[6].map((v, i) => ({ base_stat: v, effort: 0, stat: ref('stat', STATS[i], i + 1) })),
+    sprites: { front_default: SPRITES + r[0] + '.png', other: { 'official-artwork': { front_default: SPRITES + 'other/official-artwork/' + r[0] + '.png' } } },
+  });
+  const json = (obj, status) => new Response(JSON.stringify(obj), { status: status || 200, headers: { 'content-type': 'application/json; charset=utf-8' } });
+  const notFound = () => new Response('Not Found', { status: 404, statusText: 'Not Found', headers: { 'content-type': 'text/plain; charset=utf-8' } });
+  const route = (u) => {
+    const url = new URL(u);
+    const parts = url.pathname.replace(/^\/api\/v2\//, '').replace(/\/+$/, '').split('/');
+    if (parts[0] !== 'pokemon') return notFound();
+    if (parts.length === 1) {
+      const limit = Math.max(1, parseInt(url.searchParams.get('limit') || '20', 10));
+      const offset = Math.max(0, parseInt(url.searchParams.get('offset') || '0', 10));
+      const page = cfg.db.slice(offset, offset + limit);
+      const link = (o) => API + 'pokemon?offset=' + o + '&limit=' + limit;
+      return json({
+        count: cfg.db.length,
+        next: offset + limit < cfg.db.length ? link(offset + limit) : null,
+        previous: offset > 0 ? link(Math.max(0, offset - limit)) : null,
+        results: page.map((r) => ref('pokemon', r[1], r[0])),
+      });
+    }
+    if (parts.length === 2) {
+      const key = decodeURIComponent(parts[1]).toLowerCase();
+      const row = cfg.db.find((r) => r[1] === key || String(r[0]) === key);
+      return row ? json(detail(row)) : notFound();
+    }
+    return notFound();
+  };
+  let notified = false;
+  const mock = (u) => new Promise((resolve) => setTimeout(() => resolve(route(u)), 350 + Math.random() * 250));
+  window.fetch = async (input, init) => {
+    const u = typeof input === 'string' ? input : (input && input.url) || String(input);
+    if (u.indexOf(API) !== 0 || cfg.mode === 'real') return realFetch(input, init);
+    if (cfg.mode === 'mock') return mock(u);
+    try {
+      return await realFetch(input, init);
+    } catch (e) {
+      if (!notified) { notified = true; send('log', { level: 'sys', text: 'pokeapi.co no es accesible desde este visor: usando datos simulados.', t: now() }); }
+      return mock(u);
+    }
+  };
+}
+
+/* ========= Revisión de tipos y compilación (TypeScript en el navegador) ========= */
+const LIB_TEXT = document.getElementById('ts-lib').textContent;
+const TS_OK = typeof ts !== 'undefined';
+let libFile = null;
+function typeCheck(code) {
+  const text = code + '\nexport {};\n';
+  const options = { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, strict: true, noEmit: true, noLib: true, types: [] };
+  const main = ts.createSourceFile('main.ts', text, ts.ScriptTarget.ES2022, true);
+  libFile = libFile || ts.createSourceFile('lib.d.ts', LIB_TEXT, ts.ScriptTarget.ES2022, true);
+  const host = {
+    getSourceFile: (n) => (n === 'main.ts' ? main : n === 'lib.d.ts' ? libFile : undefined),
+    getDefaultLibFileName: () => 'lib.d.ts', writeFile: () => {}, getCurrentDirectory: () => '/', getDirectories: () => [],
+    fileExists: (n) => n === 'main.ts' || n === 'lib.d.ts', readFile: () => undefined,
+    getCanonicalFileName: (n) => n, useCaseSensitiveFileNames: () => true, getNewLine: () => '\n',
+  };
+  const program = ts.createProgram(['main.ts', 'lib.d.ts'], options, host);
+  const all = program.getSyntacticDiagnostics(main).concat(program.getSemanticDiagnostics(main));
+  return all.map((d) => {
+    const p = main.getLineAndCharacterOfPosition(d.start || 0);
+    return { line: p.line + 1, col: p.character + 1, code: d.code, msg: ts.flattenDiagnosticMessageText(d.messageText, '\n') };
+  });
+}
+function toJS(code) {
+  const out = ts.transpileModule(code + '\nexport {};\n', { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext } }).outputText;
+  return out.replace(/\n?export \{\};?\s*$/, '\n').trim();
+}
+
+/* ========= Playgrounds ========= */
+const modeSel = document.getElementById('modeSel');
+const plays = [];
+let playSeq = 0;
+
+function buildPlay(el) {
+  const id = 'p' + (++playSeq);
+  const lang = el.dataset.lang;
+  const hasView = el.hasAttribute('data-view');
+  const files = Array.from(el.querySelectorAll('script[type="text/plain"]')).map((s) => {
+    const name = s.dataset.file || 'main.' + lang;
+    const text = dedent(s.textContent);
+    s.remove();
+    return { name, text, orig: text, kind: /\.html$/.test(name) ? 'html' : 'code' };
+  });
+  let current = files.find((f) => f.kind === 'code');
+  const codeFile = current;
+  const htmlFile = files.find((f) => f.kind === 'html');
+  const title = el.dataset.title || 'Pruébalo';
+
+  el.innerHTML =
+    '<div class="bar"><span class="ttl"><span class="lang">' + lang.toUpperCase() + '</span><span>' + esc(title) + '</span></span>' +
+    '<span class="btns"><button class="run" type="button">▶ Ejecutar</button><button class="reset" type="button">Restaurar</button></span></div>' +
+    '<div class="panes"><div class="left">' +
+      (files.length > 1 ? '<div class="tabs" role="tablist"></div>' : '') +
+      '<textarea spellcheck="false" aria-label="Editor de código"></textarea>' +
+      (lang === 'ts' ? '<div class="diag" aria-live="polite"></div>' : '') +
+    '</div><div class="right">' +
+      '<iframe class="' + (hasView ? 'view' : 'hid') + '" sandbox="allow-scripts" title="Vista previa"></iframe>' +
+      '<div class="tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-r="console">Consola</button>' +
+      (lang === 'ts' ? '<button type="button" role="tab" aria-selected="false" data-r="js">JS generado</button>' : '') + '</div>' +
+      '<div class="console" aria-live="polite"><div class="ph">Presiona ▶ Ejecutar para ver la salida.</div></div>' +
+      (lang === 'ts' ? '<pre class="jsout" hidden></pre>' : '') +
+      '<div class="status"></div>' +
+    '</div></div>';
+
+  const ta = el.querySelector('textarea');
+  const consoleEl = el.querySelector('.console');
+  const statusEl = el.querySelector('.status');
+  const diagEl = el.querySelector('.diag');
+  const jsout = el.querySelector('.jsout');
+  const frame = el.querySelector('iframe');
+  const runBtn = el.querySelector('.run');
+  let runId = 0, runStart = 0, hasRun = false;
+
+  const fit = () => { ta.style.height = 'auto'; ta.style.height = Math.min(Math.max(ta.scrollHeight, 150), 520) + 'px'; };
+  const show = (file) => {
+    current = file; ta.value = file.text; fit();
+    el.querySelectorAll('.left .tabs button').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.f === file.name)));
+  };
+  const tabsEl = el.querySelector('.left .tabs');
+  if (tabsEl) files.forEach((f) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.role = 'tab'; b.dataset.f = f.name; b.textContent = f.name;
+    b.addEventListener('click', () => { current.text = ta.value; show(f); });
+    tabsEl.appendChild(b);
+  });
+  show(current);
+
+  const status = (t) => { statusEl.textContent = t; };
+  const addLine = (level, text, t) => {
+    if (!hasRun) { consoleEl.innerHTML = ''; hasRun = true; }
+    const row = document.createElement('div');
+    row.className = 'ln ' + level;
+    const pre = document.createElement('pre'); pre.textContent = text;
+    const tm = document.createElement('span'); tm.className = 'tm'; tm.textContent = t == null ? '' : '+' + t + ' ms';
+    row.append(pre, tm);
+    consoleEl.appendChild(row);
+    consoleEl.scrollTop = consoleEl.scrollHeight;
+  };
+
+  function check() {
+    if (lang !== 'ts') return [];
+    if (!TS_OK) { diagEl.innerHTML = '<div class="head err">No se pudo cargar el compilador de TypeScript (sin conexión a cdnjs).</div>'; return []; }
+    codeFile.text = current === codeFile ? ta.value : codeFile.text;
+    let list = [];
+    try { list = typeCheck(codeFile.text); } catch (e) { diagEl.innerHTML = '<div class="head err">Error del revisor: ' + esc(String(e.message)) + '</div>'; return []; }
+    if (!list.length) diagEl.innerHTML = '<div class="head ok">Problemas: ninguno. Los tipos están bien.</div>';
+    else diagEl.innerHTML = '<div class="head err">Problemas: ' + list.length + (list.length === 1 ? ' error de tipos' : ' errores de tipos') + '</div><ul>' +
+      list.map((d) => '<li><b>L' + d.line + ':' + d.col + '</b><span>' + esc(d.msg) + '</span></li>').join('') + '</ul>';
+    try { jsout.textContent = toJS(codeFile.text); } catch (e) { /* ignorar */ }
+    return list;
+  }
+
+  function run() {
+    if (current === codeFile) codeFile.text = ta.value; else if (current === htmlFile) htmlFile.text = ta.value;
+    let js = codeFile.text;
+    if (lang === 'ts') {
+      if (!TS_OK) { addLine('error', 'No se pudo cargar TypeScript. Revisa tu conexión.', null); return; }
+      check();
+      js = toJS(codeFile.text);
+    }
+    const id = id_(); runId = id;
+    hasRun = false; consoleEl.innerHTML = ''; runStart = performance.now();
+    status('ejecutando…'); runBtn.textContent = '↻ Ejecutando…';
+    const cfg = { id, mode: modeSel.value, db: POKE_DB };
+    const body = htmlFile ? htmlFile.text : '';
+    const doc = '<!doctype html><meta charset="utf-8"><body style="font-family:system-ui,sans-serif;margin:0">' + body +
+      '<script>(' + preludeMain.toString() + ')(' + JSON.stringify(cfg) + ');<\/script>' +
+      '<script>(async () => { window.__started = true; try {\n' + js + '\n} catch (e) { console.error(e); } finally { window.__done(); } })();<\/script>';
+    frame.srcdoc = doc;
+  }
+  const id_ = () => (++runSeq);
+
+  const onMsg = (e) => {
+    const d = e.data;
+    if (!d || e.source !== frame.contentWindow || d.__play !== runId) return;
+    if (d.type === 'log') addLine(d.level, d.text, d.t);
+    else if (d.type === 'done') {
+      if (!hasRun) { consoleEl.innerHTML = '<div class="ph">El programa terminó sin mostrar nada en la consola.</div>'; hasRun = true; }
+      status('terminó en ' + d.t + ' ms'); runBtn.textContent = '▶ Ejecutar';
+    }
+  };
+  window.addEventListener('message', onMsg);
+
+  runBtn.addEventListener('click', run);
+  el.querySelector('.reset').addEventListener('click', () => {
+    files.forEach((f) => { f.text = f.orig; });
+    show(current); check();
+  });
+  el.querySelectorAll('.right .tabs button').forEach((b) => b.addEventListener('click', () => {
+    el.querySelectorAll('.right .tabs button').forEach((x) => x.setAttribute('aria-selected', String(x === b)));
+    const js = b.dataset.r === 'js';
+    consoleEl.hidden = js; if (jsout) jsout.hidden = !js;
+  }));
+  let timer;
+  ta.addEventListener('input', () => {
+    current.text = ta.value; fit();
+    if (lang === 'ts' && current === codeFile) { clearTimeout(timer); timer = setTimeout(check, 450); }
+  });
+  ta.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab' && !e.shiftKey) { e.preventDefault(); ta.setRangeText('  ', ta.selectionStart, ta.selectionEnd, 'end'); ta.dispatchEvent(new Event('input')); }
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); run(); }
+  });
+  check();
+
+  const api = { el, run, check: () => { codeFile.text = current === codeFile ? ta.value : codeFile.text; return check(); }, title, lang };
+  plays.push(api);
+  return api;
+}
+let runSeq = 0;
+document.querySelectorAll('.play').forEach(buildPlay);
+window.__plays = plays;
+
+/* Ejecutar cada ejemplo la primera vez que se ve (salvo los de TypeScript con errores a propósito) */
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (!en.isIntersecting) return;
+      io.unobserve(en.target);
+      const p = plays.find((x) => x.el === en.target);
+      if (p && !p.el.hasAttribute('data-manual')) p.run();
+    });
+  }, { threshold: 0.35 });
+  plays.forEach((p) => io.observe(p.el));
+}
+</script>
+</body>
+</html>

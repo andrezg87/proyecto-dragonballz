@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "permissions": {
+    "allow": [
+      "Read",
+      "Bash(node --version)",
+      "Bash(npm --version)",
+      "Bash(git --version)",
+      "Bash(git status*)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(npm run verificar*)",
+      "Bash(npm run build*)",
+      "Bash(npm install*)",
+      "Bash(npm run servir*)",
+      "Bash(git config*)",
+      "Bash(pwd)",
+      "Bash(ls*)"
+    ],
+    "deny": [
+      "Edit(**/04-proyecto/dragonball/**/*.ts)",
+      "Edit(**/04-proyecto/dragonball/**/*.html)",
+      "Edit(**/04-proyecto/dragonball/**/*.css)",
+      "Edit(**/04-proyecto/dragonball/**/*.js)",
+      "Edit(**/04-proyecto/dragonball/README.md)",
+      "Edit(**/.claude/**)",
+      "Edit(**/CLAUDE.md)",
+      "Edit(**/00-repaso-rapido/**)",
+      "Edit(**/01-clase-html-css/**)",
+      "Edit(**/02-clase-js-ts/**)",
+      "Edit(**/03-pokedex-pasos/**)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PROJECT_DIR}/.claude/hooks/proteger-codigo.mjs\""
+          }
+        ]
+      }
+    ]
+  }
+}

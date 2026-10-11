@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proyecto Dragon Ball: analiza y replica</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f7f5;--surface:#fff;--surface-2:#f0efeb;--text:#1d1d1f;--muted:#5f6368;--border:#e2e0da;--accent:#e4572e;--accent-2:#2e86de;--ok:#2a9d5c;--warn:#d99a00;--field:#fff;--radius:12px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121316;--surface:#1b1c20;--surface-2:#24262b;--text:#ececec;--muted:#a3a7ae;--border:#30323a;--accent:#ff7a50;--accent-2:#5aa9f5;--ok:#4cc985;--warn:#f2b632;--field:#14151a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121316;--surface:#1b1c20;--surface-2:#24262b;--text:#ececec;--muted:#a3a7ae;--border:#30323a;--accent:#ff7a50;--accent-2:#5aa9f5;--ok:#4cc985;--warn:#f2b632;--field:#14151a;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,sans-serif}
+code,textarea,input{font-family:"JetBrains Mono",ui-monospace,monospace}
+a{color:var(--accent-2)}
+main{max-width:820px;margin:0 auto;padding:32px 16px 80px}
+h1{font-size:clamp(28px,5vw,42px);line-height:1.1;margin:0 0 8px;font-weight:800;text-wrap:balance}
+h1 span{color:var(--accent)}
+h2{font-size:24px;margin:40px 0 4px;text-wrap:balance}
+h2 small{font:600 12px "JetBrains Mono",monospace;color:var(--muted);background:var(--surface-2);border:1px solid var(--border);border-radius:99px;padding:2px 10px;margin-left:8px;vertical-align:middle}
+.lead{color:var(--muted);margin:0 0 16px}
+p code,li code,td code,summary code{background:var(--surface-2);border:1px solid var(--border);border-radius:5px;padding:1px 5px;font-size:.88em;overflow-wrap:anywhere}
+.card{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent-2);border-radius:var(--radius);padding:12px 18px;margin:14px 0}
+.card.warn{border-left-color:var(--warn)}
+.card.story{border-left-color:var(--accent)}
+.sw{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:12px 0}
+.sw div{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--surface);font-size:13px}
+.sw i{display:block;height:54px}
+.sw span{display:block;padding:6px 10px;line-height:1.35}
+.sw code{font-size:12px}
+.bonus{border-left-color:var(--ok)}
+.card ol{padding-left:22px;margin:4px 0}
+.card ol li{margin:4px 0}
+.card ul{margin:4px 0 0;padding-left:20px}
+ol.qs{list-style:none;padding:0;margin:12px 0;counter-reset:q}
+.q{counter-increment:q;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin:10px 0}
+.q .qt{display:grid;grid-template-columns:auto 1fr;gap:10px}
+.q .qt::before{content:counter(q);font:600 13px "JetBrains Mono",monospace;color:#fff;background:var(--accent);border-radius:99px;min-width:26px;height:26px;display:grid;place-items:center;margin-top:2px}
+.opts{display:grid;gap:6px;margin-top:10px}
+.opts label{display:flex;gap:8px;align-items:flex-start;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;cursor:pointer;font-size:15px}
+.opts input{margin-top:5px;accent-color:var(--accent)}
+.count{font:12px "JetBrains Mono",monospace;color:var(--muted);margin-top:4px}
+.count.ok{color:var(--ok)}
+.where{display:block;font-size:13px;color:var(--muted)}
+textarea,input[type=text]{width:100%;margin-top:10px;background:var(--field);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13.5px;line-height:1.5}
+textarea{min-height:80px;resize:vertical}
+td input{margin:0;min-width:130px}
+:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px}
+details{margin-top:8px;font-size:14px;color:var(--muted)}
+summary{cursor:pointer}
+.tablewrap{overflow-x:auto;margin:12px 0}
+table{width:100%;border-collapse:collapse;background:var(--surface);min-width:520px}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top;font-size:15px}
+th{background:var(--surface-2);font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+ul.check{list-style:none;padding:0;margin:8px 0}
+ul.check li{padding:4px 0 4px 30px;position:relative}
+ul.check input{position:absolute;left:0;top:9px;width:auto;margin:0;accent-color:var(--ok)}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0}
+.btn{font:600 14px Inter,sans-serif;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:9px 16px;cursor:pointer}
+.btn.alt{background:transparent;color:var(--text);border:1px solid var(--border)}
+#copiado{font-size:14px;color:var(--ok)}
+.theme-btn{position:fixed;right:16px;bottom:16px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:99px;padding:8px 14px;cursor:pointer;font:600 13px Inter,sans-serif}
+</style>
+</head>
+<body>
+<button class="theme-btn" id="themeBtn" aria-label="Cambiar tema">◐ Tema</button>
+<main>
+  <h1>Proyecto <span>Dragon Ball</span>: analiza y replica</h1>
+  <p class="lead">Exploras una API, diseñas una página, la construyes y al final analizas <b>tu propio código</b>. Lo que se evalúa es que puedas explicar, con tus palabras, <i>por qué</i> funciona.</p>
+  <div class="card story"><b>El encargo.</b> Tu sobrino quiere una página para ver sus personajes favoritos de Dragon Ball. Te contrataron para hacerla y te entregaron la paleta de colores de la serie. Tu trabajo: <b>diseñarla</b> y <b>construirla</b>. La página tiene solo dos pantallas: un listado con buscador y filtros, y el detalle de un personaje, en web y en celular.</div>
+  <label for="nombre"><b>Nombre</b></label>
+  <input type="text" id="nombre" data-id="nombre" placeholder="Tu nombre completo" autocomplete="name">
+  <div class="card"><b>Antes de empezar.</b> Sigue el <code>README.md</code> de la raíz del repositorio: instala Node.js y Git, ejecuta <code>npm install</code> y comprueba con <code>npm run verificar</code> que todo está listo. Tu trabajo va en la carpeta <code>04-proyecto/dragonball/</code>. Para crear un nivel usa <code>npm run nivel -- N</code> y para compilar tu TypeScript, <code>npm run build</code>.</div>
+  <div class="card warn"><b>Cómo se trabaja con la IA en este proyecto.</b> La IA puede escribir el código, pero <b>tú diriges</b>. No tienes que teclear todo desde cero, y tampoco se trata de pedirle el proyecto entero y pegarlo. Tu trabajo es: darle contexto real (wireframe, paleta, el JSON de la API), pedirle el código <b>por piezas pequeñas</b>, <b>acomodar cada pieza</b> en el archivo y la carpeta correctos dentro de VS Code, ejecutarla, <b>entenderla</b>, corregirla y <b>conversarla</b>: preguntar por qué, pedir alternativas y cuestionar lo que no tenga sentido. <b>Lo que escribes tú, con tus palabras, es la Parte D y tu README</b> (como mínimo un párrafo por respuesta, sin pegar texto generado). Todo lo sustentas en vivo. Tus respuestas se guardan solas en este navegador.</div>
+
+  <h2>A · Explora la API <small>15 %</small></h2>
+  <div class="card note"><b>Dónde leer sobre la Dragon Ball API.</b> Empieza por la documentación y luego comprueba todo con el JSON real:
+    <ul>
+      <li><a href="https://web.dragonball-api.com/" target="_blank" rel="noopener">web.dragonball-api.com</a>: el sitio de la API.</li>
+      <li><a href="https://web.dragonball-api.com/documentation" target="_blank" rel="noopener">web.dragonball-api.com/documentation</a>: la documentación (endpoints, parámetros y ejemplos).</li>
+      <li><a href="https://dragonball-api.com/api-docs" target="_blank" rel="noopener">dragonball-api.com/api-docs</a>: documentación interactiva (Swagger UI), donde puedes probar cada endpoint desde el navegador y ver la forma exacta de la respuesta.</li>
+    </ul>
+    <b>Bonus ★:</b> si vas a hacer el bonus de planetas, explora también <code>/planets</code> (lista y detalle) y compara su forma con la de los personajes.<br>
+    La documentación te da el mapa; <b>el JSON real manda</b>. Si algo no coincide, anótalo: puede ser una diferencia importante.
+  </div>
+  <p class="lead">Abre estas URLs en el navegador y lee el JSON: <a href="https://dragonball-api.com/api/characters?limit=5" target="_blank" rel="noopener">/characters?limit=5</a>, <a href="https://dragonball-api.com/api/characters/1" target="_blank" rel="noopener">/characters/1</a>, <a href="https://dragonball-api.com/api/characters?name=Goku" target="_blank" rel="noopener">/characters?name=Goku</a> y <code>/characters/99999</code>. Todas empiezan con <code>https://dragonball-api.com/api</code>. Completa con lo que <b>comprobaste</b>:</p>
+  <div class="tablewrap"><table>
+    <tr><th>Aspecto</th><th>PokéAPI</th><th>Dragon Ball API</th></tr>
+    <tr><td>Arreglo de resultados y paginación</td><td><code>results</code>, <code>next</code></td><td><input type="text" data-id="b-1" aria-label="Arreglo y paginación"></td></tr>
+    <tr><td>¿La lista ya trae imagen y datos para la tarjeta?</td><td>No: solo nombre y url</td><td><input type="text" data-id="b-2" aria-label="Datos en la lista"></td></tr>
+    <tr><td>Tipo de dato del poder (<code>ki</code>)</td><td>número (<code>hp</code>)</td><td><input type="text" data-id="b-3" aria-label="Tipo del poder"></td></tr>
+    <tr><td>Respuesta con un id inexistente</td><td>404</td><td><input type="text" data-id="b-4" aria-label="Id inexistente"></td></tr>
+    <tr><td>Forma de la respuesta con <code>?name=</code></td><td>no aplica</td><td><input type="text" data-id="b-5" aria-label="Respuesta con filtro"></td></tr>
+  </table></div>
+  <ol class="qs">
+    <li class="q" data-id="b1"><div class="qt"><div>¿Cuáles de esas diferencias te obligan a cambiar la <b>arquitectura</b> de la Pokédex (no solo los nombres de campos)? Justifica.<details><summary>Pista</summary>Piensa en <code>Promise.all</code>, en <code>ListaApi</code> y en lo que hace <code>getJSON&lt;T&gt;</code> con un filtro.</details></div></div></li>
+    <li class="q" data-id="b2"><div class="qt"><div>Define las <code>interface</code> TypeScript (<code>PersonajeApi</code>, <code>ListaApi</code>) a partir del JSON <b>real</b>: puedes pedirle a una IA que te las proponga si le pegas ese JSON, pero verifica campo por campo y anota si se equivocó en algo. Define también tu modelo <code>Personaje</code>. ¿Cómo tipas el <code>ki</code>?<textarea data-id="b2" aria-label="Interfaces" spellcheck="false" placeholder="interface PersonajeApi { ... }"></textarea></div></div></li>
+  </ol>
+
+  <h2>B · Diseña <small>15 %</small></h2>
+  <p class="lead">Antes de programar, diseña. Parte del <a href="wireframe-dragonball.html" target="_blank" rel="noopener">wireframe</a> (web y móvil, dos pantallas) y de esta paleta:</p>
+  <div class="sw" aria-label="Paleta de colores de Dragon Ball">
+    <div><i style="background:#F58A1F"></i><span><b>Naranja Gi</b><br><code>#F58A1F</code></span></div>
+    <div><i style="background:#2457A6"></i><span><b>Azul Cinturón</b><br><code>#2457A6</code></span></div>
+    <div><i style="background:#FFD23F"></i><span><b>Amarillo Ki</b><br><code>#FFD23F</code></span></div>
+    <div><i style="background:#D7263D"></i><span><b>Rojo Estrella</b><br><code>#D7263D</code></span></div>
+    <div><i style="background:#16110E"></i><span><b>Negro Saiyan</b><br><code>#16110E</code></span></div>
+    <div><i style="background:#FFFFFF;border-bottom:1px solid #ddd"></i><span><b>Blanco Guante</b><br><code>#FFFFFF</code></span></div>
+  </div>
+  <ul class="check">
+    <li><label><input type="checkbox" data-id="d1"> Genera el diseño completo (las 2 pantallas, en <b>web y móvil</b>) con <a href="https://stitch.withgoogle.com" target="_blank" rel="noopener">Google Stitch</a> o <a href="https://claude.ai/design" target="_blank" rel="noopener">Claude Design</a>, usando el wireframe y la paleta.</label></li>
+    <li><label><input type="checkbox" data-id="d2"> Guarda en el README el <b>prompt</b> que usaste y <b>al menos una iteración</b>: qué pediste cambiar y por qué.</label></li>
+    <li><label><input type="checkbox" data-id="d3"> Justifica el uso de cada color (¿cuál es el principal, cuál resalta, cuál es el fondo?) y revisa que el texto se lea bien sobre cada fondo.</label></li>
+    <li><label><input type="checkbox" data-id="d4"> Decide y dibuja lo que el wireframe no muestra: estados de <b>cargando</b>, <b>error</b>, <b>sin resultados</b> y <b>hover</b>.</label></li>
+    <li><label><input type="checkbox" data-id="d5"> <b>★ Bonus planetas:</b> diseña también, con la misma herramienta y paleta, las pantallas de <b>planetas</b> (listado y detalle, web y móvil). Están en el apartado «Bonus · Planetas» del <a href="wireframe-dragonball.html" target="_blank" rel="noopener">wireframe</a>.</label></li>
+  </ul>
+
+  <h2>C · Construye <small>30 % + bonus</small></h2>
+  <p class="lead">Trabaja dentro de <code>04-proyecto/dragonball/</code>, con una subcarpeta por nivel (<code>nivel1</code> … <code>nivel7</code>). Créalas con <code>npm run nivel -- 3</code> (ya dejan lista la configuración de TypeScript) y compila con <code>npm run build</code>. Al terminar, tu página debe verse como tu diseño. Crea una rama y haz commits en cada nivel (ver el recuadro de Git).</p>
+  <div class="card note"><b>Git: una rama por nivel, en tu GitHub.</b> Vas a guardar tu avance con Git de forma ordenada. <b>Git es un tema nuevo, que no se vio en clase</b>: se aprende aquí y se retoma más adelante, en Angular, con Pull Requests, Issues y hotfixes. Empieza con este video introductorio de 2 minutos y medio: <a href="https://www.youtube.com/watch?v=DinilgacaWs" target="_blank" rel="noopener">¿Qué es Git y GitHub? Repositorios, ramas y mucho más</a>. Luego lee <code>docs/GIT-BASICO.md</code> y, si quieres profundizar, mira este video: <a href="https://www.youtube.com/watch?v=T3roQrB_Jko&list=PLJ7sTTLrIA6klMtrvcpGXYkBFoUP3rqwo" target="_blank" rel="noopener">Curso de Git y GitHub (desde cero)</a>. Los comandos que usarás:
+    <div class="tablewrap"><table>
+      <tr><th>Comando</th><th>Qué hace</th></tr>
+      <tr><td><code>git status</code></td><td>Te dice en qué rama estás y qué cambió. Úsalo siempre antes de actuar.</td></tr>
+      <tr><td><code>git checkout -b nivel-1</code></td><td>Crea la rama <code>nivel-1</code> y te mueve a ella.</td></tr>
+      <tr><td><code>git checkout nivel-1</code></td><td>Te mueve a una rama que ya existe.</td></tr>
+      <tr><td><code>git add .</code></td><td>Prepara tus cambios para guardarlos.</td></tr>
+      <tr><td><code>git commit -m "mensaje"</code></td><td>Guarda un punto en tu historial local.</td></tr>
+      <tr><td><code>git push -u origin nivel-1</code></td><td>Sube la rama a tu GitHub (la primera vez; después basta <code>git push</code>).</td></tr>
+      <tr><td><code>git pull</code></td><td>Trae de GitHub lo que no tienes.</td></tr>
+    </table></div>
+    Cada nivel nace de la rama del anterior (<code>nivel-1</code> → <code>nivel-2</code> → … → <code>nivel-7</code>). <b>Los comandos de Git los escribes tú</b>, no la IA: así aprendes qué hace cada uno.
+    <br><b>Tu repositorio de GitHub debe ser público</b> (Public), para que tu profesor pueda ver tus ramas y para poder publicarlo en Vercel.
+  </div>
+  <div class="card note"><b>El ciclo de cada pieza de código.</b>
+    <ol>
+      <li><b>Pídela pequeña:</b> una función o una sección, no todo el nivel. Dale tu contexto (diseño, JSON real, decisiones).</li>
+      <li><b>Pregunta dónde va y por qué:</b> ¿en qué archivo?, ¿antes o después de qué?</li>
+      <li><b>Acomódala tú</b> en VS Code: crea o abre el archivo correcto y pégala en el lugar indicado.</li>
+      <li><b>Ejecútala:</b> <code>npm run build</code>, recarga la página y mira qué pasa.</li>
+      <li><b>Si falla, entiéndelo antes de pedir el arreglo:</b> ¿qué dice el error y qué crees que lo causa?</li>
+      <li><b>Explícasela a la IA con tus palabras</b> y pídele que te corrija si algo está mal. Solo entonces pasa a la siguiente pieza.</li>
+    </ol>
+    <b>Ojo:</b> una IA puede darte código de “la forma típica” que no encaja con esta API. Detectar y corregir esos errores es parte del trabajo.
+  </div>
+  <div class="card note"><b>Recomendación.</b> Usa el <b>chat</b> de <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a> o de <a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a>: te da el código en bloques y tú lo acomodas en VS Code, lo ejecutas y lo conversas. Con agentes que escriben los archivos por ti, como Claude Code u OpenCode, ya no acomodas nada y se aprende menos. Es una sugerencia: si usas Claude Code, este repositorio lo configura para que te entregue el código en la conversación en vez de escribir tus archivos. En <code>docs/PROMPTS-CHAT.md</code> tienes un prompt para convertir el chat en tu tutor y en <code>docs/USAR-IA.md</code> cómo usar Claude Code como tutor (<code>/asistir-proyecto</code>).</div>
+  <ul class="check">
+    <li><label><input type="checkbox" data-id="n1"> <b>Nivel 1 · HTML:</b> 5 personajes en HTML semántico, con la estructura del wireframe.</label></li>
+    <li><label><input type="checkbox" data-id="n2"> <b>Nivel 2 · CSS:</b> variables con la paleta, Grid responsive y <code>:hover</code>.</label></li>
+    <li><label><input type="checkbox" data-id="n3"> <b>Nivel 3 · Datos en memoria:</b> <code>interface Personaje</code>, arreglo, <code>tarjeta()</code> y <code>pintar()</code>. Compila sin errores de tipos.</label></li>
+    <li><label><input type="checkbox" data-id="n4"> <b>Nivel 4 · API:</b> <code>getJSON&lt;T&gt;</code>, <code>respuesta.ok</code>, <code>try/catch</code>, estados de carga y error, y un adaptador. En el README <b>justifica si necesitas <code>Promise.all</code></b>.</label></li>
+    <li><label><input type="checkbox" data-id="n5"> <b>Nivel 5 · Imágenes:</b> con <code>alt</code> y un plan si la imagen no carga.</label></li>
+    <li><label><input type="checkbox" data-id="n6"> <b>Nivel 6 · Tailwind:</b> reemplaza el CSS, pon la paleta en la configuración de Tailwind y usa un <code>Record</code> de color por raza.</label></li>
+    <li><label><input type="checkbox" data-id="n7"> <b>Nivel 7 · Buscador, filtros y detalle (tú diriges, sin guía paso a paso):</b> buscador por nombre, filtro por raza o afiliación y, al hacer clic en una tarjeta, el detalle (usa <code>/characters/{id}</code>). Funciona en web y en móvil.</label></li>
+    <li><label><input type="checkbox" data-id="n10"> <b>Git:</b> en tu GitHub (repositorio <b>público</b>) existen las ramas <code>nivel-1</code> … <code>nivel-7</code> (y <code>bonus-planetas</code> y <code>nivel-8</code> si haces los bonus), cada una con commits de mensaje claro, y tu README tiene la sección «Mis comandos de Git» escrita con tus palabras.</label></li>
+    <li><label><input type="checkbox" data-id="n9"> <b>Bitácora de conversación:</b> guarda en tu README al menos <b>3 momentos</b> en que cuestionaste o corregiste a la IA (un error suyo, una decisión que no entendiste, una alternativa que comparaste) y qué aprendiste.</label></li>
+  </ul>
+  <div class="card bonus">
+    <b>Nivel 8 · Bonus (+10 %): publica tu página en Vercel.</b>
+    <p><b>¿Qué es Vercel?</b> Es una plataforma de <i>hosting</i>: un servicio que guarda tu página en servidores de internet y la deja disponible para cualquier persona con un enlace, por ejemplo <code>mi-dragonball.vercel.app</code>. Tiene un plan gratuito para proyectos personales y conecta con GitHub: cada vez que subes cambios, vuelve a publicar tu página sola y le pone HTTPS.</p>
+    <p><b>¿Para qué sirve aquí?</b> Hasta ahora tu página solo existe en tu computador (<code>file://</code> o un servidor local). Con Vercel puedes <b>mandarle el enlace a tu sobrino</b>, abrirla desde tu celular y probar que realmente funciona en internet, no solo en tu máquina. Además, queda como parte de tu portafolio.</p>
+    <p><b>Mira primero el ejemplo resuelto.</b> En el repositorio del curso hay una rama que ya despliega la Pokédex con este mismo método: <a href="https://github.com/JevDev2304/curso-js-ts-api/tree/deploy-vercel-pokeapi-nivel-8" target="_blank" rel="noopener"><code>deploy-vercel-pokeapi-nivel-8</code></a>. Lee su <code>DEPLOY-VERCEL.md</code> (explica el <code>vercel.toml</code> línea por línea) y <a href="https://github.com/JevDev2304/curso-js-ts-api/compare/main...deploy-vercel-pokeapi-nivel-8" target="_blank" rel="noopener">compárala con <code>main</code></a>. Tu trabajo es hacer lo equivalente con tu proyecto, en <b>tu</b> repositorio, desplegando tu rama <code>nivel-8</code>.</p>
+    <p><b>Pasos</b></p>
+    <ol>
+      <li>Crea una cuenta gratuita en <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a> (lo más fácil es entrar con tu cuenta de GitHub).</li>
+      <li>Con tu nivel 7 terminado y subido, crea la rama del bonus <b>desde</b> <code>nivel-7</code>: <code>git checkout nivel-7</code>, <code>git checkout -b nivel-8</code> y <code>git push -u origin nivel-8</code> (si hiciste el bonus de planetas, créala desde <code>bonus-planetas</code> para publicarlos). <b>Esa es la rama que vas a desplegar</b>; no hace falta tocar <code>main</code>.</li>
+      <li>Comprueba que en <code>nivel-8</code> existe <code>04-proyecto/dragonball/nivel7/</code> con tu <code>index.html</code> y tu <code>main.ts</code>, y que <code>npm run build</code> compila sin errores en tu computador. Si quieres ayuda guiada, usa <code>/asistir-bonus</code> en Claude Code o el prompt 7 de <code>docs/PROMPTS-CHAT.md</code>.</li>
+      <li>En Vercel: <b>Add New → Project</b>, elige tu repositorio y pulsa <b>Import</b>. <b>El primer despliegue puede fallar</b>: Vercel empieza por <code>main</code>, que no tiene tu <code>nivel7</code>. Es normal.</li>
+      <li>En el proyecto de Vercel entra a <b>Settings → Environments → Production → Branch Tracking</b>, cambia el nombre de la rama de <code>main</code> a <code>nivel-8</code> y pulsa <b>Save</b>. Así Vercel publica tu rama del bonus como «producción».</li>
+      <li><b>No cambies nada</b> en Root Directory, Build Command ni Output Directory (abre <code>vercel.toml</code>: tiene un comentario en cada línea): el archivo <code>vercel.toml</code> del repositorio ya le dice a Vercel que instale las dependencias, compile tu TypeScript con <code>npm run build</code> y publique <code>04-proyecto/dragonball/nivel7</code>.</li>
+      <li>Crea el despliegue de tu rama: pestaña <b>Deployments</b> → botón <b>Create Deployment</b>, escribe <code>nivel-8</code> y pulsa <b>Create Deployment</b>. (Ojo: el botón <b>Redeploy</b> <u>no sirve</u> para cambiar de rama; solo repite el despliegue de <code>main</code>.) Al terminar te da una URL pública.</li>
+      <li><b>Haz que cualquiera pueda abrirla, sin cuenta de Vercel.</b> Copia la URL del <b>dominio de producción</b> (la corta, del tipo <code>tu-proyecto.vercel.app</code>, que aparece en <b>Domains</b>; <u>no</u> la URL larga de un despliegue concreto). Ábrela en una <b>ventana de incógnito</b>: si te pide iniciar sesión en Vercel, ve a <b>Settings → Deployment Protection</b>, desactiva <b>Vercel Authentication</b> y pulsa <b>Save</b>. Vuelve a probar en incógnito.</li>
+      <li>Ábrela en tu <b>celular</b> y comprueba que el buscador, los filtros y el detalle funcionan. Haz un cambio pequeño en <code>nivel-8</code>, haz <code>git push</code> y mira cómo Vercel publica la nueva versión.</li>
+    </ol>
+    <p><b>Qué entregas:</b> la URL en el README y una captura de la página abierta en tu celular.</p>
+    <details><summary>Si algo falla</summary>
+      <ul>
+        <li><b>«No encuentro 04-proyecto/dragonball/nivel7/index.html» o «No Output Directory named "public" found»:</b> la rama que Vercel está desplegando no tiene tu carpeta <code>nivel7</code>. Revisa que el <b>Branch Tracking</b> de Production sea <code>nivel-8</code>, que hiciste <code>git push</code> de esa rama y que en GitHub esa rama muestra <code>04-proyecto/dragonball/nivel7</code>. Si Vercel sigue desplegando <code>main</code>, es normal que falle. Si moviste otros ajustes, devuélvelos a los valores por defecto.</li>
+        <li><b>Al abrir la URL me pide iniciar sesión en Vercel:</b> es la protección de despliegues. Comparte el dominio de producción (el corto) y, si sigue pidiéndolo, desactiva <b>Vercel Authentication</b> en <b>Settings → Deployment Protection</b>.</li>
+        <li><b>Error 404 al abrir la URL:</b> tu <code>index.html</code> no está dentro de <code>nivel7</code>.</li>
+        <li><b>La página sale pero sin datos:</b> abre DevTools → Console y Network. Seguramente la ruta del <code>&lt;script src&gt;</code> está mal escrita (debe apuntar a <code>main.js</code>) o el build falló: revisa el registro del despliegue en Vercel.</li>
+        <li><b>Funciona en tu PC y no en Vercel:</b> el servidor distingue mayúsculas de minúsculas (<code>Main.js</code> ≠ <code>main.js</code>) y solo acepta peticiones <code>https</code>.</li>
+        <li><b>El despliegue falla en «Build»:</b> ejecuta <code>npm run build</code> en tu computador; si falla ahí, es un error de tipos de tu <code>nivel7/main.ts</code>. Vercel hace exactamente lo mismo.</li>
+      </ul>
+    </details>
+    <ul class="check"><li><label><input type="checkbox" data-id="n8"> Mi página está publicada y la URL está en el README.</label></li></ul>
+  </div>
+  <div class="card bonus"><b>Bonus · Planetas ★ (+15 %): diseño, código y despliegue.</b>
+    <p>Trabaja también con los <b>planetas</b> de Dragon Ball, no solo con los personajes. Tiene tres partes y las tres cuentan:</p>
+    <ol>
+      <li><b>Diseño:</b> con Stitch o Claude Design, el listado y el detalle de planetas en <b>web y móvil</b>, con la misma paleta (mira el apartado «Bonus · Planetas» del <a href="wireframe-dragonball.html" target="_blank" rel="noopener">wireframe</a>). Guarda el prompt y una iteración, como en la parte B.</li>
+      <li><b>Código:</b> una pestaña <b>Planetas</b> en tu página, con listado de <code>/planets</code> (imagen, nombre y si está destruido), búsqueda por nombre, filtro por estado y detalle al hacer clic. En el detalle de un personaje, su planeta de origen debe llevar al detalle de ese planeta. Define tu <code>interface</code> a partir del <b>JSON real</b> y reutiliza <code>getJSON&lt;T&gt;</code> y la idea del adaptador.</li>
+      <li><b>Despliegue:</b> los planetas deben verse en tu página publicada en Vercel. Por eso este bonus se completa junto con el nivel 8.</li>
+    </ol>
+    <p><b>Git:</b> haz el código de planetas en una rama <code>bonus-planetas</code> creada desde <code>nivel-7</code> (<code>git checkout nivel-7</code>, <code>git checkout -b bonus-planetas</code>), dentro de la misma carpeta <code>nivel7</code>. Si además haces el nivel 8, crea <code>nivel-8</code> <b>desde <code>bonus-planetas</code></b> para publicar la versión con planetas.</p>
+    <ul class="check">
+      <li><label><input type="checkbox" data-id="pl1"> Diseño de planetas (web y móvil) con prompt e iteración en el README.</label></li>
+      <li><label><input type="checkbox" data-id="pl2"> Pestaña Planetas con listado, búsqueda, filtro por estado y detalle, y enlace desde el planeta de origen.</label></li>
+      <li><label><input type="checkbox" data-id="pl3"> Los planetas funcionan en mi página publicada en Vercel.</label></li>
+    </ul>
+  </div>
+  <div class="card">Si copias la Pokédex tal cual, algo se va a romper porque esta API responde distinto. Es buena señal: anota en el README cada error, su causa y cómo lo resolviste.
+    <details><summary>Pistas si te atascas</summary>
+      <ul>
+        <li>Lista vacía: compara el nombre del arreglo en tu interfaz con el del JSON real.</li>
+        <li>El <code>ki</code> no es un número: mira su formato antes de decidir si lo conviertes.</li>
+        <li>El buscador falla al recorrer: imprime la respuesta y compárala con la de la lista normal.</li>
+        <li>Con Tailwind por CDN puedes definir colores propios con <code>tailwind.config</code>, como en el paso 7 de la Pokédex.</li>
+      </ul>
+    </details>
+  </div>
+
+  <h2>D · Analiza tu código <small>25 %</small></h2>
+  <p class="lead">Cuando termines, lee <b>tu</b> proyecto como si lo hubiera escrito otra persona. Aunque una IA haya generado partes del código, es <b>tu</b> proyecto y debes poder explicarlo. Puedes pedirle ayuda a una IA para entender algo, pero cada respuesta abierta la escribes tú: <b>un párrafo como mínimo</b> (unas 50 palabras), con tus palabras. Si no entiendes algo, dilo.</p>
+  <h3>Preguntas abiertas (8)</h3>
+  <ol class="qs">
+    <li class="q open" data-id="p1"><div class="qt"><div>Cuenta cómo viaja un dato desde la API hasta la pantalla en <b>tu</b> proyecto. Nombra los archivos y funciones tuyos por los que pasa y qué le ocurre en cada uno.</div></div></li>
+    <li class="q open" data-id="p2"><div class="qt"><div>Explica con tus palabras qué hace <code>async/await</code> en tu código: por qué la página no se congela mientras llegan los datos, qué hace cada <code>await</code> y qué pasaría si lo quitaras.</div></div></li>
+    <li class="q open" data-id="p3"><div class="qt"><div>Escoge el fragmento que más te costó. ¿Qué hace, línea por línea? ¿Qué intentaste antes de que funcionara y qué aprendiste?</div></div></li>
+    <li class="q open" data-id="p4"><div class="qt"><div>De lo que vimos en clase con la Pokédex, ¿qué reutilizaste casi igual y qué tuviste que cambiar porque esta API responde distinto? Explica por qué.</div></div></li>
+    <li class="q open" data-id="p5"><div class="qt"><div>Rompe tu proyecto a propósito (quita un <code>await</code>, usa una URL que no exista, apaga el internet…). Primero escribe qué crees que pasará; luego pruébalo y explica si acertaste y por qué.</div></div></li>
+    <li class="q open" data-id="p6"><div class="qt"><div>¿Dónde te ayudó TypeScript? Copia un error real que te salió, explica qué decía y cómo lo resolviste. ¿Qué cosas <b>no</b> puede comprobar por ti?</div></div></li>
+    <li class="q open" data-id="p7"><div class="qt"><div>Compara tu diseño con lo que construiste: ¿qué decisión de diseño tuviste que cambiar al programarla y por qué? ¿Cómo manejaste los estados de cargando, error y sin resultados?</div></div></li>
+    <li class="q open" data-id="p8"><div class="qt"><div>Si tuvieras una semana más, ¿qué mejorarías de tu proyecto y por qué? ¿Qué parte de tu código todavía no entiendes del todo?</div></div></li>
+  </ol>
+
+  <h3>Selección múltiple (4)</h3>
+  <p class="lead">Elige una opción por pregunta. Si dudas, vuelve a probarlo en tu código.</p>
+  <ol class="qs">
+    <li class="q mc" data-id="m1"><div class="qt"><div>Tu <code>fetch</code> pide un personaje que no existe y el servidor responde con un error HTTP. ¿Qué ocurre si no revisas nada?
+      <div class="opts">
+        <label><input type="radio" name="m1" value="A"> A. <code>fetch</code> lanza un error y el código salta al <code>catch</code> automáticamente.</label>
+        <label><input type="radio" name="m1" value="B"> B. <code>fetch</code> no lanza error: <code>respuesta.ok</code> es <code>false</code> y hay que revisarlo tú.</label>
+        <label><input type="radio" name="m1" value="C"> C. <code>fetch</code> devuelve <code>null</code>.</label>
+        <label><input type="radio" name="m1" value="D"> D. <code>fetch</code> reintenta la petición hasta que funcione.</label>
+      </div></div></div></li>
+    <li class="q mc" data-id="m2"><div class="qt"><div>¿Qué devuelve una función <code>async</code> cuando la llamas <b>sin</b> <code>await</code>?
+      <div class="opts">
+        <label><input type="radio" name="m2" value="A"> A. El valor final directamente.</label>
+        <label><input type="radio" name="m2" value="B"> B. Una <code>Promise</code> que se resolverá después.</label>
+        <label><input type="radio" name="m2" value="C"> C. <code>undefined</code>.</label>
+        <label><input type="radio" name="m2" value="D"> D. Un error de TypeScript al ejecutar.</label>
+      </div></div></div></li>
+    <li class="q mc" data-id="m3"><div class="qt"><div>Tu <code>interface</code> dice <code>ki: number</code>, pero la API devuelve el texto <code>"60.000.000"</code>. ¿Qué pasa cuando la página corre en el navegador?
+      <div class="opts">
+        <label><input type="radio" name="m3" value="A"> A. TypeScript lanza un error en tiempo de ejecución.</label>
+        <label><input type="radio" name="m3" value="B"> B. Nada lo detecta: los tipos se borran al compilar y el dato sigue siendo texto.</label>
+        <label><input type="radio" name="m3" value="C"> C. TypeScript convierte el texto a número automáticamente.</label>
+        <label><input type="radio" name="m3" value="D"> D. <code>fetch</code> rechaza la respuesta por no coincidir con el tipo.</label>
+      </div></div></div></li>
+    <li class="q mc" data-id="m4"><div class="qt"><div>Tienes 10 peticiones independientes. ¿Qué ventaja da <code>Promise.all</code> frente a un <code>await</code> dentro de un <code>for</code>?
+      <div class="opts">
+        <label><input type="radio" name="m4" value="A"> A. Hace menos peticiones al servidor.</label>
+        <label><input type="radio" name="m4" value="B"> B. Lanza todas a la vez y el tiempo total se parece al de la más lenta.</label>
+        <label><input type="radio" name="m4" value="C"> C. Evita que fallen por problemas de red.</label>
+        <label><input type="radio" name="m4" value="D"> D. Convierte las respuestas a JSON sin <code>.json()</code>.</label>
+      </div></div></div></li>
+  </ol>
+
+  <h2>Entrega y sustentación</h2>
+  <div class="card">
+    <ul>
+      <li><b>Entrega:</b> el enlace a tu <b>repositorio público</b> de GitHub, con la carpeta <code>dragonball/</code> + <code>README.md</code> con tus respuestas de las partes A y D (botón de abajo), las 4 capturas del diseño con su prompt e iteración, la decisión sobre <code>Promise.all</code>, la bitácora de errores, la bitácora de conversación con la IA, tus comandos de Git y, si hiciste el bonus, la URL de Vercel.</li>
+      <li><b>Sustentación (10 min):</b> recorre en voz alta el camino de un dato de la API a la pantalla, explica tus decisiones de diseño, di dónde TypeScript te ayudó y dónde no puede, y haz un cambio en vivo (un campo nuevo o un filtro). Puedes usar la IA para hacerlo, pero debes decir qué le pides, en qué archivo va y qué cambió. También muestra tu historial de ramas y commits en GitHub y explica qué hace cada comando de Git que usaste.</li>
+    </ul>
+  </div>
+  <div class="bar">
+    <button class="btn" id="copiar" type="button">Copiar mis respuestas (Markdown)</button>
+    <button class="btn alt" id="borrar" type="button">Borrar respuestas guardadas</button>
+    <span id="copiado" role="status"></span>
+  </div>
+  <textarea id="salida" aria-label="Respuestas en Markdown" spellcheck="false" hidden style="min-height:200px"></textarea>
+
+  <h2>Rúbrica</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Criterio</th><th>Se espera</th><th>Peso</th></tr>
+    <tr><td>A · Exploración de la API</td><td>Tabla verificada, diferencias de arquitectura identificadas, tipos correctos.</td><td>15</td></tr>
+    <tr><td>B · Diseño</td><td>Las 2 pantallas en web y móvil, paleta bien aplicada, prompt e iteración documentados, estados contemplados.</td><td>15</td></tr>
+    <tr><td>C · Construcción</td><td>Los niveles 1 a 7 funcionan, el código está bien organizado en carpetas y archivos, hay una rama por nivel con commits claros subida a tu GitHub, es fiel al diseño y la bitácora muestra que dirigiste y corregiste a la IA.</td><td>30</td></tr>
+    <tr><td>D · Análisis de tu código</td><td>8 respuestas abiertas (un párrafo mínimo, con tus palabras, con evidencia de pruebas) y 4 de selección múltiple. Se valora la comprensión, no la redacción.</td><td>25</td></tr>
+    <tr><td>Sustentación</td><td>Explica con seguridad y hace el cambio en vivo, aunque sea con ayuda de la IA.</td><td>15</td></tr>
+    <tr><td>Bonus · Nivel 8</td><td>Página publicada en Vercel y funcionando.</td><td>+10</td></tr>
+    <tr><td>Bonus · Planetas ★</td><td>Diseño de planetas (web y móvil), código con listado, filtro y detalle, y publicado en Vercel (requiere el nivel 8).</td><td>+15</td></tr>
+  </table></div>
+</main>
+
+<script>
+document.getElementById('themeBtn').addEventListener('click', function () {
+  var root = document.documentElement;
+  var isDark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = isDark ? 'light' : 'dark';
+});
+
+var PREFIX = 'dbz-proyecto:';
+function load(id) { try { return localStorage.getItem(PREFIX + id) || ''; } catch (e) { return ''; } }
+function save(id, v) { try { localStorage.setItem(PREFIX + id, v); } catch (e) { /* sin almacenamiento */ } }
+
+// Cada pregunta abierta recibe su cuadro de texto y un contador de palabras (mínimo un párrafo: ~50)
+function words(t) { return (t.trim().match(/\S+/g) || []).length; }
+document.querySelectorAll('.q:not(.mc)').forEach(function (q) {
+  if (q.querySelector('textarea')) return;
+  var ta = document.createElement('textarea');
+  ta.dataset.id = q.dataset.id;
+  ta.setAttribute('aria-label', 'Tu respuesta');
+  ta.placeholder = 'Escribe un párrafo con tus palabras…';
+  q.appendChild(ta);
+  if (q.classList.contains('open')) {
+    var c = document.createElement('div');
+    c.className = 'count';
+    q.appendChild(c);
+    var upd = function () { var n = words(ta.value); c.textContent = n + ' palabras · mínimo recomendado: 50'; c.classList.toggle('ok', n >= 50); };
+    ta.addEventListener('input', upd);
+    ta.dataset.counter = '1';
+    q._upd = upd;
+  }
+});
+document.querySelectorAll('textarea[data-id], input[type=text][data-id]').forEach(function (el) {
+  el.value = load(el.dataset.id);
+  el.addEventListener('input', function () { save(el.dataset.id, el.value); });
+  var qq = el.closest('.q'); if (qq && qq._upd) qq._upd();
+});
+document.querySelectorAll('input[type=radio]').forEach(function (el) {
+  el.checked = load(el.name) === el.value;
+  el.addEventListener('change', function () { save(el.name, el.value); });
+});
+document.querySelectorAll('input[type=checkbox][data-id]').forEach(function (el) {
+  el.checked = load(el.dataset.id) === '1';
+  el.addEventListener('change', function () { save(el.dataset.id, el.checked ? '1' : '0'); });
+});
+
+function questionText(q) {
+  var c = q.querySelector('.qt > div').cloneNode(true);
+  c.querySelectorAll('details, textarea, .where, .opts, .count').forEach(function (n) { n.remove(); });
+  return c.textContent.replace(/\s+/g, ' ').trim();
+}
+function buildMarkdown() {
+  var out = ['# Proyecto Dragon Ball', '', '**Estudiante:** ' + (load('nombre') || '(sin nombre)'), ''];
+  var parts = [['A. Exploración de la API', 'b'], ['D. Análisis de mi código (preguntas abiertas)', 'p'], ['D. Selección múltiple', 'm']];
+  parts.forEach(function (p) {
+    out.push('## ' + p[0], '');
+    if (p[1] === 'b') {
+      out.push('| Aspecto | PokéAPI | Dragon Ball API |', '|---|---|---|');
+      var rows = [['Arreglo y paginación', 'results, next', 'b-1'], ['La lista trae datos para la tarjeta', 'No: solo nombre y url', 'b-2'], ['Tipo del poder', 'número', 'b-3'], ['Id inexistente', '404', 'b-4'], ['Respuesta con ?name=', 'no aplica', 'b-5']];
+      rows.forEach(function (r) { out.push('| ' + r[0] + ' | ' + r[1] + ' | ' + (load(r[2]).replace(/\|/g, '/') || '-') + ' |'); });
+      out.push('');
+    }
+    document.querySelectorAll('.q[data-id^="' + p[1] + '"]').forEach(function (q) {
+      if (q.classList.contains('mc')) {
+        var sel = q.querySelector('input:checked');
+        out.push('**' + questionText(q) + '**', '', sel ? sel.parentElement.textContent.replace(/\\s+/g, ' ').trim() : '(sin respuesta)', '');
+      } else out.push('**' + questionText(q) + '**', '', load(q.dataset.id) || '(sin respuesta)', '');
+    });
+  });
+  return out.join('\n');
+}
+document.getElementById('copiar').addEventListener('click', function () {
+  var md = buildMarkdown(), box = document.getElementById('salida'), msg = document.getElementById('copiado');
+  box.hidden = false; box.value = md;
+  function done(ok) { msg.textContent = ok ? 'Copiado. Pégalo en tu README.md' : 'Selecciona el texto de abajo y cópialo.'; if (!ok) box.select(); }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(md).then(function () { done(true); }, function () { done(false); });
+  else done(false);
+});
+var pending = false;
+document.getElementById('borrar').addEventListener('click', function (e) {
+  var b = e.currentTarget;
+  if (!pending) { pending = true; b.textContent = 'Confirmar: borrar todo'; setTimeout(function () { pending = false; b.textContent = 'Borrar respuestas guardadas'; }, 4000); return; }
+  try { Object.keys(localStorage).filter(function (k) { return k.indexOf(PREFIX) === 0; }).forEach(function (k) { localStorage.removeItem(k); }); } catch (err) { /* nada */ }
+  location.reload();
+});
+</script>
+</body>
+</html>

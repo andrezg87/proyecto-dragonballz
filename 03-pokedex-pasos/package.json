@@ -1,0 +1,11 @@
+{
+  "name": "pokedex-pasos",
+  "private": true,
+  "description": "Mini Pokédex paso a paso: HTML, CSS, datos en memoria, API, imágenes y Tailwind (con TypeScript)",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
+}

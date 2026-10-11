@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--
+  PASO 2 · HTML + CSS
+  Objetivo: darle aspecto a la página SIN cambiar el contenido.
+  El HTML es casi idéntico al paso 1: solo enlazamos una hoja de estilos.
+  Eso es separar estructura (HTML) de presentación (CSS).
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8"> <!-- para que se vean bien las tildes -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- necesario para celulares -->
+  <title>Mini Pokédex · Paso 2</title>
+
+  <!-- NUEVO: conecta el archivo styles.css (misma carpeta) con esta página -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- <header>: la cabecera de la página -->
+  <header>
+    <h1>Mini Pokédex</h1>
+    <p>Mis primeros pokémon, escritos a mano en HTML.</p>
+  </header>
+
+  <!-- <main>: el contenido principal (solo hay uno por página) -->
+  <main>
+    <!-- id="lista": un nombre único para encontrar esta sección más adelante (CSS y JS) -->
+    <section id="lista">
+      <!-- Una tarjeta = un <article> (contenido independiente).
+           Escribimos una por pokémon, a mano. Fíjate en lo repetitivo que es:
+           ese dolor lo vamos a resolver en el paso 3.
+           Las "class" no hacen nada todavía: son etiquetas que usaremos en el paso 2. -->
+      <article class="card">
+        <p class="num">#001</p>
+        <h2>bulbasaur</h2>
+        <p class="tipos"><span class="chip">grass</span> <span class="chip">poison</span></p>
+        <p class="hp-texto">HP 45</p>
+        <progress max="200" value="45"></progress>
+      </article>
+
+      <article class="card">
+        <p class="num">#002</p>
+        <h2>ivysaur</h2>
+        <p class="tipos"><span class="chip">grass</span> <span class="chip">poison</span></p>
+        <p class="hp-texto">HP 60</p>
+        <progress max="200" value="60"></progress>
+      </article>
+
+      <article class="card">
+        <p class="num">#003</p>
+        <h2>venusaur</h2>
+        <p class="tipos"><span class="chip">grass</span> <span class="chip">poison</span></p>
+        <p class="hp-texto">HP 80</p>
+        <progress max="200" value="80"></progress>
+      </article>
+
+      <article class="card">
+        <p class="num">#004</p>
+        <h2>charmander</h2>
+        <p class="tipos"><span class="chip">fire</span></p>
+        <p class="hp-texto">HP 39</p>
+        <progress max="200" value="39"></progress>
+      </article>
+
+      <article class="card">
+        <p class="num">#005</p>
+        <h2>charmeleon</h2>
+        <p class="tipos"><span class="chip">fire</span></p>
+        <p class="hp-texto">HP 58</p>
+        <progress max="200" value="58"></progress>
+      </article>
+
+      <article class="card">
+        <p class="num">#006</p>
+        <h2>charizard</h2>
+        <p class="tipos"><span class="chip">fire</span> <span class="chip">flying</span></p>
+        <p class="hp-texto">HP 78</p>
+        <progress max="200" value="78"></progress>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--
+  PASO 4 · Datos desde una API (sin imágenes)
+  Objetivo: traer los pokémon desde internet con fetch y async/await.
+  El HTML casi no cambia: lo que cambia es de dónde salen los datos (main.ts).
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8"> <!-- para que se vean bien las tildes -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- necesario para celulares -->
+  <title>Mini Pokédex · Paso 4</title>
+
+  <!-- Conecta styles.css (paso 2) con esta página -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- <header>: la cabecera de la página -->
+  <header>
+    <h1>Mini Pokédex</h1>
+    <p>Pokémon traídos en vivo desde PokéAPI.</p>
+  </header>
+
+  <!-- <main>: el contenido principal (solo hay uno por página) -->
+  <main>
+    <!-- NUEVO: aquí JavaScript escribirá mensajes (cargando, error, cantidad...) -->
+    <p id="estado"></p>
+
+    <!-- CAMBIO: la sección está VACÍA. Las tarjetas ya no se escriben a mano:
+         las genera JavaScript a partir de los datos (ver main.ts). -->
+    <section id="lista"></section>
+  </main>
+
+  <!-- NUEVO: carga el JavaScript. Va al final del <body> para que los elementos
+       de arriba ya existan cuando el script los busque.
+       OJO: el navegador ejecuta main.js, no main.ts. TypeScript se compila a JavaScript. -->
+  <script src="main.js"></script>
+</body>
+</html>
