@@ -1,0 +1,41 @@
+/* Paleta de mi diseño: se define UNA vez y se usa en todo el archivo */
+:root {
+  --naranja-gi: #F58A1F;
+  --azul-cinturon: #2457A6;
+  --amarillo-ki: #FFD23F;
+  --rojo-estrella: #D7263D;
+  --negro-saiyan: #16110E;
+  --blanco-guante: #FFFFFF;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--negro-saiyan);
+  color: var(--blanco-guante);
+}
+
+header {
+  background: var(--naranja-gi);
+  color: var(--negro-saiyan);
+  padding: 16px 24px;
+}
+
+header h1 { margin: 0 0 12px; }
+
+nav a {
+  color: var(--blanco-guante);
+  background: var(--negro-saiyan);
+  padding: 8px 20px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* La pestaña activa: la marcamos con el aria-current del nivel 1 */
+nav a[aria-current="page"] {
+  background: var(--amarillo-ki);
+  color: var(--negro-saiyan);
+}
