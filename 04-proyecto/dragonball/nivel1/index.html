@@ -19,8 +19,28 @@
     <h2>¡Elige a tu guerrero!</h2>
     <p>Busca a tus personajes favoritos y mira cuánto ki tienen.</p>
 
-    <!-- Pieza 2: buscador y filtros -->
-    <!-- Pieza 3 y 4: tarjetas -->
+        <section aria-label="Buscar y filtrar personajes">
+      <label for="buscador">Buscar personaje</label>
+      <input type="search" id="buscador" placeholder="Busca por nombre… ej. Goku">
+
+      <div role="group" aria-label="Filtrar por raza">
+        <button type="button" aria-pressed="true">Todos</button>
+        <button type="button" aria-pressed="false">Saiyan</button>
+        <button type="button" aria-pressed="false">Namekian</button>
+        <button type="button" aria-pressed="false">Human</button>
+        <button type="button" aria-pressed="false">Android</button>
+      </div>
+
+      <label for="afiliacion">Afiliación</label>
+      <select id="afiliacion">
+        <option value="">Todas las afiliaciones</option>
+        <option value="Z Fighter">Z Fighter</option>
+        <option value="Army of Frieza">Army of Frieza</option>
+        <option value="Villain">Villain</option>
+        <option value="Other">Other</option>
+      </select>
+    </section>
+    
   </main>
 
 </body>
