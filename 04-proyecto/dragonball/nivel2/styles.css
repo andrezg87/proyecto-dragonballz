@@ -39,3 +39,51 @@ nav a[aria-current="page"] {
   background: var(--amarillo-ki);
   color: var(--negro-saiyan);
 }
+
+
+main { padding: 24px; }
+
+/* Buscador: borde naranja y redondeado, como en el diseño */
+input[type="search"] {
+  width: 100%;
+  padding: 14px 20px;
+  margin: 8px 0 16px;
+  border: 3px solid var(--naranja-gi);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--blanco-guante);
+  font-size: 1rem;
+}
+
+/* Chips de raza en fila, con espacio entre ellos */
+[role="group"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+[role="group"] button {
+  padding: 8px 18px;
+  border: 2px solid var(--blanco-guante);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--blanco-guante);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Chip activo en amarillo con texto negro */
+[role="group"] button[aria-pressed="true"] {
+  background: var(--amarillo-ki);
+  border-color: var(--amarillo-ki);
+  color: var(--negro-saiyan);
+}
+
+select {
+  padding: 10px 16px;
+  border: 3px solid var(--azul-cinturon);
+  border-radius: 999px;
+  background: var(--negro-saiyan);
+  color: var(--blanco-guante);
+}
