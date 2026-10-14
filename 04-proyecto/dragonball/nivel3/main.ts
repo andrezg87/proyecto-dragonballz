@@ -28,6 +28,16 @@ const personajes: Personaje[] = [
 const lista = document.querySelector<HTMLElement>("#lista")!;
 const estado = document.querySelector<HTMLElement>("#estado")!;
 
+// Ki más alto de la lista: sirve de "100 %" para la barra (null cuenta como 0)
+const maxKi = Math.max(...personajes.map((p) => p.kiNumero ?? 0));
+
+// Decisión B: barra solo si el ki es número; si es null, nada
+function barraKi(p: Personaje): string {
+  if (p.kiNumero === null) return "";
+  const porcentaje = Math.round((p.kiNumero / maxKi) * 100);
+  return `<progress max="100" value="${porcentaje}">${porcentaje}%</progress>`;
+}
+
 // 4) tarjeta(): recibe UN personaje y devuelve el HTML de su tarjeta (texto)
 function tarjeta(p: Personaje): string {
   return `
@@ -36,6 +46,7 @@ function tarjeta(p: Personaje): string {
       <h3>${p.name}</h3>
       <p>${p.race}</p>
       <p>Ki: ${p.kiTexto}</p>
+      ${barraKi(p)}
     </article>`;
 }
 

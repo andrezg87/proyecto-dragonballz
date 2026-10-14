@@ -15,6 +15,15 @@ const personajes = [
 // 3) REFERENCIAS AL DOM: los elementos del HTML que vamos a llenar
 const lista = document.querySelector("#lista");
 const estado = document.querySelector("#estado");
+// Ki más alto de la lista: sirve de "100 %" para la barra (null cuenta como 0)
+const maxKi = Math.max(...personajes.map((p) => p.kiNumero ?? 0));
+// Decisión B: barra solo si el ki es número; si es null, nada
+function barraKi(p) {
+    if (p.kiNumero === null)
+        return "";
+    const porcentaje = Math.round((p.kiNumero / maxKi) * 100);
+    return `<progress max="100" value="${porcentaje}">${porcentaje}%</progress>`;
+}
 // 4) tarjeta(): recibe UN personaje y devuelve el HTML de su tarjeta (texto)
 function tarjeta(p) {
     return `
@@ -23,6 +32,7 @@ function tarjeta(p) {
       <h3>${p.name}</h3>
       <p>${p.race}</p>
       <p>Ki: ${p.kiTexto}</p>
+      ${barraKi(p)}
     </article>`;
 }
 // 5) pintar(): convierte TODOS los personajes en tarjetas y los mete en la página
