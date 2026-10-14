@@ -87,3 +87,51 @@ select {
   background: var(--negro-saiyan);
   color: var(--blanco-guante);
 }
+
+
+/* Cuadrícula: 2 columnas en celular */
+section[aria-label="Lista de personajes"] {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+
+/* 4 columnas en pantallas grandes (web) */
+@media (min-width: 768px) {
+  section[aria-label="Lista de personajes"] {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Tarjeta azul con texto blanco */
+article {
+  background: var(--azul-cinturon);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+article img { width: 100%; height: 200px; object-fit: contain; }
+article h3 { margin: 8px 0 4px; }
+article p  { margin: 4px 0; }
+
+/* Hover: brillo amarillo como un aura de ki */
+article:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px var(--amarillo-ki);
+}
+
+/* Botón Ver más */
+main > button {
+  display: block;
+  margin: 24px auto 0;
+  padding: 12px 32px;
+  border: none;
+  border-radius: 999px;
+  background: var(--naranja-gi);
+  color: var(--negro-saiyan);
+  font-weight: bold;
+  cursor: pointer;
+}
