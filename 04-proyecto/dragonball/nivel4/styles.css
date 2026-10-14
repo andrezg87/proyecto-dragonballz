@@ -1,0 +1,145 @@
+/* Paleta de mi diseño: se define UNA vez y se usa en todo el archivo */
+:root {
+  --naranja-gi: #F58A1F;
+  --azul-cinturon: #2457A6;
+  --amarillo-ki: #FFD23F;
+  --rojo-estrella: #D7263D;
+  --negro-saiyan: #16110E;
+  --blanco-guante: #FFFFFF;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--negro-saiyan);
+  color: var(--blanco-guante);
+}
+
+header {
+  background: var(--naranja-gi);
+  color: var(--negro-saiyan);
+  padding: 16px 24px;
+}
+
+header h1 { margin: 0 0 12px; }
+
+nav a {
+  color: var(--blanco-guante);
+  background: var(--negro-saiyan);
+  padding: 8px 20px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* La pestaña activa: la marcamos con el aria-current del nivel 1 */
+nav a[aria-current="page"] {
+  background: var(--amarillo-ki);
+  color: var(--negro-saiyan);
+}
+
+
+main { padding: 24px; }
+
+/* Buscador: borde naranja y redondeado, como en el diseño */
+input[type="search"] {
+  width: 100%;
+  padding: 14px 20px;
+  margin: 8px 0 16px;
+  border: 3px solid var(--naranja-gi);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--blanco-guante);
+  font-size: 1rem;
+}
+
+/* Chips de raza en fila, con espacio entre ellos */
+[role="group"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+[role="group"] button {
+  padding: 8px 18px;
+  border: 2px solid var(--blanco-guante);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--blanco-guante);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Chip activo en amarillo con texto negro */
+[role="group"] button[aria-pressed="true"] {
+  background: var(--amarillo-ki);
+  border-color: var(--amarillo-ki);
+  color: var(--negro-saiyan);
+}
+
+select {
+  padding: 10px 16px;
+  border: 3px solid var(--azul-cinturon);
+  border-radius: 999px;
+  background: var(--negro-saiyan);
+  color: var(--blanco-guante);
+}
+
+
+/* Cuadrícula: 2 columnas en celular */
+section[aria-label="Lista de personajes"] {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+
+/* 4 columnas en pantallas grandes (web) */
+@media (min-width: 768px) {
+  section[aria-label="Lista de personajes"] {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Tarjeta azul con texto blanco */
+article {
+  background: var(--azul-cinturon);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+article img { width: 100%; height: 200px; object-fit: contain; }
+article h3 { margin: 8px 0 4px; }
+article p  { margin: 4px 0; }
+
+/* Hover: brillo amarillo como un aura de ki */
+article:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px var(--amarillo-ki);
+}
+
+/* Botón Ver más */
+main > button {
+  display: block;
+  margin: 24px auto 0;
+  padding: 12px 32px;
+  border: none;
+  border-radius: 999px;
+  background: var(--naranja-gi);
+  color: var(--negro-saiyan);
+  font-weight: bold;
+  cursor: pointer;
+}progress {
+  width: 100%;
+  height: 10px;
+  accent-color: var(--amarillo-ki);
+}
+#estado.error {
+  color: var(--rojo-estrella);
+  font-weight: bold;
+}
