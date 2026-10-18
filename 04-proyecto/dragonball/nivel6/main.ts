@@ -42,7 +42,7 @@ const estado = document.querySelector<HTMLElement>("#estado")!;
 // Mensajes para el usuario. Si esError es true, el CSS lo pinta en rojo
 function mostrarEstado(texto: string, esError = false): void {
   estado.textContent = texto;
-  estado.classList.toggle("error", esError);
+    estado.classList.toggle("text-estrella", esError);
 }
 
 // UNA petición a la API y devuelve el JSON ya convertido (igual que en la Pokédex)
@@ -82,15 +82,16 @@ let maxKi = 1;
 function barraKi(p: Personaje): string {
   if (p.kiNumero === null) return "";
   const porcentaje = Math.round((p.kiNumero / maxKi) * 100);
-  return `<progress max="100" value="${porcentaje}">${porcentaje}%</progress>`;
+      return `<progress class="mt-3 h-3 w-full appearance-none overflow-hidden rounded-full [&::-webkit-progress-bar]:bg-saiyan/40 [&::-webkit-progress-value]:bg-ki" max="100" value="${porcentaje}">${porcentaje}%</progress>`;
 }
 
-// Igual que en el nivel 3: NO cambian gracias al adaptador
+// Igual que en el nivel 3, pero ahora con clases de Tailwind en vez de styles.css
 function tarjeta(p: Personaje): string {
   return `
-    <article>
-      <img src="${p.image}" alt="Imagen de ${p.name}" loading="lazy" width="200" height="200">
-      <h3>${p.name}</h3>
+    <article class="rounded-2xl bg-cinturon p-4 text-center transition hover:-translate-y-1 hover:shadow-lg hover:shadow-gi/50">
+      <img src="${p.image}" alt="Imagen de ${p.name}" loading="lazy" width="200" height="200"
+        class="mx-auto h-48 w-full object-contain">
+      <h3 class="mt-3 text-xl font-extrabold">${p.name}</h3>
       <p>${p.race}</p>
       <p>Ki: ${p.kiTexto}</p>
       ${barraKi(p)}

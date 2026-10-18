@@ -26,43 +26,45 @@
 </head>
 <body class="bg-saiyan text-guante font-sans">
 
-  <header>
-    <h1>Dragon Ball Explorer</h1>
-    <nav>
-      <a href="#" aria-current="page">Personajes</a>
-      <a href="#">Planetas</a>
+   <header class="bg-gi px-6 py-4 text-saiyan">
+    <h1 class="mb-3 text-3xl font-extrabold">Dragon Ball Explorer</h1>
+    <nav class="flex gap-3">
+      <a href="#" aria-current="page" class="rounded-full bg-ki px-5 py-2 font-bold">Personajes</a>
+      <a href="#" class="rounded-full bg-saiyan px-5 py-2 font-bold text-guante hover:bg-cinturon">Planetas</a>
     </nav>
   </header>
 
-  <main>
-    <h2>¡Elige a tu guerrero!</h2>
-    <p>Busca a tus personajes favoritos y mira cuánto ki tienen.</p>
+  <main class="mx-auto max-w-6xl px-4 py-6">
+    <h2 class="text-2xl font-extrabold text-ki">¡Elige a tu guerrero!</h2>
+    <p class="mb-4">Busca a tus personajes favoritos y mira cuánto ki tienen.</p> 
+       <section aria-label="Buscar y filtrar personajes" class="mb-6 space-y-4">
+      <label for="buscador" class="block font-semibold">Buscar personaje</label>
+      <input type="search" id="buscador" placeholder="Busca por nombre… ej. Goku"
+        class="w-full rounded-full border-2 border-gi bg-saiyan px-5 py-3 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-ki">
 
-        <section aria-label="Buscar y filtrar personajes">
-      <label for="buscador">Buscar personaje</label>
-      <input type="search" id="buscador" placeholder="Busca por nombre… ej. Goku">
-
-      <div role="group" aria-label="Filtrar por raza">
-        <button type="button" aria-pressed="true">Todos</button>
-        <button type="button" aria-pressed="false">Saiyan</button>
-        <button type="button" aria-pressed="false">Namekian</button>
-        <button type="button" aria-pressed="false">Human</button>
-        <button type="button" aria-pressed="false">Android</button>
+      <div role="group" aria-label="Filtrar por raza" class="flex flex-wrap gap-2">
+        <button type="button" aria-pressed="true" class="rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Todos</button>
+        <button type="button" aria-pressed="false" class="rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Saiyan</button>
+        <button type="button" aria-pressed="false" class="rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Namekian</button>
+        <button type="button" aria-pressed="false" class="rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Human</button>
+        <button type="button" aria-pressed="false" class="rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Android</button>
       </div>
 
-      <label for="afiliacion">Afiliación</label>
-      <select id="afiliacion">
-        <option value="">Todas las afiliaciones</option>
-        <option value="Z Fighter">Z Fighter</option>
-        <option value="Army of Frieza">Army of Frieza</option>
-        <option value="Villain">Villain</option>
-        <option value="Other">Other</option>
-      </select>
-    </section>
-        <p id="estado"></p>
-    <section id="lista" aria-label="Lista de personajes"></section>
+      <div class="flex items-center gap-3">
+        <label for="afiliacion" class="font-semibold">Afiliación</label>
+        <select id="afiliacion" class="rounded-full border-2 border-cinturon bg-guante px-4 py-2 text-saiyan">
+          <option value="">Todas las afiliaciones</option>
+          <option value="Z Fighter">Z Fighter</option>
+          <option value="Army of Frieza">Army of Frieza</option>
+          <option value="Villain">Villain</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+       <p id="estado" class="mb-4 min-h-6"></p>
+    <section id="lista" aria-label="Lista de personajes"
+      class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></section>
 
-    <button type="button">Ver más</button>
+    <button type="button" class="mx-auto mt-6 block rounded-full bg-gi px-8 py-3 font-bold text-saiyan hover:bg-ki">Ver más</button> 
   </main>
 
   <script src="main.js"></script>
