@@ -143,10 +143,10 @@ function chipRaza(raza: string): string {
 // La tarjeta guarda el id en data-id: al hacer clic sabemos qué personaje abrir
 function tarjeta(p: Personaje): string {
   return `
-    <article data-id="${p.id}" class="cursor-pointer rounded-2xl bg-cinturon p-4 text-center transition hover:-translate-y-1 hover:shadow-lg hover:shadow-gi/50">
+    <article data-id="${p.id}" class="cursor-pointer rounded-2xl bg-cinturon p-3 text-center sm:p-4 transition hover:-translate-y-1 hover:shadow-lg hover:shadow-gi/50">
       <img src="${p.image}" alt="Imagen de ${p.name}" loading="lazy" width="200" height="200"
-        class="mx-auto h-48 w-full object-contain">
-      <h3 class="mt-3 text-xl font-extrabold">${p.name}</h3>
+        class="mx-auto h-36 w-full object-contain sm:h-48">
+      <h3 class="mt-3 text-lg font-extrabold sm:text-xl">${p.name}</h3>
       ${chipRaza(p.race)}
       <p>Ki: ${p.kiTexto}</p>
       ${barraKi(p)}

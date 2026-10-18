@@ -44,13 +44,13 @@
         class="w-full rounded-full border-2 border-gi bg-saiyan px-5 py-3 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-ki">
 
       <!-- data-raza: la raza que filtra cada botón ("" = Todos). main.ts la lee al hacer clic -->
-      <div role="group" aria-label="Filtrar por raza" class="flex flex-wrap gap-2">
-        <button type="button" data-raza="" aria-pressed="true" class="rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Todos</button>
-        <button type="button" data-raza="Saiyan" aria-pressed="false" class="rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Saiyan</button>
-        <button type="button" data-raza="Namekian" aria-pressed="false" class="rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Namekian</button>
-        <button type="button" data-raza="Human" aria-pressed="false" class="rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Human</button>
-        <button type="button" data-raza="Android" aria-pressed="false" class="rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Android</button>
-        <button type="button" data-raza="Frieza Race" aria-pressed="false" class="rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Frieza Race</button>
+      <div role="group" aria-label="Filtrar por raza" class="flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible">
+        <button type="button" data-raza="" aria-pressed="true" class="shrink-0 rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Todos</button>
+        <button type="button" data-raza="Saiyan" aria-pressed="false" class="shrink-0 rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Saiyan</button>
+        <button type="button" data-raza="Namekian" aria-pressed="false" class="shrink-0 rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Namekian</button>
+        <button type="button" data-raza="Human" aria-pressed="false" class="shrink-0 rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Human</button>
+        <button type="button" data-raza="Android" aria-pressed="false" class="shrink-0 rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Android</button>
+        <button type="button" data-raza="Frieza Race" aria-pressed="false" class="shrink-0 rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Frieza Race</button>
       </div>
 
       <div class="flex flex-wrap items-center gap-3">
@@ -69,7 +69,7 @@
 
     <p id="estado" class="mb-4 min-h-6" aria-live="polite"></p>
     <section id="lista" aria-label="Lista de personajes"
-      class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></section>
+      class="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4"></section>
 
     <button type="button" id="ver-mas" class="mx-auto mt-6 block rounded-full bg-gi px-8 py-3 font-bold text-saiyan hover:bg-ki">Ver más</button>
   </main>
