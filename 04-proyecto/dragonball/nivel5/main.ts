@@ -68,7 +68,7 @@ function aPersonaje(api: PersonajeApi): Personaje {
   return {
     id: api.id,
     name: api.name,
-    image: api.image + "x",
+    image: api.image,
     race: api.race,
     affiliation: api.affiliation,
     kiTexto: api.ki,
