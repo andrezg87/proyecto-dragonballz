@@ -18,7 +18,9 @@ Abre `http://localhost:5500/04-proyecto/dragonball/nivel7/`.
 ## Mi página publicada (bonus, nivel 8)
 
 URL de Vercel: https://proyecto-dragonballz.vercel.app
-Captura abierta en mi celular: _adjunta o enlaza la imagen_
+Captura abierta en mi celular:
+
+<img src="capturas/celular-vercel.webp" alt="Mi página publicada en Vercel abierta en el celular" width="300">
 
 ---
 
