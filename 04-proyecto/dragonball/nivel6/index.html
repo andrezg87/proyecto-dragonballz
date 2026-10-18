@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dragon Ball Explorer</title>
+     <!-- Tailwind por CDN, igual que en el paso 6 de la Pokédex -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Mi paleta: le enseño a Tailwind los colores de Dragon Ball -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gi: "#F58A1F",       // Naranja Gi
+            cinturon: "#2457A6", // Azul Cinturón
+            ki: "#FFD23F",       // Amarillo Ki
+            estrella: "#D7263D", // Rojo Estrella
+            saiyan: "#16110E",   // Negro Saiyan
+            guante: "#FFFFFF",   // Blanco Guante
+          },
+        },
+      },
+    };
+  </script> 
+</head>
+<body class="bg-saiyan text-guante font-sans">
+
+  <header>
+    <h1>Dragon Ball Explorer</h1>
+    <nav>
+      <a href="#" aria-current="page">Personajes</a>
+      <a href="#">Planetas</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>¡Elige a tu guerrero!</h2>
+    <p>Busca a tus personajes favoritos y mira cuánto ki tienen.</p>
+
+        <section aria-label="Buscar y filtrar personajes">
+      <label for="buscador">Buscar personaje</label>
+      <input type="search" id="buscador" placeholder="Busca por nombre… ej. Goku">
+
+      <div role="group" aria-label="Filtrar por raza">
+        <button type="button" aria-pressed="true">Todos</button>
+        <button type="button" aria-pressed="false">Saiyan</button>
+        <button type="button" aria-pressed="false">Namekian</button>
+        <button type="button" aria-pressed="false">Human</button>
+        <button type="button" aria-pressed="false">Android</button>
+      </div>
+
+      <label for="afiliacion">Afiliación</label>
+      <select id="afiliacion">
+        <option value="">Todas las afiliaciones</option>
+        <option value="Z Fighter">Z Fighter</option>
+        <option value="Army of Frieza">Army of Frieza</option>
+        <option value="Villain">Villain</option>
+        <option value="Other">Other</option>
+      </select>
+    </section>
+        <p id="estado"></p>
+    <section id="lista" aria-label="Lista de personajes"></section>
+
+    <button type="button">Ver más</button>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
