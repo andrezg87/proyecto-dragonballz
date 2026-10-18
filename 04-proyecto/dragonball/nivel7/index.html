@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dragon Ball Explorer</title>
+  <!-- Tailwind por CDN, igual que en el paso 6 de la Pokédex -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Mi paleta: le enseño a Tailwind los colores de Dragon Ball -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gi: "#F58A1F",       // Naranja Gi
+            cinturon: "#2457A6", // Azul Cinturón
+            ki: "#FFD23F",       // Amarillo Ki
+            estrella: "#D7263D", // Rojo Estrella
+            saiyan: "#16110E",   // Negro Saiyan
+            guante: "#FFFFFF",   // Blanco Guante
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="bg-saiyan text-guante font-sans">
+
+  <header class="bg-gi px-6 py-4 text-saiyan">
+    <h1 class="mb-3 text-3xl font-extrabold">Dragon Ball Explorer</h1>
+    <nav class="flex gap-3">
+      <a href="#" aria-current="page" class="rounded-full bg-ki px-5 py-2 font-bold">Personajes</a>
+      <a href="#" class="rounded-full bg-saiyan px-5 py-2 font-bold text-guante hover:bg-cinturon">Planetas</a>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-6">
+    <h2 class="text-2xl font-extrabold text-ki">¡Elige a tu guerrero!</h2>
+    <p class="mb-4">Busca a tus personajes favoritos y mira cuánto ki tienen.</p>
+
+    <section aria-label="Buscar y filtrar personajes" class="mb-6 space-y-4">
+      <label for="buscador" class="block font-semibold">Buscar personaje</label>
+      <input type="search" id="buscador" placeholder="Busca por nombre… ej. Goku"
+        class="w-full rounded-full border-2 border-gi bg-saiyan px-5 py-3 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-ki">
+
+      <!-- data-raza: la raza que filtra cada botón ("" = Todos). main.ts la lee al hacer clic -->
+      <div role="group" aria-label="Filtrar por raza" class="flex flex-wrap gap-2">
+        <button type="button" data-raza="" aria-pressed="true" class="rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Todos</button>
+        <button type="button" data-raza="Saiyan" aria-pressed="false" class="rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Saiyan</button>
+        <button type="button" data-raza="Namekian" aria-pressed="false" class="rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Namekian</button>
+        <button type="button" data-raza="Human" aria-pressed="false" class="rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Human</button>
+        <button type="button" data-raza="Android" aria-pressed="false" class="rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Android</button>
+        <button type="button" data-raza="Frieza Race" aria-pressed="false" class="rounded-full border-2 px-4 py-1 font-bold aria-pressed:border-ki aria-pressed:bg-ki aria-pressed:text-saiyan">Frieza Race</button>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <label for="afiliacion" class="font-semibold">Afiliación</label>
+        <select id="afiliacion" class="rounded-full border-2 border-cinturon bg-guante px-4 py-2 text-saiyan">
+          <option value="">Todas las afiliaciones</option>
+          <option value="Z Fighter">Z Fighter</option>
+          <option value="Army of Frieza">Army of Frieza</option>
+          <option value="Villain">Villain</option>
+          <option value="Freelancer">Freelancer</option>
+          <option value="Pride Troopers">Pride Troopers</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+    </section>
+
+    <p id="estado" class="mb-4 min-h-6" aria-live="polite"></p>
+    <section id="lista" aria-label="Lista de personajes"
+      class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></section>
+
+    <button type="button" id="ver-mas" class="mx-auto mt-6 block rounded-full bg-gi px-8 py-3 font-bold text-saiyan hover:bg-ki">Ver más</button>
+  </main>
+
+  <!-- DETALLE: un <dialog> nativo. main.ts lo abre con showModal() y lo llena con /characters/{id} -->
+  <dialog id="detalle" aria-label="Detalle del personaje"
+    class="max-h-[90vh] w-[min(56rem,calc(100%-2rem))] rounded-2xl bg-cinturon p-0 text-guante backdrop:bg-saiyan/80">
+    <button type="button" id="cerrar-detalle" aria-label="Cerrar detalle"
+      class="sticky top-3 z-10 float-right m-3 rounded-full bg-gi px-3 py-1 font-bold text-saiyan hover:bg-ki">✕</button>
+    <div id="detalle-contenido"></div>
+  </dialog>
+
+  <script src="main.js"></script>
+</body>
+</html>
