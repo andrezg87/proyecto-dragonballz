@@ -84,7 +84,22 @@ function barraKi(p: Personaje): string {
   const porcentaje = Math.round((p.kiNumero / maxKi) * 100);
       return `<progress class="mt-3 h-3 w-full appearance-none overflow-hidden rounded-full [&::-webkit-progress-bar]:bg-saiyan/40 [&::-webkit-progress-value]:bg-ki" max="100" value="${porcentaje}">${porcentaje}%</progress>`;
 }
+// Record<string, string> = un diccionario: la clave es la raza y el valor, sus clases de Tailwind
+const COLORES_RAZA: Record<string, string> = {
+  Saiyan: "bg-gi text-saiyan",
+  Namekian: "bg-ki text-saiyan",
+  Human: "bg-guante text-cinturon",
+  Android: "bg-estrella text-guante",
+  "Frieza Race": "bg-saiyan text-ki",
+};
+// Si llega una raza que no está en el diccionario (ej. "Majin"), usamos este color neutro
+const COLOR_RAZA_POR_DEFECTO = "bg-saiyan/60 text-guante";
 
+// Devuelve la etiqueta de la raza con su color
+function chipRaza(raza: string): string {
+  const clases = COLORES_RAZA[raza] ?? COLOR_RAZA_POR_DEFECTO;
+  return `<span class="mt-1 inline-block rounded-full px-3 py-0.5 text-sm font-bold ${clases}">${raza}</span>`;
+}
 // Igual que en el nivel 3, pero ahora con clases de Tailwind en vez de styles.css
 function tarjeta(p: Personaje): string {
   return `
@@ -92,7 +107,7 @@ function tarjeta(p: Personaje): string {
       <img src="${p.image}" alt="Imagen de ${p.name}" loading="lazy" width="200" height="200"
         class="mx-auto h-48 w-full object-contain">
       <h3 class="mt-3 text-xl font-extrabold">${p.name}</h3>
-      <p>${p.race}</p>
+            ${chipRaza(p.race)}
       <p>Ki: ${p.kiTexto}</p>
       ${barraKi(p)}
     </article>`;
