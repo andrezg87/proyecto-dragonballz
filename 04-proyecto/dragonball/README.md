@@ -2,8 +2,8 @@
 
 > Completa este archivo **con tus propias palabras**, sin pegar texto generado por una IA. Las respuestas de análisis son de un párrafo como mínimo cada una. Puedes usar el botón «Copiar mis respuestas (Markdown)» del enunciado para pegar aquí las partes A y D.
 
-**Estudiante:** _tu nombre_
-**Fecha:** _dd/mm/aaaa_
+**Estudiante:** Andrés Giraldo Zuluaga
+**Fecha:** 18/10/2026
 
 ## Cómo ejecutar mi proyecto
 
@@ -17,7 +17,7 @@ Abre `http://localhost:5500/04-proyecto/dragonball/nivel7/`.
 
 ## Mi página publicada (bonus, nivel 8)
 
-URL de Vercel: _pega aquí tu enlace_
+URL de Vercel: https://proyecto-dragonballz.vercel.app
 Captura abierta en mi celular: _adjunta o enlaza la imagen_
 
 ---
@@ -58,8 +58,8 @@ Explica cada comando **con tus palabras**: qué hace y cuándo lo usaste en este
 | `git push -u origin nivel-1` | _…_ | _…_ |
 | `git pull` | _…_ | _…_ |
 
-**Mi repositorio de GitHub (público):** _enlace_
-**Mis ramas:** _`nivel-1` … `nivel-7` y, si hice los bonus, `bonus-planetas` y `nivel-8`_
+**Mi repositorio de GitHub (público):** https://github.com/andrezg87/proyecto-dragonballz
+**Mis ramas:** `nivel-1`, `nivel-2`, `nivel-3`, `nivel-4`, `nivel-5`, `nivel-6`, `nivel-7` y `nivel-8` (la que publica Vercel)
 
 ## Bitácora de conversación con la IA
 
